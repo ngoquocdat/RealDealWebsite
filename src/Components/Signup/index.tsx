@@ -1,22 +1,31 @@
 import React from "react";
-import { Button, Chip, TextField } from "@mui/material";
+import { Box, Button, Chip, TextField } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { AvatarGenerator } from "random-avatar-generator";
 import { IContext, RealDealContext } from "../context";
 
 import "./index.scss";
 import { defaultLogin } from "../StepsJoinToROOM/datas";
+import { uniq } from "../Index";
 
-export default function SignUp() {
+interface ISignUp {
+  gotoChatRoom?: (isToChatRoom: boolean) => void;
+}
+
+export default function SignUp(props: ISignUp) {
   const generator = new AvatarGenerator();
+  const { gotoChatRoom } = props;
   const { register, joinRoom } = React.useContext<IContext>(RealDealContext);
 
-  //   console.log("Avatar: ", generator.generateRandomAvatar());
   const singUpInfo = React.useRef({
     phoneNumber: defaultLogin.phoneNumber,
     userName: defaultLogin.userName,
     userEmail: defaultLogin.userEmail,
   });
+
+  const handleGotoChatRoom = React.useCallback(() => {
+    gotoChatRoom && gotoChatRoom(true);
+  }, []);
 
   return (
     <div className="signup-container">
@@ -27,25 +36,41 @@ export default function SignUp() {
               {defaultLogin.userName}
               <NotificationsIcon />
             </b>
-            <p>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "10px",
+                paddingTop: "5px",
+              }}
+            >
               Phòng chat:
-              {joinRoom.isUserJoinedRoom ? (
-                <>
-                  {joinRoom.rooms.map((r: string) => (
-                    <Chip label={r} />
+              {joinRoom.userJoinedRoom?.length ? (
+                <Box>
+                  {uniq(joinRoom.userJoinedRoom).map((r: string) => (
+                    <Chip
+                      label={r}
+                      sx={{
+                        backgroundColor: "#FBB713",
+                        color: "#fff",
+                        fontWeight: 600,
+                      }}
+                      onClick={handleGotoChatRoom}
+                    />
                   ))}
-                </>
+                </Box>
               ) : (
                 "  Chưa tham gia phòng chat"
               )}
-            </p>
+            </Box>
           </div>
           <div
             className="avatar"
             style={{
               backgroundColor: "#D9D9D9",
-              width: "52px",
-              height: "52px",
+              width: "60px",
+              height: "60px",
               backgroundImage: generator.generateRandomAvatar(),
             }}
           />
@@ -95,10 +120,10 @@ export default function SignUp() {
                   register.setIsUserRegistered(_isRegistered);
                 }}
               >
-                Dang ky
+                Đăng Ký
               </Button>
               <Button className="signin rd-buttons text-button" variant="text">
-                Dang nhap
+                Đăng Nhập
               </Button>
             </div>
           </div>

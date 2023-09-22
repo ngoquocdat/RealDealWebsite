@@ -2,22 +2,21 @@ import React from "react";
 import { Box, Button, Chip, TextField, Typography } from "@mui/material";
 import { formatter, roomInfo } from "../datas";
 import { IContext, RealDealContext } from "../../context";
+import { ISettingsRoom } from "..";
 
 interface IStepOne {
   errors: any;
+  settingsRoom: ISettingsRoom;
   setError: (error: any) => void;
   changeStep: (stepNum: number) => void;
 }
 
 export default function StepOne(props: IStepOne) {
-  const { errors, setError, changeStep } = props;
+  const { errors, settingsRoom, setError, changeStep } = props;
   const { processJoinRoom } = React.useContext<IContext>(RealDealContext);
-  const [selectedSettingRoom, setSelectedSettingRoom] = React.useState<any>({
-    totalCounter: 300,
-    counter: 20,
-    apartmentPrice: 13000000000,
-    discount: 12,
-  });
+  const [memberCount, setMemberCount] = React.useState<number>(
+    settingsRoom.settings.counter
+  );
 
   return (
     <Box className="content-container">
@@ -41,6 +40,7 @@ export default function StepOne(props: IStepOne) {
                 )}
                 {info.type === "editText" ? (
                   <TextField
+                    disabled
                     error={
                       errors.filter(
                         (error: any) => error.fieldError === "memberCounter"
@@ -48,23 +48,24 @@ export default function StepOne(props: IStepOne) {
                     }
                     sx={{ width: "50px" }}
                     label={""}
-                    defaultValue={`${info.value}`}
+                    defaultValue={`${memberCount}`}
                     size="small"
-                    onChange={(evt?: any) => {
-                      if (evt?.target.value <= 1) {
-                        setError([
-                          ...errors,
-                          { isError: true, fieldError: "memberCounter" },
-                        ]);
-                      } else {
-                        setError((errors: any) =>
-                          errors.filter(
-                            (error: any) =>
-                              !(error.fieldError === "memberCounter")
-                          )
-                        );
-                      }
-                    }}
+                    value={memberCount}
+                    // onChange={(evt?: any) => {
+                    //   if (evt?.target.value <= 1) {
+                    //     setError([
+                    //       ...errors,
+                    //       { isError: true, fieldError: "memberCounter" },
+                    //     ]);
+                    //   } else {
+                    //     setError((errors: any) =>
+                    //       errors.filter(
+                    //         (error: any) =>
+                    //           !(error.fieldError === "memberCounter")
+                    //       )
+                    //     );
+                    //   }
+                    // }}
                   />
                 ) : (
                   <Typography>{_value}</Typography>
@@ -78,7 +79,6 @@ export default function StepOne(props: IStepOne) {
         {[1, 2, 3].map((box) => (
           <Box />
         ))}
-        ;
       </Box>
       <Box className="room-settings">
         <Box className="room-counter">
@@ -102,8 +102,9 @@ export default function StepOne(props: IStepOne) {
               id="phone-number-outlined"
               label="Số lượng căn hộ: "
               size="small"
-              defaultValue={selectedSettingRoom.counter}
+              defaultValue={settingsRoom.settings.counter}
               onChange={(evt?: any) => {
+                setMemberCount(evt?.target.value);
                 if (evt?.target.value > 60 || !evt?.target.value) {
                   setError([
                     ...errors,
@@ -114,26 +115,27 @@ export default function StepOne(props: IStepOne) {
                   ]);
                 } else {
                   const _discount =
-                    (evt?.target.value / selectedSettingRoom.totalCounter) *
+                    (evt?.target.value / settingsRoom.settings.totalCounter) *
                     evt?.target.value;
                   setError(
                     errors.filter(
                       (error: any) => !(error.fieldError === "roomCounter")
                     )
                   );
-                  setSelectedSettingRoom({
-                    ...selectedSettingRoom,
+                  settingsRoom.setSettings({
+                    ...settingsRoom.settings,
                     discount: (_discount / 10) * 15,
-                    counter: evt?.target.value,
+                    counter: Number(evt?.target.value),
                   });
                 }
               }}
             />
-            / <Typography>{selectedSettingRoom.totalCounter}</Typography>
+            / <Typography>{settingsRoom.settings.totalCounter}</Typography>
           </Box>
           {errors.find((error: any) => error.fieldError === "roomCounter") ? (
             <Typography sx={{ color: "red", paddingTop: "10px" }}>
-              Số lượng căn hộ không vượt quá 60 căn hộ trong một Room
+              Dự án chỉ được đăng ký tối đa 60 căn ( sản phẩm bất động sản ) cho
+              một phòng tư vấn.
             </Typography>
           ) : (
             ""
@@ -142,7 +144,7 @@ export default function StepOne(props: IStepOne) {
         <Box>
           <Typography>Giá bất động sản ( tính trên đơn vị căn hộ )</Typography>
           <Typography sx={{ fontWeight: 500, fontSize: "32px" }}>
-            {`${formatter.format(selectedSettingRoom.apartmentPrice)} VND`}
+            {`${formatter.format(settingsRoom.settings.apartmentPrice)} VND`}
           </Typography>
         </Box>
         <Box>
@@ -158,9 +160,9 @@ export default function StepOne(props: IStepOne) {
             }}
           >
             {`${formatter.format(
-              selectedSettingRoom.apartmentPrice -
-                selectedSettingRoom.apartmentPrice *
-                  (selectedSettingRoom.discount / 100)
+              settingsRoom.settings.apartmentPrice -
+                settingsRoom.settings.apartmentPrice *
+                  (settingsRoom.settings.discount / 100)
             )} VND`}
           </Typography>
         </Box>

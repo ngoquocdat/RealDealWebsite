@@ -9,22 +9,28 @@ import {
 import React from "react";
 import { formatter, paymentInfo } from "../datas";
 import { IContext, RealDealContext } from "../../context";
+import { ISettings } from "..";
 
 interface IStepTwo {
   errors: any;
+  settings: ISettings;
   setError: (error: any) => void;
   changeStep: (stepNum: number) => void;
 }
 
 export default function StepTwo(props: IStepTwo) {
-  const { errors, changeStep } = props;
+  const { errors, settings, changeStep } = props;
   const { processJoinRoom } = React.useContext<IContext>(RealDealContext);
+  const [openFee, setOpenFee] = React.useState<number>(0);
   const [methodSelected, setMethodSelected] = React.useState<any[]>([]);
 
   return (
     <Box className="content-container payment">
       <Box className="payment-info">
         {paymentInfo.map((info) => {
+          if (info.type === "currency" && !openFee) {
+            setOpenFee(Number(info.value));
+          }
           return (
             <Box className="info-wrapper">
               <Typography sx={{ fontWeight: 600 }}>{info.label}</Typography>
@@ -77,7 +83,33 @@ export default function StepTwo(props: IStepTwo) {
           label="Thanh toán thông qua QR code chuyển khoản"
         />
       </FormGroup>
+      <Box sx={{ gridColumn: "5/6" }}>
+        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          Tổng tiền cần thanh toán
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={{ paddingTop: "20px", color: "#FBB713", fontWeight: 600 }}
+        >
+          {`${formatter.format(settings.counter * 500000 + openFee)} VND`}
+        </Typography>
+      </Box>
       <Box className="buttons">
+        <Button
+          disabled={false}
+          sx={{
+            backgroundColor: `${
+              errors?.length > 0 ? "rgba(0, 0, 0, 0.12) !important" : "#FBB713"
+            }`,
+          }}
+          className="signup rd-buttons contained-button"
+          variant={"contained"}
+          onClick={(evt?: React.MouseEvent) => {
+            changeStep(1);
+          }}
+        >
+          Quay lại bước trước
+        </Button>
         <Button
           disabled={!(methodSelected.length > 0)}
           sx={{
@@ -94,21 +126,6 @@ export default function StepTwo(props: IStepTwo) {
           }}
         >
           Xác nhận thanh toán
-        </Button>
-        <Button
-          disabled={false}
-          sx={{
-            backgroundColor: `${
-              errors?.length > 0 ? "rgba(0, 0, 0, 0.12) !important" : "#FBB713"
-            }`,
-          }}
-          className="signup rd-buttons contained-button"
-          variant={"contained"}
-          onClick={(evt?: React.MouseEvent) => {
-            changeStep(1);
-          }}
-        >
-          Quay lại bước trước
         </Button>
         <Button
           className="signin rd-buttons text-button"

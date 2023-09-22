@@ -27,7 +27,7 @@ export const roomInfo = [
     },
     {
         label: "",
-        value: "( Số lượng thành viên không được nhỏ hơn 2 thành viên )",
+        value: "( Số lượng thành viên tương ứng với số lượng bất động sản được chọn )",
         type: "text"
     },
     {
@@ -70,7 +70,7 @@ export const paymentInfo = [
         type: "text"
     },
     {
-        label: 'Số lượng thành viên:',
+        label: 'Số lượng thành viên tối đa:',
         value: '10',
         position: "left",
         type: "text"
@@ -88,7 +88,7 @@ export const paymentInfo = [
         type: "text"
     },
     {
-        label: 'Số tiền cần thanh toán:',
+        label: 'Số tiền phí tạo phòng tư vấn:',
         value: 5000000,
         position: "right",
         type: "currency"

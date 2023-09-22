@@ -6,11 +6,35 @@ import StepOne from "./components/stepOne";
 import StepTwo from "./components/stepTwo";
 
 import "./index.scss";
+import StepThree from "./components/stepThree";
+import StepFourth from "./components/stepFourth";
 
-export default function StepsJoinToRoom() {
+export interface ISettings {
+  totalCounter: number;
+  counter: number;
+  apartmentPrice: number;
+  discount: number;
+}
+export interface ISettingsRoom {
+  settings: ISettings;
+  setSettings: React.Dispatch<any>;
+}
+
+interface IStepjoinRoom {
+  redirectToChatRoom: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function StepsJoinToRoom(props: IStepjoinRoom) {
+  const { redirectToChatRoom } = props;
   const { joinDialog } = React.useContext<IContext>(RealDealContext);
   const [currentStep, setCurrentStep] = React.useState<number>(1);
   const [counterError, toggleErrorCounter] = React.useState<any[]>([]);
+  const [selectedSettingRoom, setSelectedSettingRoom] = React.useState<any>({
+    totalCounter: 300,
+    counter: 20,
+    apartmentPrice: 13000000000,
+    discount: 12,
+  });
 
   const handleChangeStep = (stepNum: number) => {
     setCurrentStep(stepNum);
@@ -49,6 +73,10 @@ export default function StepsJoinToRoom() {
           changeStep={handleChangeStep}
           errors={counterError}
           setError={toggleErrorCounter}
+          settingsRoom={{
+            settings: selectedSettingRoom,
+            setSettings: setSelectedSettingRoom,
+          }}
         />
       )}
       {currentStep === 2 && (
@@ -56,8 +84,11 @@ export default function StepsJoinToRoom() {
           changeStep={handleChangeStep}
           errors={counterError}
           setError={toggleErrorCounter}
+          settings={selectedSettingRoom}
         />
       )}
+      {currentStep === 3 && <StepThree changeStep={handleChangeStep} />}
+      {currentStep === 4 && <StepFourth toChatRoom={redirectToChatRoom} />}
       <Box className="selected-project">
         <div className={`news-item`}>
           <Box className="image" sx={{ margin: "0px 20px" }} />
