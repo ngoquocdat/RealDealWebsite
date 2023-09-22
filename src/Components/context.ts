@@ -7,8 +7,8 @@ export const RealDealContext = React.createContext<any>({
         setIsUserRegistered: () => null,
     },
     joinRoom: {
-        isUserJoinedRoom: null,
-        setIsUserJoinedRoom: () => null,
+        uerJoinedRoom: null,
+        setUserJoinedRoom: () => null,
     },
     joinDialog: {
         isOpenJoinDialog: null,
@@ -26,8 +26,8 @@ export interface IContext {
       setIsUserRegistered: React.Dispatch<React.SetStateAction<boolean>>;
     };
     joinRoom: {
-      isUserJoinedRoom: boolean;
-      setIsUserJoinedRoom: React.Dispatch<React.SetStateAction<boolean>>;
+      userJoinedRoom: any;
+      setUserJoinedRoom: React.Dispatch<React.SetStateAction<any>>;
       rooms: ["ROOM A"];
     };
     joinDialog: {

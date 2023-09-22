@@ -12,6 +12,13 @@ import RealEstateRegions from "./RealEstateRegions";
 import Carousel from "./Carousel";
 import StepsJoinToRoom from "./StepsJoinToROOM";
 import { RealDealContext } from "./context";
+import ChatRoom from "./ChatRoom";
+
+export function uniq(a: any) {
+  return a.sort().filter(function (item: any, pos: any, ary: any) {
+    return !pos || item !== ary[pos - 1];
+  });
+}
 
 export default function MainContainer() {
   const menuItems = [
@@ -21,15 +28,10 @@ export default function MainContainer() {
     "Nhà phố",
     "RealDeal là gì ?",
   ];
-  const renderMenuItems = () => {
-    return menuItems.map((menuItem) => (
-      <li key={`key-${menuItem}`}>{menuItem}</li>
-    ));
-  };
-
   const [isRegistered, setIsRegistered] = React.useState<boolean>(false);
-  const [isJoinedRoom, setIsJoinedRoom] = React.useState<boolean>(false);
+  const [joinedRoom, setjoinedRoom] = React.useState<any[]>([]);
   const [isOpenJoinDialog, setIsOpenDialog] = React.useState<boolean>(false);
+  const [gotoChatRoom, setGotoChatRoom] = React.useState<boolean>(false);
   const [isProcessJoinRoom, setIsProcessJoinRoom] =
     React.useState<boolean>(false);
 
@@ -39,8 +41,8 @@ export default function MainContainer() {
       setIsUserRegistered: setIsRegistered,
     },
     joinRoom: {
-      isUserJoinedRoom: isJoinedRoom,
-      setIsUserJoinedRoom: setIsJoinedRoom,
+      userJoinedRoom: joinedRoom,
+      setUserJoinedRoom: setjoinedRoom,
     },
     joinDialog: {
       isOpenJoinDialog: isOpenJoinDialog,
@@ -50,6 +52,27 @@ export default function MainContainer() {
       isProcessJoinRoom: isProcessJoinRoom,
       setIsProcessJoinRoom: setIsProcessJoinRoom,
     },
+  };
+
+  React.useEffect(() => {
+    if (gotoChatRoom) {
+      setIsRegistered(true);
+      setjoinedRoom(["TDA_ConsultantNHA_2023"]);
+    }
+  }, [gotoChatRoom, setGotoChatRoom]);
+
+  const renderMenuItems = () => {
+    return menuItems.map((menuItem) => (
+      <li
+        key={`key-${menuItem}`}
+        onClick={() => {
+          setGotoChatRoom(false);
+          setIsProcessJoinRoom(false);
+        }}
+      >
+        {menuItem}
+      </li>
+    ));
   };
 
   return (
@@ -73,37 +96,44 @@ export default function MainContainer() {
                   </div>
                 </div>
                 {/** Sign up zone */}
-                <SignUp />
+                <SignUp gotoChatRoom={setGotoChatRoom} />
               </div>
             </header>
-            <div className="contents">
-              {/** CAROUSEL */}
-              <Carousel />
-              {!isProcessJoinRoom ? (
-                <Box>
-                  {/** REAL ESTATE REGIONS */}
-                  <RealEstateRegions />
-                  {/** SEARCH - NEWS */}
-                  <RealNews
-                    newsCounter={[
-                      "first",
-                      "second",
-                      "third",
-                      "fourth",
-                      "five",
-                      "six",
-                    ]}
-                  />
-                </Box>
-              ) : (
-                <StepsJoinToRoom />
-              )}
-              <div className="contacts">
-                <Typography>
-                  <b>Thông tin liên hệ, địa chỉ</b>
-                </Typography>
+
+            {gotoChatRoom ? (
+              <div className="chatRoom">
+                <ChatRoom />
               </div>
-            </div>
+            ) : (
+              <div className="contents">
+                {/** CAROUSEL */}
+                <Carousel />
+                {!isProcessJoinRoom ? (
+                  <Box>
+                    {/** REAL ESTATE REGIONS */}
+                    <RealEstateRegions />
+                    {/** SEARCH - NEWS */}
+                    <RealNews
+                      newsCounter={[
+                        "first",
+                        "second",
+                        "third",
+                        "fourth",
+                        "five",
+                        "six",
+                      ]}
+                    />
+                  </Box>
+                ) : (
+                  <StepsJoinToRoom redirectToChatRoom={setGotoChatRoom} />
+                )}
+                <div className="contacts">
+                  <Typography>
+                    <b>Thông tin liên hệ, địa chỉ</b>
+                  </Typography>
+                </div>
+              </div>
+            )}
           </article>
         </div>
       </div>
