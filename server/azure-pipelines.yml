@@ -8,8 +8,8 @@ trigger:
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: "bc372248-3d50-4064-8d01-4066ca1f92d2"
-  # azureSubscription: "fc2c6a8b-c74f-483f-ac64-3f2b64a904de"
+  # azureSubscription: "bc372248-3d50-4064-8d01-4066ca1f92d2"
+  azureSubscription: "6d297ade-cbc9-4449-aece-7f6208283027"
 
   # Web app name
   webAppName: "realdeal-server-34268"
