@@ -45,31 +45,31 @@ stages:
           - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
             artifact: drop
 
-  # - stage: Deploy
-  #   displayName: Deploy stage
-  #   dependsOn: Build
-  #   condition: succeeded()
-  #   jobs:
-  #     - deployment: Deploy
-  #       displayName: Deploy
-  #       environment: $(environmentName)
-  #       pool:
-  #         vmImage: $(vmImageName)
-  #       strategy:
-  #         runOnce:
-  #           deploy:
-  #             steps:
-  #               # Delay further execution of a workflow by a fixed time.
-  #               - task: Delay@1
-  #                 inputs:
-  #                   delayForMinutes: '5' # string. Required. Delay Time (minutes). Default: 0.
-  #               - task: AzureWebApp@1
-  #                 retryCountOnTaskFailure: 10
-  #                 displayName: "Azure Web App Deploy: realdeal-server-34268"
-  #                 inputs:
-  #                   azureSubscription: $(azureSubscription)
-  #                   appType: webAppLinux
-  #                   appName: $(webAppName)
-  #                   runtimeStack: "NODE|16.x"
-  #                   package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-  #                   startUpCommand: "npm run start"
+  - stage: Deploy
+    displayName: Deploy stage
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - deployment: Deploy
+        displayName: Deploy
+        environment: $(environmentName)
+        pool:
+          vmImage: $(vmImageName)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                # Delay further execution of a workflow by a fixed time.
+                - task: Delay@1
+                  inputs:
+                    delayForMinutes: '5' # string. Required. Delay Time (minutes). Default: 0.
+                - task: AzureWebApp@1
+                  retryCountOnTaskFailure: 5
+                  displayName: "Azure Web App Deploy: realdeal-server-34268"
+                  inputs:
+                    azureSubscription: $(azureSubscription)
+                    appType: webAppLinux
+                    appName: $(webAppName)
+                    runtimeStack: "NODE|16.x"
+                    package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+                    startUpCommand: "npm run start"
