@@ -63,6 +63,7 @@ stages:
                   retryCountOnTaskFailure: 10
                   displayName: "Azure Web App Deploy: realdeal-server-34268"
                   inputs:
+                    deploymentMethod: runFromPackage
                     azureSubscription: $(azureSubscription)
                     appType: webAppLinux
                     appName: $(webAppName)
