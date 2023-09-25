@@ -60,11 +60,12 @@ stages:
             deploy:
               steps:
                 - task: AzureWebApp@1
+                  retryCountOnTaskFailure: 10
                   displayName: "Azure Web App Deploy: realdeal-server-34268"
                   inputs:
                     azureSubscription: $(azureSubscription)
                     appType: webAppLinux
                     appName: $(webAppName)
-                    runtimeStack: "NODE|10.10"
+                    runtimeStack: "NODE|16.x"
                     package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
                     startUpCommand: "npm run start"
