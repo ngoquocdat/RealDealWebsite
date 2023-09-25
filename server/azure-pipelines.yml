@@ -59,11 +59,14 @@ stages:
           runOnce:
             deploy:
               steps:
+                # Delay further execution of a workflow by a fixed time.
+                - task: Delay@1
+                  inputs:
+                    delayForMinutes: '5' # string. Required. Delay Time (minutes). Default: 0.
                 - task: AzureWebApp@1
                   retryCountOnTaskFailure: 10
                   displayName: "Azure Web App Deploy: realdeal-server-34268"
                   inputs:
-                    deploymentMethod: runFromPackage
                     azureSubscription: $(azureSubscription)
                     appType: webAppLinux
                     appName: $(webAppName)
