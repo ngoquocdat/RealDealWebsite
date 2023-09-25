@@ -28,8 +28,8 @@ stages:
           #   displayName: "npm install, build and test"
 
           - script: | 
-              npm install
-              npm run build --if-present
+              npm install -D
+              npm run build
             displayName: "npm install & build"
 
           - task: ArchiveFiles@2
