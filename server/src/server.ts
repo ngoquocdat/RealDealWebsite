@@ -28,11 +28,14 @@ class Server {
     }
 
     private routerConfig() {
-        this.app.use('/todos', todosRouter);
+        this.app.use('/', todosRouter);
     }
 
     public start = (port: number ) => {
         return new Promise((resolve, reject) => {
+            this.app.get('/', function (req, res) {
+                return res.send("Connected to postgres db");
+            })
             this.app.listen(port, () => {
                 resolve(port);
             }).on('error', (err: Object) => reject(err));

@@ -1,9 +1,9 @@
-import express, {Router} from 'express';
-import TodosController from '../controllers/TodosController';
+import {Router} from 'express';
+import CrawlData from '../controllers/TodosController';
 
 const router = Router();
-const todosController = new TodosController();
+const crawlData = new CrawlData();
 
-router.get(`/todos`, todosController.get);
+router.get(`/`, crawlData.get);
 
 export default router;

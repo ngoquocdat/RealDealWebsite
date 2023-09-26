@@ -5,7 +5,10 @@ class TodosController {
         try {
             const client = await pool.connect();
 
-            const sql = "SELECT * FROM todos";
+            const sql = `
+                SELECT * FROM public.logic_api_news
+                ORDER BY id ASC 
+            `;
             const { rows } = await client.query(sql);
             const todos =  rows;
             
