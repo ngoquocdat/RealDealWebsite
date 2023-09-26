@@ -60,8 +60,8 @@ stages:
             deploy:
               steps:
                 - task: AzureWebApp@1
-                  retryCountOnTaskFailure: 10
-                  displayName: "Azure Web App Deploy: realdeal-server-34268"
+                  retryCountOnTaskFailure: 5
+                  displayName: "Azure Web App Deploy: realdeal-server"
                   inputs:
                     azureSubscription: $(azureSubscription)
                     appType: webAppLinux
