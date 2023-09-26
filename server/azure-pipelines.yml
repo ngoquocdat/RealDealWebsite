@@ -18,7 +18,7 @@ stages:
         steps:
           - task: NodeTool@0
             inputs:
-              versionSpec: "10.x"
+              versionSpec: "16.x"
             displayName: "Install Node.js"
 
           # - script: |
@@ -27,10 +27,11 @@ stages:
           #     npm run test --if-present
           #   displayName: "npm install, build and test"
 
-          - script: | 
-              npm install -D
-              npm run build
-            displayName: "npm install & build"
+          - script: npm install -D
+            displayName: "npm install"
+
+          - script: npm run build
+            displayName: "npm build"
 
           - task: ArchiveFiles@2
             displayName: "Archive files"
@@ -59,11 +60,12 @@ stages:
             deploy:
               steps:
                 - task: AzureWebApp@1
-                  displayName: "Azure Web App Deploy: realdeal-server-34268"
+                  retryCountOnTaskFailure: 5
+                  displayName: "Azure Web App Deploy: realdeal-server"
                   inputs:
                     azureSubscription: $(azureSubscription)
                     appType: webAppLinux
                     appName: $(webAppName)
-                    runtimeStack: "NODE|10.10"
+                    runtimeStack: "NODE|16.x"
                     package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
                     startUpCommand: "npm run start"
