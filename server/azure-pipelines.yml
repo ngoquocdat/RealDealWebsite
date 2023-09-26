@@ -21,12 +21,6 @@ stages:
               versionSpec: "16.x"
             displayName: "Install Node.js"
 
-          # - script: |
-          #     npm install
-          #     npm run build --if-present
-          #     npm run test --if-present
-          #   displayName: "npm install, build and test"
-
           - script: |
               cd server && npm install -D
               npm run build
@@ -35,7 +29,7 @@ stages:
           - task: ArchiveFiles@2
             displayName: "Archive files"
             inputs:
-              rootFolderOrFile: "$(System.DefaultWorkingDirectory)"
+              rootFolderOrFile: "$(System.DefaultWorkingDirectory)/server/dist/src"
               includeRootFolder: false
               archiveType: zip
               archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
@@ -67,4 +61,4 @@ stages:
                     appName: $(webAppName)
                     runtimeStack: "NODE|16.x"
                     package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-                    startUpCommand: "npm run node"
+                    startUpCommand: "npm run start"
