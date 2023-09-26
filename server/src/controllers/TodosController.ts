@@ -1,6 +1,6 @@
 import pool from '../dbconfig/dbconnector';
 
-class TodosController {
+class CrawlData {
     public async get(req,res) {
         try {
             const client = await pool.connect();
@@ -22,4 +22,4 @@ class TodosController {
     }
 }
 
-export default TodosController;
+export default CrawlData;
