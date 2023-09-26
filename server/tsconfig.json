@@ -1,15 +1,13 @@
 {
-  "include": [
-    "src/**/*",
-    "package.json"
-  ],
   "compilerOptions": {
       "module": "commonjs",
       "esModuleInterop": true,
+      "resolveJsonModule": true,
       "target": "es6",
       "moduleResolution": "node",
       "sourceMap": true,
       "outDir": "dist/src",
   },
+  "include": ["./package.json"],
   "lib": ["es2016"]
 }
