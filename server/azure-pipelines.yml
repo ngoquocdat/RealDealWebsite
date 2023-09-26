@@ -71,4 +71,4 @@ stages:
                     WebAppName: 'realdeal-server'
                     packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
                     RuntimeStack: 'NODE|16-lts'
-                    StartupCommand: 'cd server && npm run node-start'
+                    StartupCommand: 'node src/app.js'
