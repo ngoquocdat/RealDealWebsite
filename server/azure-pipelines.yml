@@ -35,7 +35,7 @@ stages:
               archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
               replaceExistingArchive: true
 
-          - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
             artifact: drop
 
   - stage: Deploy
@@ -52,13 +52,23 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: AzureWebApp@1
-                  retryCountOnTaskFailure: 5
-                  displayName: "Azure Web App Deploy: realdeal-server"
+                - task: DownloadBuildArtifacts@1
                   inputs:
-                    azureSubscription: $(azureSubscription)
-                    appType: webAppLinux
-                    appName: $(webAppName)
-                    runtimeStack: "NODE|16.x"
-                    package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-                    startUpCommand: "npm run start"
+                    buildType: 'current'
+                    downloadType: 'single'
+                    artifactName: 'drop'
+                    downloadPath: '$(System.ArtifactsDirectory)'
+
+                - task: CmdLine@2
+                  inputs: 
+                    script: 'ls -la $(System.ArtifactsDirectory)'
+
+                - task: AzureRmWebAppDeployment@4
+                  inputs:
+                    ConnectionType: 'AzureRM'
+                    azureSubscription: 'Azure subscription 1 (fc2c6a8b-c74f-483f-ac64-3f2b64a904de)'
+                    appType: 'webAppLinux'
+                    WebAppName: 'realdeal-server'
+                    packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
+                    RuntimeStack: 'NODE|16-lts'
+                    StartupCommand: 'npm run start'
