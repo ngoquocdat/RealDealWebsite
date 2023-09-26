@@ -52,13 +52,36 @@ stages:
           runOnce:
             deploy:
               steps:
+                - task: DownloadBuildArtifacts@1
+
+                  inputs:
+                    buildType: 'specific'
+                    project: 'bda44ce7-1c18-4b65-8d95-61882b7bd2ce'
+                    pipeline: '8'
+                    buildVersionToDownload: 'latest'
+                    allowPartiallySucceededBuilds: true
+                    downloadType: 'specific'
+                    downloadPath: '$(System.ArtifactsDirectory)'
+
                 - task: AzureWebApp@1
                   retryCountOnTaskFailure: 5
                   displayName: "Azure Web App Deploy: realdeal-server"
                   inputs:
-                    azureSubscription: $(azureSubscription)
-                    appType: webAppLinux
+                    # azureSubscription: $(azureSubscription)
+                    # appType: webAppLinux
+                    # appName: $(webAppName)
+                    # runtimeStack: "NODE|16.x"
+                    # # package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+                    # package: $(System.DefaultWorkingDirectory)/**/drop/$(Build.BuildId).zip
+                    # startUpCommand: 'npm run start'
+
+                    azureSubscription: 'Azure subscription 1 (fc2c6a8b-c74f-483f-ac64-3f2b64a904de)'
+                    appType: 'webAppLinux'
                     appName: $(webAppName)
-                    runtimeStack: "NODE|16.x"
-                    package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-                    startUpCommand: "npm run start"
+                    deployToSlotOrASE: true
+                    resourceGroupName: 'RealDealserver'
+                    slotName: 'production'
+                    # package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+                    package: $(System.DefaultWorkingDirectory)/**/drop/$(Build.BuildId).zip
+                    runtimeStack: 'NODE|16-lts'
+                    startUpCommand: 'npm run start'
