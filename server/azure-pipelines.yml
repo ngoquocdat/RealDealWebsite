@@ -63,25 +63,12 @@ stages:
                   inputs: 
                     script: 'ls -la $(System.ArtifactsDirectory)'
 
-                - task: AzureWebApp@1
-                  retryCountOnTaskFailure: 5
-                  displayName: "Azure Web App Deploy: realdeal-server"
+                - task: AzureRmWebAppDeployment@4
                   inputs:
-                    # azureSubscription: $(azureSubscription)
-                    # appType: webAppLinux
-                    # appName: $(webAppName)
-                    # runtimeStack: "NODE|16.x"
-                    # # package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-                    # package: $(System.DefaultWorkingDirectory)/**/drop/$(Build.BuildId).zip
-                    # startUpCommand: 'npm run start'
-
+                    ConnectionType: 'AzureRM'
                     azureSubscription: 'Azure subscription 1 (fc2c6a8b-c74f-483f-ac64-3f2b64a904de)'
                     appType: 'webAppLinux'
-                    appName: $(webAppName)
-                    deployToSlotOrASE: true
-                    resourceGroupName: 'RealDealserver'
-                    slotName: 'production'
-                    # package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-                    package: $(System.DefaultWorkingDirectory)/**/drop/$(Build.BuildId).zip
-                    runtimeStack: 'NODE|16-lts'
-                    startUpCommand: 'npm run start'
+                    WebAppName: 'realdeal-server'
+                    packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
+                    RuntimeStack: 'NODE|16-lts'
+                    StartupCommand: 'npm run start'
