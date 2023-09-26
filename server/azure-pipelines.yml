@@ -53,16 +53,11 @@ stages:
             deploy:
               steps:
                 - task: DownloadBuildArtifacts@1
-
                   inputs:
-                    buildType: 'specific'
-                    project: 'bda44ce7-1c18-4b65-8d95-61882b7bd2ce'
-                    pipeline: '8'
-                    buildVersionToDownload: 'latest'
-                    allowPartiallySucceededBuilds: true
-                    downloadType: 'specific'
+                    buildType: 'current'
+                    downloadType: 'single'
+                    artifactName: 'drop'
                     downloadPath: '$(System.ArtifactsDirectory)'
-
                 - task: AzureWebApp@1
                   retryCountOnTaskFailure: 5
                   displayName: "Azure Web App Deploy: realdeal-server"
