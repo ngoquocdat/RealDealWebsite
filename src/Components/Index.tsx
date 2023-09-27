@@ -13,6 +13,7 @@ import Carousel from "./Carousel";
 import StepsJoinToRoom from "./StepsJoinToROOM";
 import { RealDealContext } from "./context";
 import ChatRoom from "./ChatRoom";
+import DetailsDialog from "./DetailsDialog";
 
 export function uniq(a: any) {
   return a.sort().filter(function (item: any, pos: any, ary: any) {
@@ -31,11 +32,19 @@ export default function MainContainer() {
   const [isRegistered, setIsRegistered] = React.useState<boolean>(false);
   const [joinedRoom, setjoinedRoom] = React.useState<any[]>([]);
   const [isOpenJoinDialog, setIsOpenDialog] = React.useState<boolean>(false);
+  const [selectedNews, setSelectedNews] = React.useState<any>(null);
+  const [isOpenDetailsDialog, setIsOpenDetailsDialog] =
+    React.useState<boolean>(false);
   const [gotoChatRoom, setGotoChatRoom] = React.useState<boolean>(false);
   const [isProcessJoinRoom, setIsProcessJoinRoom] =
     React.useState<boolean>(false);
+  const [posts, setPosts] = React.useState<any[]>([]);
 
   const contextObj: any = {
+    selectedNews: {
+      selectedNews: selectedNews,
+      setSelectedNews: setSelectedNews,
+    },
     register: {
       isUserRegistered: isRegistered,
       setIsUserRegistered: setIsRegistered,
@@ -48,9 +57,17 @@ export default function MainContainer() {
       isOpenJoinDialog: isOpenJoinDialog,
       toggleIsOpenDialog: setIsOpenDialog,
     },
+    detailsDialog: {
+      isOpenDetailsDialog: isOpenDetailsDialog,
+      setIsOpenDetailsDialog: setIsOpenDetailsDialog,
+    },
     processJoinRoom: {
       isProcessJoinRoom: isProcessJoinRoom,
       setIsProcessJoinRoom: setIsProcessJoinRoom,
+    },
+    realEstatePosts: {
+      posts: posts,
+      setPosts: setPosts,
     },
   };
 
@@ -146,6 +163,9 @@ export default function MainContainer() {
           }}
         />
       )}
+      {isOpenDetailsDialog && selectedNews ? (
+        <DetailsDialog newsSelected={selectedNews} />
+      ) : null}
     </RealDealContext.Provider>
   );
 }

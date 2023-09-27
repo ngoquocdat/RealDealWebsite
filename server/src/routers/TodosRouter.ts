@@ -4,6 +4,9 @@ import CrawlData from '../controllers/TodosController';
 const router = Router();
 const crawlData = new CrawlData();
 
-router.get(`/`, crawlData.get);
+const getRealestatePosts = () => {
+    const response = router.get(`/realestatePosts`, crawlData.get);
+    return response;
+}
 
 export default router;

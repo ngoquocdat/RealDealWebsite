@@ -5,13 +5,27 @@ import { NavigateBefore, NavigateNext } from "@mui/icons-material";
 import NewsList from "./newsList";
 
 interface IRealNews {
-  //["first", "second", "third", "fourth", "five", "six"]
   newsCounter: string[];
 }
 
 export default function RealNews(props: IRealNews) {
   const { newsCounter } = props;
-  const { joinDialog } = React.useContext<IContext>(RealDealContext);
+  const { joinDialog, realEstatePosts, detailsDialog } =
+    React.useContext<IContext>(RealDealContext);
+
+  const getData = async () => {
+    const response = await fetch("https://realdeal-server.azurewebsites.net/")
+      .then((response) => response.json())
+      .catch((error) => console.log("getData error: ", error));
+
+    console.log("getData: ", response);
+    realEstatePosts.setPosts(response);
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <div className="real-estate-news">
       <div className="tools">
@@ -46,11 +60,16 @@ export default function RealNews(props: IRealNews) {
         </div>
       </div>
       <NewsList
-        news={newsCounter}
-        joinDialogToggle={joinDialog.toggleIsOpenDialog}
+        // news={}
+        counter={newsCounter}
+        news={realEstatePosts.posts?.slice(0, 6) || null}
+        toggleDialog={detailsDialog.setIsOpenDetailsDialog}
       />
       <div className="news-paging">
-        6 of 120 <NavigateBefore />
+        {`${
+          realEstatePosts.posts ? `6 of ${realEstatePosts.posts.length}` : null
+        }`}
+        <NavigateBefore />
         <NavigateNext />
       </div>
     </div>

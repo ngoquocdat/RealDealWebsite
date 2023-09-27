@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import { LoremIpsum } from "lorem-ipsum";
 import React from "react";
+import { IContext, RealDealContext } from "../context";
 
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
@@ -39,11 +40,13 @@ const carousels = [
 
 export default function Carousel() {
   const [position, setPosition] = React.useState<number>(1);
+  const { realEstatePosts } = React.useContext<IContext>(RealDealContext);
+  const [data, setData] = React.useState<any[]>([]);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       setPosition((position) => {
-        if (position === carousels.length) {
+        if (position === data.length) {
           return (position = 1);
         } else {
           return position + 1;
@@ -56,18 +59,29 @@ export default function Carousel() {
     };
   }, []);
 
+  React.useEffect(() => {
+    console.log("realEstatePosts: ", realEstatePosts.posts?.slice(0, 6));
+    setData(realEstatePosts.posts?.slice(0, 6));
+  }, [realEstatePosts.posts]);
+
   return (
     <div className="carousel">
       <div className="container">
         <div className="carousel-layout-image" />
-        {carousels.map((i, indx) => {
+        {data?.map((i, indx) => {
           return (
             <Box
               className="carousel-layout-content"
               sx={{ display: `${++indx === position ? "block" : "none"}` }}
             >
               <b className="content-title">{i.title}</b>
-              <p className="content-values">{i.content}</p>
+              <p className="content-values">
+                {i.excerpt}
+                <br />
+                <br />
+                {lorem.generateParagraphs(3)}
+              </p>
+
               <Button
                 className="join-to-room-button rd-buttons contained-button"
                 variant="contained"
@@ -76,10 +90,10 @@ export default function Carousel() {
               </Button>
             </Box>
           );
-        })}
+        }) || null}
       </div>
       <div className="carousel-controllers">
-        {carousels.map((i, indx) => {
+        {data?.map((i, indx) => {
           return (
             <Box
               className="carousel-controller"

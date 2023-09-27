@@ -26,7 +26,8 @@ interface IStepjoinRoom {
 
 export default function StepsJoinToRoom(props: IStepjoinRoom) {
   const { redirectToChatRoom } = props;
-  const { joinDialog } = React.useContext<IContext>(RealDealContext);
+  const { joinDialog, realEstatePosts } =
+    React.useContext<IContext>(RealDealContext);
   const [currentStep, setCurrentStep] = React.useState<number>(1);
   const [counterError, toggleErrorCounter] = React.useState<any[]>([]);
   const [selectedSettingRoom, setSelectedSettingRoom] = React.useState<any>({
@@ -148,8 +149,9 @@ export default function StepsJoinToRoom(props: IStepjoinRoom) {
         </Typography>
         <NewsList
           titleSize={20}
-          news={["first", "second", "third", "fourth"]}
-          joinDialogToggle={joinDialog.toggleIsOpenDialog}
+          counter={["first", "second", "third", "fourth"]}
+          news={realEstatePosts.posts?.slice(0, 6) || null}
+          toggleDialog={joinDialog.toggleIsOpenDialog}
         />
       </Box>
     </Box>
