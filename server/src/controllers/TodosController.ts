@@ -14,7 +14,7 @@ class CrawlData {
             
             client.release();
 
-            res.json(todos);
+            res.send(todos);
 
         } catch(err) {
             res.status(400).send(err);
