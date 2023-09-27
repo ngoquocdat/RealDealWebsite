@@ -71,9 +71,3 @@ stages:
                     WebAppName: 'realdeal-server'
                     packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
                     RuntimeStack: 'NODE|16-lts'
-                    
-                - script: |
-                    npm install -D
-                    npm install express
-                    node src/src/app.js
-                  displayName: "npm install && npm install express && start server" 
