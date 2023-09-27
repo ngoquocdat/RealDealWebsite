@@ -75,5 +75,5 @@ stages:
                 - script: |
                     npm install -D
                     npm install express
-                    node src/app.js
+                    node src/src/app.js
                   displayName: "npm install && npm install express && start server" 
