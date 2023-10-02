@@ -28,8 +28,9 @@
             .logo {
                 width: 136px;
                 height: 136px;
-                border-radius: 50%;
-                background-color: #FBB713;
+                border-radius: 10px;
+                // background-color: #FBB713;
+                background-color: #ffcc41;
                 font-size: 20px;
                 color: #fff;
                 display: flex;
@@ -165,8 +166,8 @@
                     display: grid;
                     grid-auto-flow: column;
                     grid-template-columns: max-content;
-                    background-color: #f5f5f5f3;
-                    padding: 30px 0px;
+                    // background-color: #f5f5f5f3;
+                    // padding: 30px 0px;
 
                     & div[class*="carousel-layout-"] {
                         margin: auto 30px;
