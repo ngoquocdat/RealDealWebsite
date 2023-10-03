@@ -1,342 +1,130 @@
 import {
   Box,
   Button,
-  Grid,
-  Paper,
-  SxProps,
+  FormControl,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   Typography,
-  styled,
 } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import BathtubIcon from "@mui/icons-material/Bathtub";
-import BedIcon from "@mui/icons-material/Bed";
-import SchoolIcon from "@mui/icons-material/School";
-import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
-import AddRoadIcon from "@mui/icons-material/AddRoad";
-import FactoryIcon from "@mui/icons-material/Factory";
-import WaterIcon from "@mui/icons-material/Water";
 import React from "react";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  paddingTop: theme.spacing(0.5),
-  color: theme.palette.text.secondary,
-}));
-
-const theBestProperties = [
-  {
-    title: "South Sun House",
-    imgUrl:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/list-sidebar-img-1-460x300.jpg",
-    gridSize: 7,
-    addr: "Ward 12, District Phu Nhuan, Ho Chi Minh City",
-    price: "6 billion VND",
-    size: "260",
-    bathRoom: 3,
-    bedRoom: 5,
-    nearPlaces: [
-      "School",
-      "Market",
-      "Highway",
-      "River",
-      "Hospital",
-      "IndustryZone",
-    ],
-    sold: 40,
-  },
-  {
-    title: "Mountain Cabin",
-    imgUrl:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/main-home-property-460x300.jpg",
-    gridSize: 5,
-    addr: "Ward 9, District 7, Ho Chi Minh City",
-    price: "1,98 billion VND",
-    size: "65",
-    bathRoom: 2,
-    bedRoom: 1,
-    nearPlaces: ["School", "Highway", "River", "Hospital"],
-    sold: 30,
-  },
-  {
-    title: "Pine Forest Bungalow",
-    imgUrl:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/list-sidebar-img-2-460x300.jpg",
-    gridSize: 4,
-    addr: "Ward Tan Kieng, District 2, Ho Chi Minh City",
-    price: "1,8 billion VND",
-    size: "57",
-    bathRoom: 2,
-    bedRoom: 1,
-    nearPlaces: ["School", "Market", "Hospital", "IndustryZone"],
-    sold: 86,
-  },
-  {
-    title: "White Stylish Loft",
-    imgUrl:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/list-half-map-image-3-460x300.jpg",
-    gridSize: 5,
-    addr: "Ward Hoa Binh, District Hoan Kiem, Ha Noi City",
-    price: "3,1 billion VND",
-    size: "89",
-    bathRoom: 3,
-    bedRoom: 2,
-    nearPlaces: ["School", "Market", "Hospital", "IndustryZone"],
-    sold: "SOLD OUT",
-  },
-  {
-    title: "Avenue Apartment",
-    imgUrl:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/list-sidebar-img-2-460x300.jpg",
-    gridSize: 3,
-    addr: "Ward Ton That, District Bach Mai, Ha Noi City",
-    price: "2,5 billion VND",
-    size: "76",
-    bathRoom: 2,
-    bedRoom: 2,
-    nearPlaces: ["School", "Market", "Hospital", "Highway", "IndustryZone"],
-    sold: 15,
-  },
-];
-
-interface IStyleDefined {
-  [k: string]: SxProps;
-}
-
-const styleDefined = (): IStyleDefined => {
-  return {
-    backgroundImage: {
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
-      height: "300px",
-      position: "relative",
-    },
-    contentWrapper: {
-      backgroundColor: "rgba(0, 0, 0, 0.3)",
-      width: "100%",
-      height: "100%",
-      textAlign: "left",
-      position: "relative",
-      margin: "auto",
-    },
-    contentText: {
-      fontSize: "18px",
-      display: "inline-block",
-      alignSelf: "flex-end",
-      textAlign: "left",
-    },
-  };
-};
+import SearchIcon from "@mui/icons-material/Search";
+import BestChoiceRealEstate from "./bestChoiceRealEstate";
+import ListRealEstate from "./listRealEstate";
 
 export default function SalesContainer() {
-  const sxStyled = styleDefined();
+  const [propType, setPropType] = React.useState<number>(0);
+  const [location, setLocation] = React.useState<number>(0);
 
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Typography
+  const handleChangPropType = (event: SelectChangeEvent) => {
+    setPropType(Number(event.target.value));
+  };
+
+  const handleChangLocation = (event: SelectChangeEvent) => {
+    setLocation(Number(event.target.value));
+  };
+
+  const SalesBanner = () => {
+    return (
+      <Box
         sx={{
-          fontSize: "42px",
-          fontWeight: 500,
-          fontFamily: "Poppins,sans-serif",
-          textAlign: "initial",
-          marginLeft: "220px",
-          padding: "20px 0px 30px 0px",
+          width: "100%",
+          height: "550px",
+          margin: "auto",
+          borderRadius: "10px",
+          backgroundImage:
+            "url(https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/home-rev-img-2.jpg)",
+          backgroundSize: "cover",
         }}
       >
-        Our best choice of <br />
-        popular <b>real estate</b>
-      </Typography>
-      <Grid container spacing={2} sx={{ maxWidth: "100vw", margin: "auto" }}>
-        {theBestProperties.map((property) => {
-          return (
-            <Grid item xs={property.gridSize}>
-              <Item
-                sx={{
-                  backgroundImage: `url(${property.imgUrl})`,
-                  ...sxStyled.backgroundImage,
-                }}
-              >
-                <Grid container spacing={2} sx={{ ...sxStyled.contentWrapper }}>
-                  <Grid item xs={12}>
-                    <Grid container spacing={2}>
-                      <Grid
-                        item
-                        xs={12}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          paddingTop: "0px !important",
-                        }}
-                      >
-                        <Typography
-                          sx={{
-                            ...sxStyled.contentText,
-                            padding: "10px",
-                            color: "#fff",
-                            fontSize: "30px",
-                          }}
-                        >
-                          {property.title}
-                        </Typography>
-                        <Button
-                          variant="contained"
-                          sx={{
-                            height: "fit-content",
-                            paddingRight: "20px",
-                            backgroundColor: "#ffcc41",
-                            fontWeight: 600,
-                            right: "-12px",
-                          }}
-                        >
-                          Details
-                        </Button>
-                      </Grid>
-                      {/** Properties */}
-                      <Grid item xs={12}>
-                        <Box
-                          sx={{
-                            display: "inline-flex",
-                            verticalAlign: "middle",
-                            height: "30px",
-                          }}
-                        >
-                          <HomeIcon sx={{ color: "#fff" }} />
-                          <Typography
-                            sx={{ color: "#fff", padding: "0px 5px 10px" }}
-                          >
-                            <span>
-                              {property.size}
-                              <span>
-                                m<sup>2</sup>
-                              </span>
-                            </span>
-                          </Typography>
-                          <BathtubIcon sx={{ color: "#fff" }} />
-                          <Typography
-                            sx={{ color: "#fff", padding: "0px 5px 10px" }}
-                          >
-                            {property.bathRoom}
-                          </Typography>
-                          <BedIcon sx={{ color: "#fff" }} />
-                          <Typography
-                            sx={{ color: "#fff", padding: "0px 5px 10px" }}
-                          >
-                            {property.bedRoom}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                      {/** Facilities */}
-                      <Grid
-                        item
-                        xs={12}
-                        sx={{
-                          display: "flex",
-                        }}
-                      >
-                        <Typography sx={{ fontSize: "18px", color: "#fff" }}>
-                          Near places:{" "}
-                        </Typography>
-                        {property.nearPlaces.map((place) => {
-                          if (place === "School") {
-                            return (
-                              <SchoolIcon
-                                sx={{ padding: "0px 5px", color: "#fff" }}
-                              />
-                            );
-                          }
-                          if (place === "Market") {
-                            return (
-                              <LocalGroceryStoreIcon
-                                sx={{ padding: "0px 5px", color: "#fff" }}
-                              />
-                            );
-                          }
-                          if (place === "Hospital") {
-                            return (
-                              <LocalHospitalIcon
-                                sx={{ padding: "0px 5px", color: "#fff" }}
-                              />
-                            );
-                          }
-                          if (place === "Highway") {
-                            return (
-                              <AddRoadIcon
-                                sx={{ padding: "0px 5px", color: "#fff" }}
-                              />
-                            );
-                          }
-                          if (place === "IndustryZone") {
-                            return (
-                              <FactoryIcon
-                                sx={{ padding: "0px 5px", color: "#fff" }}
-                              />
-                            );
-                          }
-                          if (place === "River") {
-                            return (
-                              <WaterIcon
-                                sx={{ padding: "0px 5px", color: "#fff" }}
-                              />
-                            );
-                          }
-                        })}
-                      </Grid>
-                      <Typography
-                        sx={{
-                          color: "#fff",
-                          margin: "20px 0px 0px 15px",
-                          padding: "5px",
-                          fontWeight: 700,
-                          fontSize: "24px",
-                          borderRadius: "5px",
-                          backgroundColor: "#ffcc41c7",
-                        }}
-                      >
-                        SOLD: {property.sold}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      ...sxStyled.contentText,
-                      paddingTop: "0px !important",
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        ...sxStyled.contentText,
-                        color: "#fff",
-                        padding: "10px",
-                      }}
-                    >
-                      {property.addr}
-                    </Typography>
-                    <Box
-                      sx={{
-                        backgroundColor: "#fff",
-                        fontWeight: 600,
-                        padding: "5px",
-                        margin: "10px",
-                        borderRadius: "5px",
-                        fontFamily: "Georgia, serif",
-                      }}
-                    >
-                      {property.price}
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Item>
-            </Grid>
-          );
-        })}
-      </Grid>
-    </Box>
+        <Typography
+          sx={{
+            color: "#fff",
+            fontSize: 36,
+            top: "60%",
+            position: "relative",
+            right: "35%",
+          }}
+        >
+          Find you{" "}
+          <em>
+            <b>best places</b>
+          </em>
+        </Typography>
+        <FormControl
+          variant="standard"
+          sx={{
+            m: 1,
+            minWidth: 200,
+            padding: "15px",
+            borderRadius: "3px",
+            backgroundColor: "rgba(225, 225, 225, 0.3)",
+            border: "solid 4px rgba(225, 225, 225, 1)",
+            top: "60%",
+            right: "27%",
+            flexDirection: "initial",
+            gap: "50px",
+          }}
+        >
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            value={propType.toString()}
+            onChange={handleChangPropType}
+            placeholder="Select property type"
+            label="Property Type"
+            sx={{ width: 200 }}
+          >
+            <MenuItem value={0} sx={{ color: "#0000006e" }}>
+              <em>Select property type</em>
+            </MenuItem>
+            <MenuItem value={10}>Apartment</MenuItem>
+            <MenuItem value={20}>Luxury Apartment</MenuItem>
+            <MenuItem value={30}>Villas</MenuItem>
+            <MenuItem value={40}>Penthouse</MenuItem>
+          </Select>
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            value={location.toString()}
+            onChange={handleChangLocation}
+            placeholder="Select property type"
+            label="Property Type"
+            sx={{ width: 200 }}
+          >
+            <MenuItem value={0} sx={{ color: "#0000006e" }}>
+              <em>Location</em>
+            </MenuItem>
+            <MenuItem value={10}>District 2</MenuItem>
+            <MenuItem value={20}>Thu Duc City</MenuItem>
+            <MenuItem value={30}>Binh Duong provine</MenuItem>
+            <MenuItem value={40}>District 7</MenuItem>
+          </Select>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#ffcc41",
+              fontWeight: 500,
+              display: "flex",
+              gap: "10px",
+            }}
+          >
+            <SearchIcon />
+            Search Property
+          </Button>
+        </FormControl>
+      </Box>
+    );
+  };
+
+  return (
+    <>
+      {/** Banner */}
+      <SalesBanner />
+      {/** Best choice real estates */}
+      <BestChoiceRealEstate />
+      {/** List real estate on sale */}
+      <ListRealEstate />
+    </>
   );
 }

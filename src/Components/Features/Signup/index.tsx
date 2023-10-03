@@ -45,7 +45,7 @@ export default function SignUp(props: ISignUp) {
                 paddingTop: "5px",
               }}
             >
-              Phòng chat:
+              Chat rooms:
               {joinRoom.userJoinedRoom?.length ? (
                 <Box>
                   {uniq(joinRoom.userJoinedRoom).map((r: string) => (
@@ -61,12 +61,14 @@ export default function SignUp(props: ISignUp) {
                   ))}
                 </Box>
               ) : (
-                "  Chưa tham gia phòng chat"
+                <em>Not chat rooms available</em>
               )}
             </Box>
           </div>
-          <div
+          <Box
             className="avatar"
+            component="img"
+            src="https://imgs.search.brave.com/qJt1RbPKmLuKTgGLuGn3aWFt9zfEJRQ3KRZncC--40o/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS12ZWN0b3Iv/YnVzaW5lc3NtYW4t/Y2hhcmFjdGVyLWF2/YXRhci1pc29sYXRl/ZF8yNDg3Ny02MDEx/MS5qcGc_c2l6ZT02/MjYmZXh0PWpwZw"
             style={{
               backgroundColor: "#D9D9D9",
               width: "60px",
@@ -79,9 +81,10 @@ export default function SignUp(props: ISignUp) {
         <>
           <div className="left-wrapper">
             <TextField
+              sx={{ width: 250 }}
               required
               id="phone-number-outlined"
-              label="So dien thoai"
+              label="Phone number"
               size="small"
               defaultValue={defaultLogin.phoneNumber}
               onChange={(evt?: any) => {
@@ -89,27 +92,32 @@ export default function SignUp(props: ISignUp) {
               }}
             />
             <TextField
-              id="user-name-required"
-              label="Ten nguoi dung"
-              size="small"
-              defaultValue={defaultLogin.userName}
-              onChange={(evt?: any) => {
-                singUpInfo.current.userName = evt?.target.value;
-              }}
-            />
-          </div>
-          <div className="right-wrapper">
-            <TextField
+              sx={{ width: 250 }}
               required
               id="user-email-required"
-              label="Thu dien tu"
+              label="Emails"
               size="small"
               defaultValue={defaultLogin.userEmail}
               onChange={(evt?: any) => {
                 singUpInfo.current.userEmail = evt?.target.value;
               }}
             />
-            <div className="buttons-wrapper">
+          </div>
+          <div className="right-wrapper">
+            <TextField
+              sx={{ width: 250 }}
+              id="user-name-required"
+              label="User name"
+              size="small"
+              defaultValue={defaultLogin.userName}
+              onChange={(evt?: any) => {
+                singUpInfo.current.userName = evt?.target.value;
+              }}
+            />
+            <div className="buttons-wrapper" style={{ width: "250px" }}>
+              <Button className="signin rd-buttons text-button" variant="text">
+                Sign In
+              </Button>
               <Button
                 className="signup rd-buttons contained-button"
                 variant={register.isUserRegistered ? "text" : "contained"}
@@ -120,10 +128,7 @@ export default function SignUp(props: ISignUp) {
                   register.setIsUserRegistered(_isRegistered);
                 }}
               >
-                Đăng Ký
-              </Button>
-              <Button className="signin rd-buttons text-button" variant="text">
-                Đăng Nhập
+                Sign Up
               </Button>
             </div>
           </div>

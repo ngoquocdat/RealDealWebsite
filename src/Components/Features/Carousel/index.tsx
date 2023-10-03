@@ -1,19 +1,7 @@
 import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
-import { LoremIpsum } from "lorem-ipsum";
 import React from "react";
-import { IContext, RealDealContext } from "../../context";
-
-const lorem = new LoremIpsum({
-  sentencesPerParagraph: {
-    max: 8,
-    min: 4,
-  },
-  wordsPerSentence: {
-    max: 16,
-    min: 4,
-  },
-});
+import { IContext, RealDealContext, lorem } from "../../context";
 
 const carousels = [
   {
@@ -44,9 +32,13 @@ export default function Carousel() {
   const [data, setData] = React.useState<any[]>([]);
 
   React.useEffect(() => {
+    console.log("realEstatePosts: ", realEstatePosts);
+  });
+
+  React.useEffect(() => {
     const interval = setInterval(() => {
       setPosition((position) => {
-        if (position === data.length) {
+        if (position === data?.length) {
           return (position = 2);
         } else {
           return position + 1;
@@ -60,9 +52,9 @@ export default function Carousel() {
   }, []);
 
   React.useEffect(() => {
-    console.log("realEstatePosts: ", realEstatePosts.posts?.slice(0, 6));
-    setData(realEstatePosts.posts?.slice(0, 6));
-  }, [realEstatePosts.posts]);
+    console.log("realEstatePosts: ", realEstatePosts?.posts?.slice(0, 6));
+    setData(realEstatePosts?.posts?.slice(0, 6));
+  }, [realEstatePosts]);
 
   return (
     <div className="carousel">

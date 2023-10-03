@@ -17,8 +17,6 @@ export default function RealNews(props: IRealNews) {
     const response = await fetch("https://realdeal-server.azurewebsites.net/")
       .then((response) => response.json())
       .catch((error) => console.log("getData error: ", error));
-
-    console.log("getData: ", response);
     realEstatePosts.setPosts(response);
   };
 
@@ -62,12 +60,14 @@ export default function RealNews(props: IRealNews) {
       <NewsList
         // news={}
         counter={newsCounter}
-        news={realEstatePosts.posts?.slice(0, 6) || null}
-        toggleDialog={detailsDialog.setIsOpenDetailsDialog}
+        news={realEstatePosts?.posts?.slice(0, 6) || null}
+        toggleDialog={detailsDialog?.setIsOpenDetailsDialog}
       />
       <div className="news-paging">
         {`${
-          realEstatePosts.posts ? `6 of ${realEstatePosts.posts.length}` : null
+          realEstatePosts?.posts
+            ? `6 of ${realEstatePosts?.posts?.length}`
+            : null
         }`}
         <NavigateBefore />
         <NavigateNext />

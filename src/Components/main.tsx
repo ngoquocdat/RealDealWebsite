@@ -12,6 +12,7 @@ import "./index.scss";
 import SalesContainer from "./salesContainer";
 import SignUp from "./Features/Signup";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
+import { LoremIpsum } from "lorem-ipsum";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,15 @@ export function uniq(a: any) {
   });
 }
 
+export const getPrice = (num: number) => {
+  const units = ["million", "billion", "T", "Q"];
+  const unit = Math.floor((num / 1.0e1).toFixed(0).toString().length);
+  const r = unit % 3;
+  const x =
+    Math.abs(Number(num)) / (Number("1.0e+" + (unit - r)).toFixed(2) as any);
+  return x.toFixed(2) + " " + units[Math.floor(unit / 3) - 2] + " VND";
+};
+
 export default function MainContainer() {
   const menuItems = [
     { title: "HOME", url: "/" },
@@ -41,6 +51,7 @@ export default function MainContainer() {
   const [joinedRoom, setjoinedRoom] = React.useState<any[]>([]);
   const [isOpenJoinDialog, setIsOpenDialog] = React.useState<boolean>(false);
   const [gotoChatRoom, setGotoChatRoom] = React.useState<boolean>(false);
+  const [realEstatePosts, setRealEstatePosts] = React.useState<any>(null);
   const [isProcessJoinRoom, setIsProcessJoinRoom] =
     React.useState<boolean>(false);
 
@@ -60,6 +71,10 @@ export default function MainContainer() {
     processJoinRoom: {
       isProcessJoinRoom: isProcessJoinRoom,
       setIsProcessJoinRoom: setIsProcessJoinRoom,
+    },
+    realEstatePosts: {
+      posts: realEstatePosts,
+      setPosts: setRealEstatePosts,
     },
   };
 
@@ -121,7 +136,7 @@ export default function MainContainer() {
                 <RouterProvider router={router} />
                 <div className="contacts">
                   <Typography>
-                    <b>Thông tin liên hệ, địa chỉ</b>
+                    <b>Address and Contact information</b>
                   </Typography>
                 </div>
               </div>
