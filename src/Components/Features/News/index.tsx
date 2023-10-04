@@ -58,7 +58,6 @@ export default function RealNews(props: IRealNews) {
         </div>
       </div>
       <NewsList
-        // news={}
         counter={newsCounter}
         news={realEstatePosts?.posts?.slice(0, 6) || null}
         toggleDialog={detailsDialog?.setIsOpenDetailsDialog}

@@ -12,12 +12,15 @@ import "./index.scss";
 import SalesContainer from "./salesContainer";
 import SignUp from "./Features/Signup";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
-import { LoremIpsum } from "lorem-ipsum";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <SalesContainer />,
+  },
+  {
+    path: "/demo",
+    element: <div>Demo page</div>,
   },
   {
     path: "/rsnews",
@@ -44,7 +47,7 @@ export default function MainContainer() {
   const menuItems = [
     { title: "HOME", url: "/" },
     { title: "PROPERTY", url: "/property" },
-    { title: "NEWS", url: "/news" },
+    { title: "NEWS", url: "/rsnews" },
     { title: "WHAT'S REALDEAL ?", url: "/about" },
   ];
   const [isRegistered, setIsRegistered] = React.useState<boolean>(false);
