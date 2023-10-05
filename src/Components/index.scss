@@ -1,5 +1,13 @@
 .realdeal-main-container {
 
+    .paging-number {    
+        &:hover {
+            font-size: 26px;
+            text-decoration: underline !important;
+            text-decoration-color: #ffcc41 !important;
+        }
+    }
+
     button[class*="rd-buttons"] {
         font-weight: 700;
 
