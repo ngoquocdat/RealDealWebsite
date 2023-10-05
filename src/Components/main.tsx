@@ -12,21 +12,22 @@ import "./index.scss";
 import SalesContainer from "./salesContainer";
 import SignUp from "./Features/Signup";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
+import { SolarPower } from "@mui/icons-material";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <SalesContainer />,
-  },
-  {
-    path: "/demo",
-    element: <div>Demo page</div>,
-  },
-  {
-    path: "/news",
-    element: <NewsContainer />,
-  },
-]);
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <SalesContainer />,
+//   },
+//   {
+//     path: "/demo",
+//     element: <div>Demo page</div>,
+//   },
+//   {
+//     path: "/news",
+//     element: <NewsContainer />,
+//   },
+// ]);
 
 export function uniq(a: any) {
   return a.sort().filter(function (item: any, pos: any, ary: any) {
@@ -47,7 +48,7 @@ export default function MainContainer() {
   const menuItems = [
     { title: "HOME", url: "/" },
     { title: "PROPERTY", url: "/property" },
-    { title: "NEWS", url: "/rsnews" },
+    { title: "NEWS", url: "/news" },
     { title: "WHAT'S REALDEAL ?", url: "/about" },
   ];
   const [isRegistered, setIsRegistered] = React.useState<boolean>(false);
@@ -55,6 +56,10 @@ export default function MainContainer() {
   const [isOpenJoinDialog, setIsOpenDialog] = React.useState<boolean>(false);
   const [gotoChatRoom, setGotoChatRoom] = React.useState<boolean>(false);
   const [realEstatePosts, setRealEstatePosts] = React.useState<any>(null);
+  const [redirectUrl, setRedirectURl] = React.useState<string>("/");
+  const [renderContent, setRenderContent] = React.useState<JSX.Element | null>(
+    null
+  );
   const [isProcessJoinRoom, setIsProcessJoinRoom] =
     React.useState<boolean>(false);
 
@@ -88,12 +93,41 @@ export default function MainContainer() {
     }
   }, [gotoChatRoom, setGotoChatRoom]);
 
+  React.useEffect(() => {
+    if (window.location.pathname != redirectUrl) {
+      const newUrl = window.location.origin + redirectUrl;
+      window.history.replaceState(undefined, "RealDeal", newUrl);
+      handleRenderContent();
+    }
+  }, [redirectUrl, setRedirectURl]);
+
+  const handleRenderContent = () => {
+    let redirectComp = renderContent;
+    if (window.location.pathname === "/news") {
+      redirectComp = <NewsContainer />;
+    } else if (window.location.pathname === "/chat") {
+      redirectComp = <div>Chat Room</div>;
+    } else if (window.location.pathname === "/about") {
+      redirectComp = <div>About Us</div>;
+    } else if (window.location.pathname === "/property") {
+      redirectComp = <div>Property</div>;
+    } else if (window.location.pathname === "/") {
+      redirectComp = <SalesContainer />;
+    }
+    setRenderContent(redirectComp);
+  };
+
+  React.useEffect(() => {
+    handleRenderContent();
+  }, []);
+
   const renderMenuItems = () => {
     return menuItems.map((menuItem) => (
       <li
         key={`key-${menuItem}`}
         onClick={() => {
-          window.location.href = menuItem.url;
+          // window.location.href = menuItem.url;
+          setRedirectURl(menuItem.url);
           setGotoChatRoom(false);
           setIsProcessJoinRoom(false);
         }}
@@ -136,7 +170,8 @@ export default function MainContainer() {
               </div>
             ) : (
               <div className="contents">
-                <RouterProvider router={router} />
+                {renderContent}
+                {/* <RouterProvider router={router} /> */}
                 <div className="contacts">
                   <Typography>
                     <b>Address and Contact information</b>
