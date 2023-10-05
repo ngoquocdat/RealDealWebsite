@@ -11,153 +11,115 @@ import FactoryIcon from "@mui/icons-material/Factory";
 import WaterIcon from "@mui/icons-material/Water";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { lorem } from "../context";
 import { getPrice } from "../main";
+import { IRealEstates, RealEstates } from "../datas";
+import RDSearch from "../Features/Search";
 
-const RealEstates = [
-  {
-    id: 1,
-    title: "East Sunlight Apartment",
-    image:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/east-sunglight-01-450x300.jpg",
-    rsType: "APARTMENTS",
-    location: "Ha Noi City",
-    address: "123 Hoang Thai Tien Street, District Ho Hoan Kiem, Ha Noi City",
-    description: lorem.generateParagraphs(2),
-    floorArea: 96,
-    facilities: {
-      bathroom: 1,
-      bedroom: 2,
-      others: ["Pool", "Market", "School", "Hospital"],
-    },
-    price: 3000000000,
-    isPopular: true,
-    total: 100,
-    capacity: 86,
-  },
-  {
-    id: 2,
-    title: "South Side Garden House",
-    image:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/property-grid-img-1-450x300.jpg",
-    rsType: "APARTMENTS",
-    location: "Ho Chi Minh City",
-    address: "86 Hoang Minh Giam Street, District Binh Thanh, Ho Chi Minh City",
-    description: lorem.generateParagraphs(2),
-    floorArea: 138,
-    facilities: {
-      bathroom: 2,
-      bedroom: 3,
-      others: ["Pool", "Market", "School", "Hospital"],
-    },
-    price: 1800000000,
-    isPopular: false,
-    total: 100,
-    capacity: 68,
-  },
-  {
-    id: 3,
-    title: "Penthouse Apartment",
-    image:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/penthouse-apartment-01-450x300.jpg",
-    rsType: "APARTMENTS",
-    location: "Ho Chi Minh City",
-    address: "Vin Park, District Binh Thanh, Ho Chi Minh City",
-    description: lorem.generateParagraphs(2),
-    floorArea: 160,
-    facilities: {
-      bathroom: 2,
-      bedroom: 2,
-      others: ["Pool", "Market", "School", "Hospital"],
-    },
-    price: 2000000000,
-    isPopular: true,
-    total: 80,
-    capacity: 72,
-  },
-  {
-    id: 4,
-    title: "Modern Family Home",
-    image:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/modern-family-house-01-450x300.jpg",
-    rsType: "APARTMENTS",
-    location: "Ho Chi Minh City",
-    address: "Road 4 Song Hanh Street, District 2, Ho Chi Minh City",
-    description: lorem.generateParagraphs(2),
-    floorArea: 120,
-    facilities: {
-      bathroom: 2,
-      bedroom: 3,
-      others: ["Pool", "Market", "School", "Hospital"],
-    },
-    price: 2650000000,
-    isPopular: false,
-    total: 100,
-    capacity: 90,
-  },
-  {
-    id: 5,
-    title: "East Sunlight Apartment",
-    image:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/east-sunglight-01-450x300.jpg",
-    rsType: "APARTMENTS",
-    location: "Ha Noi City",
-    address: "123 Hoang Thai Tien Street, District Ho Hoan Kiem, Ha Noi City",
-    description: lorem.generateParagraphs(2),
-    floorArea: 87,
-    facilities: {
-      bathroom: 2,
-      bedroom: 2,
-      others: ["Pool", "Market", "School", "Hospital"],
-    },
-    price: 3800000000,
-    isPopular: false,
-    total: 100,
-    capacity: 53,
-  },
-  {
-    id: 6,
-    title: "East Sunlight Apartment",
-    image:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/east-sunglight-01-450x300.jpg",
-    rsType: "APARTMENTS",
-    location: "Ha Noi City",
-    address: "123 Hoang Thai Tien Street, District Ho Hoan Kiem, Ha Noi City",
-    description: lorem.generateParagraphs(2),
-    floorArea: 87,
-    facilities: {
-      bathroom: 2,
-      bedroom: 3,
-      others: ["Pool", "Market", "School", "Hospital"],
-    },
-    price: 8000000000,
-    isPopular: false,
-    total: 100,
-    capacity: 36,
-  },
-  {
-    id: 7,
-    title: "One Bedroom Studio",
-    image:
-      "https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/list-half-map-image-2-450x300.jpg",
-    rsType: "APARTMENTS",
-    location: "Thu Duc City",
-    address: "385 Highway 13th, District Tay Thanh, Thu Duc City",
-    description: lorem.generateParagraphs(2),
-    floorArea: 78,
-    facilities: {
-      bathroom: 2,
-      bedroom: 3,
-      others: ["Pool", "Market", "School", "Hospital"],
-    },
-    price: 3000000000,
-    isPopular: false,
-    total: 50,
-    capacity: 24,
-  },
-];
+interface IListRealEstate {
+  handleListSearch: (searchOpts: any) => void;
+  searchOpts?: any;
+}
 
-export default function ListRealEstate() {
+export default function ListRealEstate(props: IListRealEstate) {
+  const { handleListSearch, searchOpts } = props;
+  const [currentPage, setCurrentPage] = React.useState<number>(0);
+  const [posts, setPosts] = React.useState<IRealEstates[]>([]);
+  const [listRsRef, setListRsRef] = React.useState<number[]>([]);
+
+  const handleRenderPagingNum = () => {
+    const numberOfPages = (): number => {
+      let pages = Math.round(
+        (searchOpts?.searchLocation && searchOpts?.searchLocation !== "none"
+          ? posts
+          : RealEstates
+        ).length / 6
+      );
+      const getDecimalVal = pages.toString().indexOf(".");
+      const decimalPart = pages.toString().substring(getDecimalVal + 1);
+
+      return Number(decimalPart) > 1 ? ++pages : pages;
+    };
+    const _listRsRef = Array.from(Array(numberOfPages()).keys());
+    setListRsRef(_listRsRef);
+  };
+
+  const handleNumberPosts = () => {
+    let posts = null;
+    if (searchOpts?.searchLocation && searchOpts?.searchLocation !== "none") {
+      posts = RealEstates.filter((rs: any) =>
+        rs.searchKey.includes(searchOpts?.searchLocation)
+      ).slice(currentPage * 6, currentPage * 6 + 6);
+    } else {
+      posts = RealEstates.slice(currentPage * 6, currentPage * 6 + 6);
+    }
+    console.log("handleNumberPosts: ", posts);
+    setPosts(posts);
+  };
+
+  React.useEffect(() => {
+    handleRenderPagingNum();
+  }, [posts, searchOpts]);
+
+  React.useEffect(() => {
+    handleNumberPosts();
+  }, [searchOpts]);
+
+  const renderComp = (rs: IRealEstates) => {
+    return rs.facilities.others.map((place: any) => {
+      if (place === "School") {
+        return <SchoolIcon sx={{ padding: "0px 5px" }} />;
+      }
+      if (place === "Market") {
+        return <LocalGroceryStoreIcon sx={{ padding: "0px 5px" }} />;
+      }
+      if (place === "Hospital") {
+        return <LocalHospitalIcon sx={{ padding: "0px 5px" }} />;
+      }
+      if (place === "Highway") {
+        return <AddRoadIcon sx={{ padding: "0px 5px" }} />;
+      }
+      if (place === "IndustryZone") {
+        return <FactoryIcon sx={{ padding: "0px 5px" }} />;
+      }
+      if (place === "River" || place === "Pool") {
+        return <WaterIcon sx={{ padding: "0px 5px" }} />;
+      }
+      return null;
+    });
+  };
+
+  const renderPaging = () => {
+    return (
+      <Box
+        sx={{
+          height: "40px",
+          display: "flex",
+          alignItems: "center",
+          flex: "0 1 100%",
+          justifyContent: "flex-end",
+        }}
+      >
+        {listRsRef.map((p) => (
+          <h3
+            className="paging-number"
+            onClick={() => setCurrentPage(p)}
+            style={{
+              cursor: "pointer",
+              padding: "0px 20px",
+              textDecoration: `${p === currentPage ? "underline" : ""}`,
+            }}
+          >
+            <b>{p + 1}</b>
+          </h3>
+        ))}
+      </Box>
+    );
+  };
+
+  React.useEffect(() => {
+    handleNumberPosts();
+  }, [currentPage]);
+
   return (
     <Box
       sx={{
@@ -183,11 +145,15 @@ export default function ListRealEstate() {
         <em>Find The House of Your Dream</em> <br />
         <b style={{ fontSize: "36px" }}>Using Our Platform</b>
       </Typography>
-      {RealEstates.slice(0, 6).map((rs) => {
+      <RDSearch
+        handleSearchChange={handleListSearch}
+        styling={{ flex: "0 1 100%", padding: "30px 0px !important" }}
+      />
+      {posts.map((rs) => {
         return (
           <Box
             sx={{
-              width: "360px",
+              width: "90%",
               height: "fit-content",
               flex: "0 1 calc(33% - 1em)",
               textAlign: "left",
@@ -297,27 +263,7 @@ export default function ListRealEstate() {
               <Typography sx={{ fontSize: "inherit", paddingBottom: "20px" }}>
                 <em>Near places:</em>{" "}
               </Typography>
-              {rs.facilities.others.map((place) => {
-                if (place === "School") {
-                  return <SchoolIcon sx={{ padding: "0px 5px" }} />;
-                }
-                if (place === "Market") {
-                  return <LocalGroceryStoreIcon sx={{ padding: "0px 5px" }} />;
-                }
-                if (place === "Hospital") {
-                  return <LocalHospitalIcon sx={{ padding: "0px 5px" }} />;
-                }
-                if (place === "Highway") {
-                  return <AddRoadIcon sx={{ padding: "0px 5px" }} />;
-                }
-                if (place === "IndustryZone") {
-                  return <FactoryIcon sx={{ padding: "0px 5px" }} />;
-                }
-                if (place === "River" || place === "Pool") {
-                  return <WaterIcon sx={{ padding: "0px 5px" }} />;
-                }
-                return null;
-              })}
+              {renderComp(rs)}
             </Box>
             <Typography sx={{ paddingBottom: "20px", width: "inherit" }}>
               <em>Address: {rs.address}</em>
@@ -356,6 +302,7 @@ export default function ListRealEstate() {
           </Box>
         );
       })}
+      {renderPaging()}
     </Box>
   );
 }

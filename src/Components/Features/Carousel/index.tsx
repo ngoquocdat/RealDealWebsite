@@ -3,29 +3,6 @@ import Button from "@mui/material/Button";
 import React from "react";
 import { IContext, RealDealContext, lorem } from "../../context";
 
-const carousels = [
-  {
-    title: "Thông tin dự án bất động sản CityLAnd",
-    content: lorem.generateParagraphs(2),
-  },
-  {
-    title: "Tin bất động sản tiềm năng đang được quan tâm nhiều",
-    content: lorem.generateParagraphs(5),
-  },
-  {
-    title: "Dưa án chung cư cao cấp mới quận 9",
-    content: lorem.generateParagraphs(3),
-  },
-  {
-    title: "View sông với hệ thống căn hộ - nhà phố CurlViewLand",
-    content: lorem.generateParagraphs(4),
-  },
-  {
-    title: "Mở bán block CTY1 dưa án tiềm năng Thủ Đức",
-    content: lorem.generateParagraphs(2),
-  },
-];
-
 export default function Carousel() {
   const [position, setPosition] = React.useState<number>(2);
   const { realEstatePosts } = React.useContext<IContext>(RealDealContext);
