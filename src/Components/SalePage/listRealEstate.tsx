@@ -11,8 +11,8 @@ import FactoryIcon from "@mui/icons-material/Factory";
 import WaterIcon from "@mui/icons-material/Water";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { lorem } from "./context";
-import { getPrice } from "./main";
+import { lorem } from "../context";
+import { getPrice } from "../main";
 
 const RealEstates = [
   {

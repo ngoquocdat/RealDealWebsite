@@ -6,10 +6,10 @@ import { RealDealContext } from "./context";
 import ChatRoom from "./ChatRoom";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import NewsContainer from "./newsContainer";
+import NewsContainer from "./Features/News/newsContainer";
 
 import "./index.scss";
-import SalesContainer from "./salesContainer";
+import SalesContainer from "./SalePage/salesContainer";
 import SignUp from "./Features/Signup";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
 import { SolarPower } from "@mui/icons-material";
@@ -94,7 +94,7 @@ export default function MainContainer() {
   }, [gotoChatRoom, setGotoChatRoom]);
 
   React.useEffect(() => {
-    if (window.location.pathname != redirectUrl) {
+    if (window.location.pathname !== redirectUrl) {
       const newUrl = window.location.origin + redirectUrl;
       window.history.replaceState(undefined, "RealDeal", newUrl);
       handleRenderContent();

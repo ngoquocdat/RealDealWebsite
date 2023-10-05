@@ -17,7 +17,7 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import AddRoadIcon from "@mui/icons-material/AddRoad";
 import FactoryIcon from "@mui/icons-material/Factory";
 import WaterIcon from "@mui/icons-material/Water";
-import { getPrice } from "./main";
+import { getPrice } from "../main";
 
 const theBestProperties = [
   {

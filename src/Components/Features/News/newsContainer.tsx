@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import React from "react";
-import Carousel from "./Features/Carousel";
-import RealEstateRegions from "./Features/RealEstateRegions";
-import RealNews from "./Features/News";
+import Carousel from "../Carousel";
+import RealEstateRegions from "../RealEstateRegions";
+import RealNews from ".";
 
 export default function NewsContainer() {
   return (
