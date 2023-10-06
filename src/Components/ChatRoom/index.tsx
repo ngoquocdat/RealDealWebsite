@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import ChatRoomList from "./RoomList";
+import Conversation from "../Conversation";
 
 export default function ChatRoom() {
   return (
@@ -33,10 +34,22 @@ export default function ChatRoom() {
         sx={{
           gridColumn: "2/7",
           backgroundColor: "#fff",
-          border: "solid 1px #d9d9d9d",
-          margin: "10px",
+          border: "solid 1px #d9d9d9",
+          borderRadius: "10px",
+          ml: 1
         }}
-      ></Box>
+      >
+        <Conversation
+          conversationId={'1dat.ngo'}
+          user={{
+            id: '1dat.ngo',
+            username: 'Dat.ngo',
+            email: 'dat.ngo@sts.com',
+            name: 'Đạt Ngô',
+            avatar: 'https://fastly.picsum.photos/id/260/300/300.jpg?'
+          }}
+        />
+      </Box>
     </Box>
   );
 }

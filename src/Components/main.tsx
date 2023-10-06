@@ -27,6 +27,10 @@ import { SolarPower } from "@mui/icons-material";
 //     path: "/news",
 //     element: <NewsContainer />,
 //   },
+//   {
+//     path: "/chat",
+//     element: <ChatRoom />,
+//   },
 // ]);
 
 export function uniq(a: any) {
