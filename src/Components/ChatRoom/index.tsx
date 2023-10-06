@@ -1,9 +1,13 @@
 import React from "react";
 import { Box } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
 import ChatRoomList from "./RoomList";
 import Conversation from "../Conversation";
 
 export default function ChatRoom() {
+  const [params] = useSearchParams();
+  const username = params.get('u') as string
+  
   return (
     <Box
       className="chat-room-container"
@@ -42,11 +46,11 @@ export default function ChatRoom() {
         <Conversation
           conversationId={'1dat.ngo'}
           user={{
-            id: '1dat.ngo',
-            username: 'Dat.ngo',
-            email: 'dat.ngo@sts.com',
-            name: 'Đạt Ngô',
-            avatar: 'https://fastly.picsum.photos/id/260/300/300.jpg?'
+            id: username,
+            username,
+            email: `${username}@sts.com`,
+            name: username,
+            avatar: 'https://i.pravatar.cc/150?u='+username
           }}
         />
       </Box>

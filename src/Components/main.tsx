@@ -14,24 +14,24 @@ import SignUp from "./Features/Signup";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
 import { SolarPower } from "@mui/icons-material";
 
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <SalesContainer />,
-//   },
-//   {
-//     path: "/demo",
-//     element: <div>Demo page</div>,
-//   },
-//   {
-//     path: "/news",
-//     element: <NewsContainer />,
-//   },
-//   {
-//     path: "/chat",
-//     element: <ChatRoom />,
-//   },
-// ]);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <SalesContainer />,
+  },
+  {
+    path: "/demo",
+    element: <div>Demo page</div>,
+  },
+  {
+    path: "/news",
+    element: <NewsContainer />,
+  },
+  {
+    path: "/chat",
+    element: <ChatRoom />,
+  },
+]);
 
 export function uniq(a: any) {
   return a.sort().filter(function (item: any, pos: any, ary: any) {
@@ -175,7 +175,7 @@ export default function MainContainer() {
             ) : (
               <div className="contents">
                 {renderContent}
-                {/* <RouterProvider router={router} /> */}
+                <RouterProvider router={router} />
                 <div className="contacts">
                   <Typography>
                     <b>Address and Contact information</b>
