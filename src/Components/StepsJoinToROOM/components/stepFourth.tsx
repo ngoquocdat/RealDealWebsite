@@ -9,8 +9,14 @@ interface IStepFourth {
 export default function StepFourth(props: IStepFourth) {
   const roomCode = "TDA_ConsultantNHA_2023";
   const { toChatRoom } = props;
-  const { processJoinRoom, joinRoom } =
-    React.useContext<IContext>(RealDealContext);
+  const {
+    processJoinRoom,
+    joinRoom,
+    detailsDialog,
+    joinDialog,
+    handleRedirect,
+    selectedRealEstate,
+  } = React.useContext<IContext>(RealDealContext);
 
   React.useEffect(() => {
     joinRoom.setUserJoinedRoom((joinedRoom: any[]) => {
@@ -49,16 +55,29 @@ export default function StepFourth(props: IStepFourth) {
           <Button
             className="signup rd-buttons contained-button"
             variant={"contained"}
-            onClick={() => toChatRoom(true)}
+            onClick={() => {
+              selectedRealEstate?.setSelectedREs(null);
+              joinDialog.toggleIsOpenDialog(false);
+              handleRedirect.setUrl("/chat");
+              // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+              handleRedirect.redirect;
+            }}
           >
-            Đi tới phòng tư vấn
+            Booked Real Estate
           </Button>
           <Button
             className="signin rd-buttons contained-button"
             variant="contained"
-            onClick={() => processJoinRoom.setIsProcessJoinRoom(false)}
+            onClick={() => {
+              processJoinRoom.setIsProcessJoinRoom(false);
+              joinDialog.toggleIsOpenDialog(false);
+              selectedRealEstate?.setSelectedREs(null);
+              handleRedirect.setUrl("/");
+              // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+              handleRedirect.redirect;
+            }}
           >
-            Trang tin tức RealDeal
+            Real Estate On Sales
           </Button>
         </Box>
       </Box>

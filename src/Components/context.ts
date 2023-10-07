@@ -49,6 +49,10 @@ export interface IContext {
       selectedNews: any,
       setSelectedNews: React.Dispatch<React.SetStateAction<any>>
     },
+    selectedRealEstate: {
+      selectedREs: any,
+      setSelectedREs: React.Dispatch<React.SetStateAction<any>>
+    },
     register: {
       isUserRegistered: boolean;
       setIsUserRegistered: React.Dispatch<React.SetStateAction<boolean>>;
@@ -74,4 +78,8 @@ export interface IContext {
       posts: any[],
       setPosts: React.Dispatch<React.SetStateAction<any>>
     }
+    handleRedirect:{
+      redirect: () => void,
+      setUrl: React.Dispatch<React.SetStateAction<string>>
+    };
 }

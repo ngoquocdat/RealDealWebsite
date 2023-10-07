@@ -1,30 +1,22 @@
 import React from "react";
-import { Box, Button, Link, Typography } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import BathtubIcon from "@mui/icons-material/Bathtub";
-import BedIcon from "@mui/icons-material/Bed";
-import SchoolIcon from "@mui/icons-material/School";
-import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
-import AddRoadIcon from "@mui/icons-material/AddRoad";
-import FactoryIcon from "@mui/icons-material/Factory";
-import WaterIcon from "@mui/icons-material/Water";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { getPrice } from "../main";
+import { Box, Typography } from "@mui/material";
+
 import { IRealEstates, RealEstates } from "../datas";
 import RDSearch from "../Features/Search";
-
+import { IContext, RealDealContext } from "../context";
+import RealEstateItem from "./realEstateItem";
 interface IListRealEstate {
-  handleListSearch: (searchOpts: any) => void;
+  length?: number;
+  handleListSearch?: (searchOpts: any) => void;
   searchOpts?: any;
 }
 
 export default function ListRealEstate(props: IListRealEstate) {
-  const { handleListSearch, searchOpts } = props;
+  const { handleListSearch, searchOpts, length } = props;
   const [currentPage, setCurrentPage] = React.useState<number>(0);
   const [posts, setPosts] = React.useState<IRealEstates[]>([]);
   const [listRsRef, setListRsRef] = React.useState<number[]>([]);
+  const { selectedRealEstate } = React.useContext<IContext>(RealDealContext);
 
   const handleRenderPagingNum = () => {
     const numberOfPages = (): number => {
@@ -32,7 +24,7 @@ export default function ListRealEstate(props: IListRealEstate) {
         (searchOpts?.searchLocation && searchOpts?.searchLocation !== "none"
           ? posts
           : RealEstates
-        ).length / 6
+        ).length / (length || 6)
       );
       const getDecimalVal = pages.toString().indexOf(".");
       const decimalPart = pages.toString().substring(getDecimalVal + 1);
@@ -45,48 +37,32 @@ export default function ListRealEstate(props: IListRealEstate) {
 
   const handleNumberPosts = () => {
     let posts = null;
+    const numberPosts = length || 6;
     if (searchOpts?.searchLocation && searchOpts?.searchLocation !== "none") {
       posts = RealEstates.filter((rs: any) =>
         rs.searchKey.includes(searchOpts?.searchLocation)
-      ).slice(currentPage * 6, currentPage * 6 + 6);
+      ).slice(
+        currentPage * numberPosts,
+        currentPage * numberPosts + numberPosts
+      );
     } else {
-      posts = RealEstates.slice(currentPage * 6, currentPage * 6 + 6);
+      posts = RealEstates.slice(
+        currentPage * numberPosts,
+        currentPage * numberPosts + numberPosts
+      );
     }
-    console.log("handleNumberPosts: ", posts);
     setPosts(posts);
   };
 
   React.useEffect(() => {
-    handleRenderPagingNum();
+    if (!(length && length <= 6)) {
+      handleRenderPagingNum();
+    }
   }, [posts, searchOpts]);
 
   React.useEffect(() => {
     handleNumberPosts();
   }, [searchOpts]);
-
-  const renderComp = (rs: IRealEstates) => {
-    return rs.facilities.others.map((place: any) => {
-      if (place === "School") {
-        return <SchoolIcon sx={{ padding: "0px 5px" }} />;
-      }
-      if (place === "Market") {
-        return <LocalGroceryStoreIcon sx={{ padding: "0px 5px" }} />;
-      }
-      if (place === "Hospital") {
-        return <LocalHospitalIcon sx={{ padding: "0px 5px" }} />;
-      }
-      if (place === "Highway") {
-        return <AddRoadIcon sx={{ padding: "0px 5px" }} />;
-      }
-      if (place === "IndustryZone") {
-        return <FactoryIcon sx={{ padding: "0px 5px" }} />;
-      }
-      if (place === "River" || place === "Pool") {
-        return <WaterIcon sx={{ padding: "0px 5px" }} />;
-      }
-      return null;
-    });
-  };
 
   const renderPaging = () => {
     return (
@@ -145,163 +121,17 @@ export default function ListRealEstate(props: IListRealEstate) {
         <em>Find The House of Your Dream</em> <br />
         <b style={{ fontSize: "36px" }}>Using Our Platform</b>
       </Typography>
-      <RDSearch
-        handleSearchChange={handleListSearch}
-        styling={{ flex: "0 1 100%", padding: "30px 0px !important" }}
-      />
-      {posts.map((rs) => {
-        return (
-          <Box
-            sx={{
-              width: "90%",
-              height: "fit-content",
-              flex: "0 1 calc(33% - 1em)",
-              textAlign: "left",
-              fontFamily: "Poppins,sans-serif",
-            }}
-          >
-            <Box sx={{ width: "inherit", position: "relative" }}>
-              <Button
-                variant="contained"
-                sx={{
-                  color: "#fff",
-                  position: "absolute",
-                  top: "20px",
-                  right: "-3%",
-                  backgroundColor: `${
-                    rs.isPopular
-                      ? "#d25319"
-                      : !rs.isPopular && rs.total - rs.capacity < rs.total / 3
-                      ? "#51d219"
-                      : "#ffcc41"
-                  }`,
-                }}
-              >
-                {rs.isPopular ? (
-                  <>
-                    <LocalFireDepartmentIcon /> Most Popular
-                  </>
-                ) : null}
-                {!rs.isPopular && rs.total - rs.capacity < rs.total / 3
-                  ? "SOLD OUT SOON"
-                  : null}
-                {!rs.isPopular && !(rs.total - rs.capacity < rs.total / 3)
-                  ? "ON SELL"
-                  : null}
-              </Button>
-              <Box
-                component="img"
-                src={rs.image}
-                sx={{ width: "inherit", height: "50%" }}
-              />
-            </Box>
-            <Typography
-              sx={{
-                padding: "10px 0px 0px",
-                display: "flex",
-                alignItems: "baseline",
-              }}
-            >
-              <LocationOnIcon sx={{ padding: "0px 8px", fill: "#ffcc41" }} />
-              <Link href="#" sx={{ textDecoration: "none" }}>
-                {rs.location}
-              </Link>
-            </Typography>
-            <Typography
-              variant="h5"
-              sx={{
-                padding: "10px 0px 20px",
-                fontFamily: "inherit",
-                fontSize: 26,
-              }}
-            >
-              {rs.title}
-            </Typography>
-            <Box sx={{ display: "flex", gap: "40px", paddingBottom: "20px" }}>
-              <Typography>
-                <em>
-                  <b>Total:</b> {rs.total}
-                </em>
-              </Typography>
-              <Typography>
-                <em>
-                  <b>Cap:</b> {rs.capacity}
-                </em>
-              </Typography>
-            </Box>
-            <Typography sx={{ paddingBottom: "20px" }}>
-              <em>Facilities:</em>{" "}
-              <Box
-                sx={{
-                  display: "inline-flex",
-                  verticalAlign: "middle",
-                  height: "30px",
-                }}
-              >
-                <HomeIcon />
-                <Typography sx={{ padding: "0px 15px 0px 5px" }}>
-                  <em>
-                    <span>
-                      {rs.floorArea}
-                      <span>
-                        m<sup>2</sup>
-                      </span>
-                    </span>
-                  </em>
-                </Typography>
-                <BathtubIcon />
-                <Typography sx={{ padding: "0px 15px 0px 5px" }}>
-                  <em>{rs.facilities.bathroom}</em>
-                </Typography>
-                <BedIcon />
-                <Typography sx={{ padding: "0px 15px 0px 5px" }}>
-                  <em>{rs.facilities.bedroom}</em>
-                </Typography>
-              </Box>
-            </Typography>
-            <Box sx={{ display: "flex" }}>
-              <Typography sx={{ fontSize: "inherit", paddingBottom: "20px" }}>
-                <em>Near places:</em>{" "}
-              </Typography>
-              {renderComp(rs)}
-            </Box>
-            <Typography sx={{ paddingBottom: "20px", width: "inherit" }}>
-              <em>Address: {rs.address}</em>
-            </Typography>
-            <Typography
-              sx={{
-                width: "inherit",
-                overflow: "hidden",
-                height: 100,
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 4,
-              }}
-            >
-              {rs.description}
-            </Typography>
-            <Box
-              sx={{
-                width: "75%",
-                display: "flex",
-                borderTop: "solid 1px rgb(0 0 0 / 27%)",
-                marginTop: "10px",
-              }}
-            >
-              <Typography
-                sx={{
-                  fontSize: "x-large",
-                  fontWeight: 600,
-                  color: "#ffcc41",
-                  padding: "10px 0px 25px",
-                }}
-              >
-                {getPrice(rs.price as number)}
-              </Typography>
-            </Box>
-          </Box>
-        );
-      })}
+      {handleListSearch && (
+        <RDSearch
+          handleSearchChange={handleListSearch}
+          styling={{ flex: "0 1 100%", padding: "30px 0px !important" }}
+        />
+      )}
+      {posts?.length &&
+        posts.map((rs) => {
+          console.log("posts posts : ", posts);
+          return <RealEstateItem realestate={rs} posts={posts} />;
+        })}
       {renderPaging()}
     </Box>
   );

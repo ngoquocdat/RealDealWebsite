@@ -31,6 +31,17 @@ export default function SignUp(props: ISignUp) {
     <div className="signup-container">
       {register.isUserRegistered ? (
         <div className="user-logged-in">
+          <Box
+            className="avatar"
+            component="img"
+            src="https://imgs.search.brave.com/qJt1RbPKmLuKTgGLuGn3aWFt9zfEJRQ3KRZncC--40o/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS12ZWN0b3Iv/YnVzaW5lc3NtYW4t/Y2hhcmFjdGVyLWF2/YXRhci1pc29sYXRl/ZF8yNDg3Ny02MDEx/MS5qcGc_c2l6ZT02/MjYmZXh0PWpwZw"
+            style={{
+              backgroundColor: "#D9D9D9",
+              width: "60px",
+              height: "60px",
+              backgroundImage: generator.generateRandomAvatar(),
+            }}
+          />
           <div className="user-info">
             <b style={{ display: "inline-flex", gap: "15px" }}>
               {defaultLogin.userName}
@@ -65,17 +76,6 @@ export default function SignUp(props: ISignUp) {
               )}
             </Box>
           </div>
-          <Box
-            className="avatar"
-            component="img"
-            src="https://imgs.search.brave.com/qJt1RbPKmLuKTgGLuGn3aWFt9zfEJRQ3KRZncC--40o/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS12ZWN0b3Iv/YnVzaW5lc3NtYW4t/Y2hhcmFjdGVyLWF2/YXRhci1pc29sYXRl/ZF8yNDg3Ny02MDEx/MS5qcGc_c2l6ZT02/MjYmZXh0PWpwZw"
-            style={{
-              backgroundColor: "#D9D9D9",
-              width: "60px",
-              height: "60px",
-              backgroundImage: generator.generateRandomAvatar(),
-            }}
-          />
         </div>
       ) : (
         <>

@@ -8,6 +8,8 @@ import StepTwo from "./components/stepTwo";
 import "./index.scss";
 import StepThree from "./components/stepThree";
 import StepFourth from "./components/stepFourth";
+import ListRealEstate from "../SalePage/listRealEstate";
+import RealEstateItem from "../SalePage/realEstateItem";
 
 export interface ISettings {
   totalCounter: number;
@@ -26,7 +28,7 @@ interface IStepjoinRoom {
 
 export default function StepsJoinToRoom(props: IStepjoinRoom) {
   const { redirectToChatRoom } = props;
-  const { joinDialog, realEstatePosts } =
+  const { joinDialog, realEstatePosts, selectedRealEstate } =
     React.useContext<IContext>(RealDealContext);
   const [currentStep, setCurrentStep] = React.useState<number>(1);
   const [counterError, toggleErrorCounter] = React.useState<any[]>([]);
@@ -35,6 +37,13 @@ export default function StepsJoinToRoom(props: IStepjoinRoom) {
     counter: 20,
     apartmentPrice: 13000000000,
     discount: 12,
+  });
+
+  React.useEffect(() => {
+    console.log(
+      "selectedRealEstate?.selectedREs?.imgUrl: ",
+      selectedRealEstate?.selectedREs
+    );
   });
 
   const handleChangeStep = (stepNum: number) => {
@@ -78,6 +87,11 @@ export default function StepsJoinToRoom(props: IStepjoinRoom) {
             settings: selectedSettingRoom,
             setSettings: setSelectedSettingRoom,
           }}
+          images={[
+            selectedRealEstate?.selectedREs?.image,
+            selectedRealEstate?.selectedREs?.image,
+            selectedRealEstate?.selectedREs?.image,
+          ]}
         />
       )}
       {currentStep === 2 && (
@@ -90,52 +104,11 @@ export default function StepsJoinToRoom(props: IStepjoinRoom) {
       )}
       {currentStep === 3 && <StepThree changeStep={handleChangeStep} />}
       {currentStep === 4 && <StepFourth toChatRoom={redirectToChatRoom} />}
-      <Box className="selected-project">
-        <div className={`news-item`}>
-          <Box className="image" sx={{ margin: "0px 20px" }} />
-          <div className="info">
-            <Box className="title" sx={{ fontSize: `20px`, fontWeight: 700 }}>
-              Bất động sản dự án thành phố Thủ đức
-            </Box>
-            <br />
-            <b>Diện tích: </b>120 m2
-            <br />
-            <b>Tình trạng: </b>bàn giao hoàn chỉnh Quý 3, 2023
-            <br />
-          </div>
-          <div className="description">
-            <Typography sx={{ padding: "20px 0px" }}>
-              Gần khu dân cư hiện hữu, nhiều nhu cầu tiện ích đáp ứng nhu cầu
-              cho mua ở hoặc các hình thức cho thuê khác. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit. Nam sed egestas sapien. Donec
-              et maximus velit. Quisque laoreet sem vitae nulla molestie, non
-              viverra tellus imperdiet. Mauris suscipit, mi non aliquam posuere,
-              lorem risus congue metus, eget vehicula lorem arcu a felis.
-            </Typography>
-            <div>
-              <Button
-                className="join-to-room-button rd-buttons contained-button"
-                variant="contained"
-                onClick={(evt?: any) => {
-                  return null;
-                }}
-              >
-                Dự Toán Khoản Vay
-              </Button>
-              <Link
-                sx={{ fontWeight: 600, fontSize: "18px", paddingLeft: "20px" }}
-                component="button"
-                variant="body2"
-                onClick={() => {
-                  return null;
-                }}
-              >
-                Thông tin chi tiết
-              </Link>
-            </div>
-          </div>
-        </div>
-      </Box>
+      <RealEstateItem
+        realestate={selectedRealEstate?.selectedREs}
+        posts={[]}
+        onBooking
+      />
       <hr
         style={{
           textAlign: "left",
@@ -144,15 +117,7 @@ export default function StepsJoinToRoom(props: IStepjoinRoom) {
         }}
       />
       <Box className="similar-projects">
-        <Typography sx={{ fontWeight: "700", fontSize: "24px" }}>
-          Các dự án có thể bạn quan tâm:{" "}
-        </Typography>
-        <NewsList
-          titleSize={20}
-          counter={["first", "second", "third", "fourth"]}
-          news={realEstatePosts.posts?.slice(0, 6) || null}
-          toggleDialog={joinDialog.toggleIsOpenDialog}
-        />
+        <ListRealEstate />
       </Box>
     </Box>
   );
