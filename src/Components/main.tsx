@@ -5,33 +5,33 @@ import { Box, Typography } from "@mui/material";
 import { RealDealContext } from "./context";
 import ChatRoom from "./ChatRoom";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NewsContainer from "./Features/News/newsContainer";
 
 import "./index.scss";
 import SalesContainer from "./SalePage/salesContainer";
 import SignUp from "./Features/Signup";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
-import { SolarPower } from "@mui/icons-material";
+import StepsJoinToRoom from "./StepsJoinToROOM";
+import { createBrowserRouter } from "react-router-dom";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <SalesContainer />,
-  },
-  {
-    path: "/demo",
-    element: <div>Demo page</div>,
-  },
-  {
-    path: "/news",
-    element: <NewsContainer />,
-  },
-  {
-    path: "/chat",
-    element: <ChatRoom />,
-  },
-]);
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <SalesContainer />,
+//   },
+//   {
+//     path: "/demo",
+//     element: <div>Demo page</div>,
+//   },
+//   {
+//     path: "/news",
+//     element: <NewsContainer />,
+//   },
+//   {
+//     path: "/chat",
+//     element: <ChatRoom />,
+//   },
+// ]);
 
 export function uniq(a: any) {
   return a.sort().filter(function (item: any, pos: any, ary: any) {
@@ -54,6 +54,7 @@ export default function MainContainer() {
     { title: "PROPERTY", url: "/property" },
     { title: "NEWS", url: "/news" },
     { title: "WHAT'S REALDEAL ?", url: "/about" },
+    { title: "CHAT ROOM", url: "/chat" },
   ];
   const [isRegistered, setIsRegistered] = React.useState<boolean>(false);
   const [joinedRoom, setjoinedRoom] = React.useState<any[]>([]);
@@ -66,6 +67,26 @@ export default function MainContainer() {
   );
   const [isProcessJoinRoom, setIsProcessJoinRoom] =
     React.useState<boolean>(false);
+  const [selectedNews, setSelectedNews] = React.useState<any>(null);
+  const [isOpenDetailsDialog, setIsOpenDetailsDialog] =
+    React.useState<boolean>(false);
+  const [selectedREs, setSelectedREs] = React.useState<any>(null);
+
+  const handleRenderContent = () => {
+    let redirectComp = renderContent;
+    if (window.location.pathname === "/news") {
+      redirectComp = <NewsContainer />;
+    } else if (window.location.pathname === "/chat") {
+      redirectComp = <div>Chat Room</div>;
+    } else if (window.location.pathname === "/about") {
+      redirectComp = <div>About Us</div>;
+    } else if (window.location.pathname === "/property") {
+      redirectComp = <div>Property</div>;
+    } else if (window.location.pathname === "/") {
+      redirectComp = <SalesContainer />;
+    }
+    setRenderContent(redirectComp);
+  };
 
   const contextObj: any = {
     register: {
@@ -88,6 +109,22 @@ export default function MainContainer() {
       posts: realEstatePosts,
       setPosts: setRealEstatePosts,
     },
+    selectedNews: {
+      selectedNews: selectedNews,
+      setSelectedNews: setSelectedNews,
+    },
+    detailsDialog: {
+      isOpenDetailsDialog: isOpenDetailsDialog,
+      setIsOpenDetailsDialog: setIsOpenDetailsDialog,
+    },
+    handleRedirect: {
+      redirect: handleRenderContent,
+      setUrl: setRedirectURl,
+    },
+    selectedRealEstate: {
+      selectedREs: selectedREs,
+      setSelectedREs: setSelectedREs,
+    },
   };
 
   React.useEffect(() => {
@@ -104,22 +141,6 @@ export default function MainContainer() {
       handleRenderContent();
     }
   }, [redirectUrl, setRedirectURl]);
-
-  const handleRenderContent = () => {
-    let redirectComp = renderContent;
-    if (window.location.pathname === "/news") {
-      redirectComp = <NewsContainer />;
-    } else if (window.location.pathname === "/chat") {
-      redirectComp = <div>Chat Room</div>;
-    } else if (window.location.pathname === "/about") {
-      redirectComp = <div>About Us</div>;
-    } else if (window.location.pathname === "/property") {
-      redirectComp = <div>Property</div>;
-    } else if (window.location.pathname === "/") {
-      redirectComp = <SalesContainer />;
-    }
-    setRenderContent(redirectComp);
-  };
 
   React.useEffect(() => {
     handleRenderContent();
@@ -140,6 +161,10 @@ export default function MainContainer() {
       </li>
     ));
   };
+
+  React.useEffect(() => {
+    console.log("isRegistered && selectedREs: ", isRegistered && selectedREs);
+  });
 
   return (
     <RealDealContext.Provider value={contextObj}>
@@ -167,15 +192,25 @@ export default function MainContainer() {
                 <SignUp gotoChatRoom={setGotoChatRoom} />
               </div>
             </header>
-
             {gotoChatRoom ? (
               <div className="chatRoom">
                 <ChatRoom />
               </div>
             ) : (
               <div className="contents">
-                {renderContent}
-                <RouterProvider router={router} />
+                {/* {renderContent}
+                <RouterProvider router={router} /> */}
+                {isRegistered && selectedREs && isProcessJoinRoom ? (
+                  <StepsJoinToRoom
+                    redirectToChatRoom={function (
+                      value: React.SetStateAction<boolean>
+                    ): void {
+                      throw new Error("Function not implemented.");
+                    }}
+                  />
+                ) : (
+                  renderContent
+                )}
                 <div className="contacts">
                   <Typography>
                     <b>Address and Contact information</b>

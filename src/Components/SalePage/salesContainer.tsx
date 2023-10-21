@@ -3,22 +3,20 @@ import { Box, Typography } from "@mui/material";
 import BestChoiceRealEstate from "./bestChoiceRealEstate";
 import ListRealEstate from "./listRealEstate";
 import RDSearch from "../Features/Search";
+import FullScreenDialog from "../Features/DetailsDialog";
+import { IContext, RealDealContext } from "../context";
 
 export default function SalesContainer() {
   const [listSearch, setListSearch] = React.useState<any>(null);
+  const { selectedRealEstate } = React.useContext<IContext>(RealDealContext);
 
   const handleBannerSearch = (searchOpts: any) => {
     console.log("handleBannerSearch: ", searchOpts);
   };
 
   const handleListRSSearch = (searchOpts: any) => {
-    console.log("handleListRSSearch: ", searchOpts);
     setListSearch(searchOpts);
   };
-
-  // React.useEffect(() => {
-  //   console.log("listSearch : ", listSearch);
-  // });
 
   const SalesBanner = () => {
     return (
@@ -73,6 +71,12 @@ export default function SalesContainer() {
         handleListSearch={handleListRSSearch}
         searchOpts={listSearch}
       />
+      {
+        <FullScreenDialog
+          newsSelected={undefined}
+          isRealestate={selectedRealEstate?.selectedREs ? true : false}
+        />
+      }
     </>
   );
 }

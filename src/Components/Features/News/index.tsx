@@ -1,8 +1,10 @@
 import React from "react";
-import { Button, Chip, TextField } from "@mui/material";
+import { Box, Button, Chip, Skeleton, TextField } from "@mui/material";
 import { IContext, RealDealContext } from "../../context";
 import { NavigateBefore, NavigateNext } from "@mui/icons-material";
 import NewsList from "./newsList";
+import RDSearch from "../Search";
+import FullScreenDialog from "../DetailsDialog";
 
 interface IRealNews {
   newsCounter: string[];
@@ -10,7 +12,7 @@ interface IRealNews {
 
 export default function RealNews(props: IRealNews) {
   const { newsCounter } = props;
-  const { joinDialog, realEstatePosts, detailsDialog } =
+  const { joinDialog, realEstatePosts, detailsDialog, selectedNews } =
     React.useContext<IContext>(RealDealContext);
 
   const getData = async () => {
@@ -28,22 +30,14 @@ export default function RealNews(props: IRealNews) {
     <div className="real-estate-news">
       <div className="tools">
         <div className="searchEngine">
-          <Button
-            className="join-to-room-button rd-buttons contained-button"
-            variant="contained"
-          >
-            Search
-          </Button>
-          <TextField
-            id="filled-search"
-            label="Search real estate"
-            type="search"
-            variant="filled"
-            size="small"
+          <RDSearch
+            handleSearchChange={function (searchStrings: any): void {
+              throw new Error("Function not implemented.");
+            }}
           />
         </div>
         <div className="search-keywords">
-          <b>Tìm kiếm từ khóa: </b>
+          <b>Search by key words: </b>
           <div className="chip-keywords">
             {[
               "đất rẻ",
@@ -59,7 +53,7 @@ export default function RealNews(props: IRealNews) {
       </div>
       <NewsList
         counter={newsCounter}
-        news={realEstatePosts?.posts?.slice(0, 6) || null}
+        news={realEstatePosts?.posts || null}
         toggleDialog={detailsDialog?.setIsOpenDetailsDialog}
       />
       <div className="news-paging">
@@ -71,6 +65,10 @@ export default function RealNews(props: IRealNews) {
         <NavigateBefore />
         <NavigateNext />
       </div>
+
+      {detailsDialog?.isOpenDetailsDialog && selectedNews?.selectedNews && (
+        <FullScreenDialog newsSelected={selectedNews?.selectedNews} />
+      )}
     </div>
   );
 }

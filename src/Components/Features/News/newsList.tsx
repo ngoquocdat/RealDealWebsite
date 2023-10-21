@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Button } from "@mui/material";
-import { IContext, RealDealContext } from "../../context";
+import { Box, Button, Typography } from "@mui/material";
+import { IContext, RealDealContext, lorem } from "../../context";
 
 interface INewsList {
   counter: string[];
@@ -13,15 +13,40 @@ export default function NewsList(props: INewsList) {
   const { titleSize, news, toggleDialog, counter } = props;
   const { selectedNews } = React.useContext<IContext>(RealDealContext);
 
-  React.useEffect(() => {
-    console.log("news: ", news);
-  }, [news]);
+  const returnPosText = (index: number) => {
+    if (index === 0) {
+      return "first";
+    } else if (index === 1) {
+      return "second";
+    } else if (index === 2) {
+      return "third";
+    } else if (index === 3) {
+      return "fourth";
+    } else if (index === 4) {
+      return "five";
+    } else if (index === 5) {
+      return "six";
+    }
+  };
+
+  const convertDate = (date: Date) => {
+    const userLocale: string =
+      navigator.languages && navigator.languages.length
+        ? navigator.languages[0]
+        : navigator.language;
+    return date.toLocaleString("vi", {
+      weekday: "short",
+      year: "numeric",
+      month: "2-digit",
+      day: "numeric",
+    });
+  };
 
   return (
     <div className="real-estate-news-wrapper">
       {news?.length &&
-        counter.map((num, index) => (
-          <div className={`news-item ${num}`}>
+        news?.slice(0, counter?.length).map((rs, index) => (
+          <div className={`news-item ${returnPosText(index)}`}>
             <Box
               className="image"
               component="img"
@@ -34,24 +59,30 @@ export default function NewsList(props: INewsList) {
               >
                 {news[index]?.title}
               </Box>
+              <b>Post date: </b>
+              {convertDate(rs.post_date)}
+              <Typography>
+                <b>Post by:</b> Nguyễn Hoài Nam
+              </Typography>
               <br />
-              <b>Diện tích: </b>120 m2
-              <br />
-              <b>Tình trạng: </b>bàn giao hoàn chỉnh Quý 3, 2023
-              <br />
+              {news[index]?.excerpt}
             </div>
             <div className="description">
-              {news[index]?.excerpt}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: `<p>${lorem.generateParagraphs(1)}</p>`,
+                }}
+              />
               <div>
                 <Button
                   className="join-to-room-button rd-buttons contained-button"
                   variant="contained"
                   onClick={(evt?: any) => {
-                    selectedNews.setSelectedNews(news[index]);
+                    selectedNews?.setSelectedNews(news[index]);
                     toggleDialog(true);
                   }}
                 >
-                  Xem chi tiết tin tức
+                  News details
                 </Button>
               </div>
             </div>

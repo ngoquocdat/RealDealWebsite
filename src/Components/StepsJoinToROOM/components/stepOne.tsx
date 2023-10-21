@@ -9,11 +9,13 @@ interface IStepOne {
   settingsRoom: ISettingsRoom;
   setError: (error: any) => void;
   changeStep: (stepNum: number) => void;
+  images: string[];
 }
 
 export default function StepOne(props: IStepOne) {
-  const { errors, settingsRoom, setError, changeStep } = props;
-  const { processJoinRoom } = React.useContext<IContext>(RealDealContext);
+  const { images, errors, settingsRoom, setError, changeStep } = props;
+  const { processJoinRoom, selectedRealEstate } =
+    React.useContext<IContext>(RealDealContext);
   const [memberCount, setMemberCount] = React.useState<number>(
     settingsRoom.settings.counter
   );
@@ -76,8 +78,14 @@ export default function StepOne(props: IStepOne) {
         </Box>
       </Box>
       <Box className="real-estate-image">
-        {[1, 2, 3].map((box) => (
-          <Box />
+        {images.map((box) => (
+          <Box
+            sx={{
+              backgroundImage: `url(${box})`,
+              backgroundSize: "cover",
+              height: "270px",
+            }}
+          />
         ))}
       </Box>
       <Box className="room-settings">
@@ -115,7 +123,8 @@ export default function StepOne(props: IStepOne) {
                   ]);
                 } else {
                   const _discount =
-                    (evt?.target.value / settingsRoom.settings.totalCounter) *
+                    (evt?.target.value /
+                      selectedRealEstate?.selectedREs?.total) *
                     evt?.target.value;
                   setError(
                     errors.filter(
@@ -130,7 +139,7 @@ export default function StepOne(props: IStepOne) {
                 }
               }}
             />
-            / <Typography>{settingsRoom.settings.totalCounter}</Typography>
+            / <Typography>{selectedRealEstate?.selectedREs?.total}</Typography>
           </Box>
           {errors.find((error: any) => error.fieldError === "roomCounter") ? (
             <Typography sx={{ color: "red", paddingTop: "10px" }}>
@@ -144,7 +153,7 @@ export default function StepOne(props: IStepOne) {
         <Box>
           <Typography>Giá bất động sản ( tính trên đơn vị căn hộ )</Typography>
           <Typography sx={{ fontWeight: 500, fontSize: "32px" }}>
-            {`${formatter.format(settingsRoom.settings.apartmentPrice)} VND`}
+            {`${formatter.format(selectedRealEstate?.selectedREs?.price)} VND`}
           </Typography>
         </Box>
         <Box>
@@ -160,8 +169,8 @@ export default function StepOne(props: IStepOne) {
             }}
           >
             {`${formatter.format(
-              settingsRoom.settings.apartmentPrice -
-                settingsRoom.settings.apartmentPrice *
+              selectedRealEstate?.selectedREs.price -
+                selectedRealEstate?.selectedREs.price *
                   (settingsRoom.settings.discount / 100)
             )} VND`}
           </Typography>
@@ -188,6 +197,7 @@ export default function StepOne(props: IStepOne) {
           variant="text"
           onClick={(evt?: React.MouseEvent) => {
             processJoinRoom.setIsProcessJoinRoom(false);
+            selectedRealEstate?.setSelectedREs(null);
           }}
         >
           Hủy và quay lại trang tin
