@@ -3,6 +3,7 @@ import { Box, Button, Chip, TextField, Typography } from "@mui/material";
 import { formatter, roomInfo } from "../datas";
 import { IContext, RealDealContext } from "../../context";
 import { ISettingsRoom } from "..";
+import { calculateDiscountPrice } from "Components/rdutil";
 
 interface IStepOne {
   errors: any;
@@ -19,6 +20,31 @@ export default function StepOne(props: IStepOne) {
   const [memberCount, setMemberCount] = React.useState<number>(
     settingsRoom.settings.counter
   );
+  const [discountPrice, setDiscountPrice] = React.useState<any>(null);
+
+  const handleDiscountPrice = (memberCounter: number) => {
+    // const members = new Array(memberCounter);
+    // .fill(null)
+    // .map((_, i) => i);
+    const members = Array.from(
+      { length: memberCounter },
+      (_, idx) => `${++idx}`
+    );
+    const _priceTable = members.map((mem, index) => {
+      const priceobj = calculateDiscountPrice(
+        index,
+        members.length,
+        selectedRealEstate?.selectedREs
+      );
+      return priceobj;
+    });
+    console.log("priceTable - final price: ", _priceTable);
+    return setDiscountPrice(_priceTable[0]);
+  };
+
+  React.useEffect(() => {
+    handleDiscountPrice(memberCount);
+  }, [memberCount]);
 
   return (
     <Box className="content-container">
@@ -113,7 +139,7 @@ export default function StepOne(props: IStepOne) {
               defaultValue={settingsRoom.settings.counter}
               onChange={(evt?: any) => {
                 setMemberCount(evt?.target.value);
-                if (evt?.target.value > 60 || !evt?.target.value) {
+                if (evt?.target.value > 30 || !evt?.target.value) {
                   setError([
                     ...errors,
                     {
@@ -143,7 +169,7 @@ export default function StepOne(props: IStepOne) {
           </Box>
           {errors.find((error: any) => error.fieldError === "roomCounter") ? (
             <Typography sx={{ color: "red", paddingTop: "10px" }}>
-              Dự án chỉ được đăng ký tối đa 60 căn ( sản phẩm bất động sản ) cho
+              Dự án chỉ được đăng ký tối đa 30 căn ( sản phẩm bất động sản ) cho
               một phòng tư vấn.
             </Typography>
           ) : (
@@ -153,27 +179,35 @@ export default function StepOne(props: IStepOne) {
         <Box>
           <Typography>Giá bất động sản ( tính trên đơn vị căn hộ )</Typography>
           <Typography sx={{ fontWeight: 500, fontSize: "32px" }}>
-            {`${formatter.format(selectedRealEstate?.selectedREs?.price)} VND`}
+            {`${formatter.format(
+              selectedRealEstate?.selectedREs?.floorArea *
+                selectedRealEstate?.selectedREs?.pricePerSquare
+            )} VND`}
           </Typography>
         </Box>
         <Box>
-          <Typography>
-            Giá bất động sản đã chiết khấu ( tính trên đơn vị căn hộ )
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: 500,
-              fontSize: "32px",
-              color: "#FBB713",
-              textDecoration: `${errors?.length > 0 ? "line-through" : "auto"}`,
-            }}
-          >
-            {`${formatter.format(
-              selectedRealEstate?.selectedREs.price -
-                selectedRealEstate?.selectedREs.price *
-                  (settingsRoom.settings.discount / 100)
-            )} VND`}
-          </Typography>
+          {discountPrice ? (
+            <>
+              <Typography>
+                Giá bất động sản chiết khấu dự kiến cao nhất ( tính trên đơn vị
+                căn hộ )
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: "32px",
+                  color: "#FBB713",
+                  textDecoration: `${
+                    errors?.length > 0 ? "line-through" : "auto"
+                  }`,
+                }}
+              >
+                {`${discountPrice.finalPrice} VND`}
+              </Typography>
+            </>
+          ) : (
+            ""
+          )}
         </Box>
       </Box>
       <Box className="buttons">

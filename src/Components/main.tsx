@@ -13,6 +13,8 @@ import SignUp from "./Features/Signup";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
 import StepsJoinToRoom from "./StepsJoinToROOM";
 import { createBrowserRouter } from "react-router-dom";
+import { calculateDiscountPrice } from "./rdutil";
+import { RealEstates } from "./datas";
 
 // const router = createBrowserRouter([
 //   {
@@ -151,7 +153,6 @@ export default function MainContainer() {
       <li
         key={`key-${menuItem}`}
         onClick={() => {
-          // window.location.href = menuItem.url;
           setRedirectURl(menuItem.url);
           setGotoChatRoom(false);
           setIsProcessJoinRoom(false);

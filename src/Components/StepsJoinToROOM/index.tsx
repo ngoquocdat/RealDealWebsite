@@ -1,7 +1,6 @@
 import React from "react";
-import { Box, Button, Link, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { IContext, RealDealContext } from "../context";
-import NewsList from "../Features/News/newsList";
 import StepOne from "./components/stepOne";
 import StepTwo from "./components/stepTwo";
 

@@ -71,12 +71,10 @@ export default function SalesContainer() {
         handleListSearch={handleListRSSearch}
         searchOpts={listSearch}
       />
-      {
-        <FullScreenDialog
-          newsSelected={undefined}
-          isRealestate={selectedRealEstate?.selectedREs ? true : false}
-        />
-      }
+      <FullScreenDialog
+        newsSelected={undefined}
+        isRealestate={selectedRealEstate?.selectedREs ? true : false}
+      />
     </>
   );
 }

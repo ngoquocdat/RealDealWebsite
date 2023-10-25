@@ -47,7 +47,12 @@ export const roomInfo = [
     },
     {
       label: "Giá tham khảo",
-      value: "75 – 90 triệu/m2",
+      value: "40 triệu/ m2",
+      type: "text",
+    },
+    {
+      label: "Diện tích căn hộ",
+      value: "50 m2",
       type: "text",
     },
     {

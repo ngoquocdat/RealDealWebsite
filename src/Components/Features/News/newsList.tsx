@@ -34,12 +34,14 @@ export default function NewsList(props: INewsList) {
       navigator.languages && navigator.languages.length
         ? navigator.languages[0]
         : navigator.language;
-    return date.toLocaleString("vi", {
+    const dateTime = date.toLocaleString("vi-VN", {
       weekday: "short",
       year: "numeric",
       month: "2-digit",
       day: "numeric",
+      timeZone: "vi-VN",
     });
+    return dateTime;
   };
 
   return (
@@ -60,8 +62,8 @@ export default function NewsList(props: INewsList) {
                 {news[index]?.title}
               </Box>
               <b>Post date: </b>
-              {convertDate(rs.post_date)}
-              <Typography>
+              {convertDate(rs.post_date).split(" ")[0]}
+              <Typography sx={{ margin: "10px 0px" }}>
                 <b>Post by:</b> Nguyễn Hoài Nam
               </Typography>
               <br />

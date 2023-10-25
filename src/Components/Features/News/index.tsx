@@ -32,7 +32,7 @@ export default function RealNews(props: IRealNews) {
         <div className="searchEngine">
           <RDSearch
             handleSearchChange={function (searchStrings: any): void {
-              throw new Error("Function not implemented.");
+              return;
             }}
           />
         </div>
