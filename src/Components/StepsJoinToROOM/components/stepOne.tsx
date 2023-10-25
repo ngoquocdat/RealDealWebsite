@@ -43,6 +43,7 @@ export default function StepOne(props: IStepOne) {
   };
 
   React.useEffect(() => {
+    console.log("memberCount: ", memberCount);
     handleDiscountPrice(memberCount);
   }, [memberCount]);
 
@@ -139,7 +140,11 @@ export default function StepOne(props: IStepOne) {
               defaultValue={settingsRoom.settings.counter}
               onChange={(evt?: any) => {
                 setMemberCount(evt?.target.value);
-                if (evt?.target.value > 30 || !evt?.target.value) {
+                if (
+                  evt?.target.value > 30 ||
+                  evt?.target.value < 5 ||
+                  !evt?.target.value
+                ) {
                   setError([
                     ...errors,
                     {
@@ -169,8 +174,8 @@ export default function StepOne(props: IStepOne) {
           </Box>
           {errors.find((error: any) => error.fieldError === "roomCounter") ? (
             <Typography sx={{ color: "red", paddingTop: "10px" }}>
-              Dự án chỉ được đăng ký tối đa 30 căn ( sản phẩm bất động sản ) cho
-              một phòng tư vấn.
+              Dự án chỉ được đăng ký tối thiểu 10 và tối đa 30 căn ( sản phẩm
+              bất động sản ) cho một phòng tư vấn.
             </Typography>
           ) : (
             ""
@@ -186,28 +191,27 @@ export default function StepOne(props: IStepOne) {
           </Typography>
         </Box>
         <Box>
-          {discountPrice ? (
-            <>
-              <Typography>
-                Giá bất động sản chiết khấu dự kiến cao nhất ( tính trên đơn vị
-                căn hộ )
-              </Typography>
-              <Typography
-                sx={{
-                  fontWeight: 500,
-                  fontSize: "32px",
-                  color: "#FBB713",
-                  textDecoration: `${
-                    errors?.length > 0 ? "line-through" : "auto"
-                  }`,
-                }}
-              >
-                {`${discountPrice.finalPrice} VND`}
-              </Typography>
-            </>
-          ) : (
-            ""
-          )}
+          <Typography>
+            Giá bất động sản chiết khấu dự kiến cao nhất ( tính trên đơn vị căn
+            hộ )
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: 500,
+              fontSize: "32px",
+              color: "#FBB713",
+              textDecoration: `${errors?.length > 0 ? "line-through" : "auto"}`,
+            }}
+          >
+            {`${
+              discountPrice
+                ? discountPrice.finalPrice
+                : formatter.format(
+                    selectedRealEstate?.selectedREs?.floorArea *
+                      selectedRealEstate?.selectedREs?.pricePerSquare
+                  )
+            } VND`}
+          </Typography>
         </Box>
       </Box>
       <Box className="buttons">
