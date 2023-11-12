@@ -2,11 +2,8 @@ import React from "react";
 import { Box } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import ChatRoomList from "./RoomList";
-import Conversation from "../Conversation";
 
 export default function ChatRoom() {
-  const [params] = useSearchParams();
-  const username = params.get('u') as string
   
   return (
     <Box
@@ -41,18 +38,7 @@ export default function ChatRoom() {
           border: "solid 1px #d9d9d9",
           borderRadius: "10px",
           ml: 1
-        }}
-      >
-        <Conversation
-          conversationId={'1dat.ngo'}
-          user={{
-            id: username,
-            username,
-            email: `${username}@sts.com`,
-            name: username,
-            avatar: 'https://i.pravatar.cc/150?u='+username
-          }}
-        />
+        }}>
       </Box>
     </Box>
   );

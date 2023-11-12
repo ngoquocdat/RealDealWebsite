@@ -12,27 +12,29 @@ import SalesContainer from "./SalePage/salesContainer";
 import SignUp from "./Features/Signup";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
 import StepsJoinToRoom from "./StepsJoinToROOM";
-import { createBrowserRouter } from "react-router-dom";
+import { Route, Router, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { calculateDiscountPrice } from "./rdutil";
 import { RealEstates } from "./datas";
+import ChatRoomPage from "./ChatRoom/ChatRoomContainer";
+import ChatRoomContainer from "./ChatRoom/ChatRoomContainer";
 
-// const router = createBrowserRouter([
+//const router = createBrowserRouter([
 //   {
 //     path: "/",
 //     element: <SalesContainer />,
 //   },
-//   {
-//     path: "/demo",
-//     element: <div>Demo page</div>,
-//   },
-//   {
-//     path: "/news",
-//     element: <NewsContainer />,
-//   },
-//   {
-//     path: "/chat",
-//     element: <ChatRoom />,
-//   },
+//    {
+//      path: "/demo",
+//      element: <div>Demo page</div>,
+//    },
+//    {
+//      path: "/news",
+//      element: <NewsContainer />,
+//    },
+//    {
+//      path: "/chat",
+//      element: <ChatRoom />,
+//    },
 // ]);
 
 export function uniq(a: any) {
@@ -79,7 +81,7 @@ export default function MainContainer() {
     if (window.location.pathname === "/news") {
       redirectComp = <NewsContainer />;
     } else if (window.location.pathname === "/chat") {
-      redirectComp = <div>Chat Room</div>;
+      redirectComp = <ChatRoomContainer />;
     } else if (window.location.pathname === "/about") {
       redirectComp = <div>About Us</div>;
     } else if (window.location.pathname === "/property") {
@@ -195,12 +197,10 @@ export default function MainContainer() {
             </header>
             {gotoChatRoom ? (
               <div className="chatRoom">
-                <ChatRoom />
               </div>
             ) : (
               <div className="contents">
-                {/* {renderContent}
-                <RouterProvider router={router} /> */}
+                {/* {renderContent} <RouterProvider router={router} /> */}
                 {isRegistered && selectedREs && isProcessJoinRoom ? (
                   <StepsJoinToRoom
                     redirectToChatRoom={function (
