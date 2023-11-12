@@ -8,7 +8,9 @@ import SalesContainer from "./SalePage/salesContainer";
 import SignUp from "./Features/Signup";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
 import StepsJoinToRoom from "./StepsJoinToROOM";
-
+import NewsContainer from "./Features/News/newsContainer";
+import ChatRoomContainer from "./ChatRoom/ChatRoomContainer";
+import AboutUsContainer from "./Features/AboutUs/AboutUsContainer";
 
 export function uniq(a: any) {
   return a.sort().filter(function (item: any, pos: any, ary: any) {
