@@ -1,5 +1,6 @@
 import { Message } from '../Models/MessageModel';
 import { Room } from '../Models/RoomModel';
+import { getRooms } from "../../datas"
 
 
 export default class ChatRoomService
@@ -19,35 +20,6 @@ export default class ChatRoomService
     
     getRooms = (): Room[] =>
     {
-        return [{
-                    id: "1",
-                    room: "Living Room",
-                    lastTimeChat: 1636465576,
-                    lastMessage: "Hello, how are you?"
-                },
-                {
-                    id: "2",
-                    room: "Kitchen",
-                    lastTimeChat: 1636465577,
-                    lastMessage: "What's for dinner?"
-                },
-                {
-                    id: "3",
-                    room: "Bedroom",
-                    lastTimeChat: 1636465578,
-                    lastMessage: "Good night!"
-                },
-                {
-                    id: "4",
-                    room: "Bathroom",
-                    lastTimeChat: 1636465579,
-                    lastMessage: "Need more toilet paper."
-                },
-                {
-                    id: "5",
-                    room: "Garage",
-                    lastTimeChat: 1636465580,
-                    lastMessage: "Car needs an oil change."
-                }];
+        return getRooms
     } 
 }

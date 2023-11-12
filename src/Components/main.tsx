@@ -17,6 +17,7 @@ import { calculateDiscountPrice } from "./rdutil";
 import { RealEstates } from "./datas";
 import ChatRoomPage from "./ChatRoom/ChatRoomContainer";
 import ChatRoomContainer from "./ChatRoom/ChatRoomContainer";
+import AboutUsContainer from "./Features/AboutUs/AboutUsContainer";
 
 //const router = createBrowserRouter([
 //   {
@@ -83,7 +84,7 @@ export default function MainContainer() {
     } else if (window.location.pathname === "/chat") {
       redirectComp = <ChatRoomContainer />;
     } else if (window.location.pathname === "/about") {
-      redirectComp = <div>About Us</div>;
+      redirectComp = <AboutUsContainer />;
     } else if (window.location.pathname === "/property") {
       redirectComp = <div>Property</div>;
     } else if (window.location.pathname === "/") {

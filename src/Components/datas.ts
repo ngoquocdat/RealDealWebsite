@@ -26,6 +26,35 @@ export interface IRealEstates {
     searchKey: string[]
 }
 
+export type AboutUs = {
+  id: string,
+  header: string,
+  title: string,
+  text?: string,
+  fileUrls?: { name: string, url: string }[],
+  imageUrls?: { name: string, url: string }[]
+}
+
+export type Message = {
+  id: string,
+  roomId: string,
+  type?: string,
+  isAgency: boolean
+  title: string,
+  text?: string,
+  date: string,
+  avatar: string,
+  fileUrls?: { name: string, url: string }[],
+  imageUrls?: { name: string, url: string }[]
+}
+
+export type Room = {
+  id: string,
+  room: string,
+  lastTimeChat: number,
+  lastMessage: string
+}
+
 const RealEstates: IRealEstates[] = [
     {
       id: 1,
@@ -510,8 +539,123 @@ const carousels = [
     },
 ];
 
+const getAboutUs= [
+  {
+      id: "1",
+      title: "",
+      header: "Chào mừng tới RealDeal",
+      text: "Không cần mua sỉ mới có giá rẻ, tại RealDeal bạn chỉ cần mua theo nhóm là sẽ có được mức giá rất phải chăng. Chất lượng và số lượng hàng hóa tại RealDeal cũng rất đa dạng, nên nếu có nhu cầu mua sắm Bất Động Sản thì RealDeal là một gợi ý hoàn hảo dành cho bạn.",
+      fileUrls: [
+        { name: "UserGuide", url: "https://www.example.com/user-guide.pdf" },
+        { name: "TermsAndConditions", url: "https://www.example.com/terms-and-conditions.pdf" }
+      ],
+      imageUrls: [
+        { name: "Logo", url: "https://www.example.com/logo.png" },
+        { name: "Banner", url: "https://www.example.com/banner.png" }
+      ]
+  },
+  {
+      id: "2",
+      title: "Realdeal Là Gì?",
+      header: "",
+      text: `Realdeal là một trang thương mại điện tử về lĩnh vực Bất Động Sản được thành lập năm 2023 bởi Công ty TNHH Truyền thông SEEU. Realdeal cung cấp đa dạng các sản phẩm trong lĩnh vực Bất Động Sản từ Căn hộ chung cư, Nhà phố, Đất nền, Bất động sản nghỉ dưỡng, Shophouse, Officetel,… đáp ứng được hầu hết các nhu cầu của khách hàng.
+             Tuy nhiên, thay vì tập trung vào mô hình kinh doanh B2B hay B2C, RealDeal lại áp dụng một hình thức mới: “mua theo nhóm” – kết hợp mạng xã hội vào mua sắm. 
+             Tại đây, khách hàng có thể tạo nhóm bạn bè, người thân, thậm chí là những người xa lạ với nhau để cùng mua một mặt hàng về Bất Động Sản với giá “hời” hơn rất nhiều.
+             Mặc dù mới được thành lập và mới chỉ hoạt động nhưng hình thức mua sắm theo nhóm trên RealDeal đã thực sự thu hút được sự quan tâm lớn của nhiều chủ đầu tư và đặc biệt là khách hàng có nhu cầu mua Bất Động Sản không qua trung gian.`,
+      fileUrls: [
+        { name: "UserGuide", url: "https://www.example.com/user-guide.pdf" },
+        { name: "TermsAndConditions", url: "https://www.example.com/terms-and-conditions.pdf" }
+      ],
+      imageUrls: [
+        { name: "Logo", url: "https://www.example.com/logo.png" },
+        { name: "Banner", url: "https://www.example.com/banner.png" }
+      ]
+  },
+  {
+      id: "3",
+      title: "Mua sắm theo nhóm",
+      header: "Những Lợi Thế Nổi Bật Của RealDeal",
+      text: `Mua sắm theo nhóm là cốt lõi của RealDeal. Tại đây, người dùng có hai sự lựa chọn cụ thể:
+             Mua lẻ cho cá nhân: Hình thức mua lẻ thông thường..
+             Mua theo nhóm: Bạn sẽ khởi tạo nhóm mới hoặc tham gia một nhóm mua hàng có sẵn. Trong thời gian quy định, nếu những thành viên tham gia đủ số lượng mua trên RealDeal thì đơn hàng của bạn sẽ được xác nhận.
+             Hình thức mua sắm theo nhóm không những mang lợi ích cho người mua mà còn là cách tăng doanh thu và số lượng bán hàng nhanh chóng cho người bán. Đồng thời, tăng mức độ trải nghiệm và tương tác qua lại của người dùng.
+      `,
+      fileUrls: [
+        { name: "UserGuide", url: "https://www.example.com/user-guide.pdf" },
+        { name: "TermsAndConditions", url: "https://www.example.com/terms-and-conditions.pdf" }
+      ],
+      imageUrls: [
+        { name: "Logo", url: "https://www.example.com/logo.png" },
+        { name: "Banner", url: "https://www.example.com/banner.png" }
+      ]
+  },
+  {
+      id: "4",
+      title: "Không giới hạn khu vực",
+      header: "",
+      text: `RealDeal không chỉ tập trung phát triển tại những thành phố lớn mà còn phân bổ nhiều dự án ở mọi khu vực trải dài khắp cả nước. Đối với khu vực ngoại ô, tuy có mức sống không cao như thành thị nhưng với sự phát triển nhanh chóng của nền kinh tế, kỹ thuật số, nhóm khách hàng khu vực ngoại ô rất cực kỳ tiềm năng.
+             Đặc biệt, người có thu nhập thấp thường hướng đến những sản phẩm chất lượng – giá tốt, rất hợp với hình thức mua sắm theo nhóm của RealDeal.`,
+      fileUrls: [
+        { name: "UserGuide", url: "https://www.example.com/user-guide.pdf" },
+        { name: "TermsAndConditions", url: "https://www.example.com/terms-and-conditions.pdf" }
+      ],
+      imageUrls: [
+        { name: "Logo", url: "https://www.example.com/logo.png" },
+        { name: "Banner", url: "https://www.example.com/banner.png" }
+      ]
+  },
+  {
+      id: "5",
+      title: "Giá cả cạnh tranh",
+      header: "",
+      text: `RealDeal không chỉ tập trung phát triển tại những thành phố lớn mà còn phân bổ nhiều dự án ở mọi khu vực trải dài khắp cả nước. Đối với khu vực ngoại ô, tuy có mức sống không cao như thành thị nhưng với sự phát triển nhanh chóng của nền kinh tế, kỹ thuật số, nhóm khách hàng khu vực ngoại ô rất cực kỳ tiềm năng.
+             Đặc biệt, người có thu nhập thấp thường hướng đến những sản phẩm chất lượng – giá tốt, rất hợp với hình thức mua sắm theo nhóm của RealDeal.`,
+      fileUrls: [
+        { name: "UserGuide", url: "https://www.example.com/user-guide.pdf" },
+        { name: "TermsAndConditions", url: "https://www.example.com/terms-and-conditions.pdf" }
+      ],
+      imageUrls: [
+        { name: "Logo", url: "https://www.example.com/logo.png" },
+        { name: "Banner", url: "https://www.example.com/banner.png" }
+      ]
+  }
+] 
+
+const getRooms= [{
+  id: "1",
+  room: "Living Room",
+  lastTimeChat: 1636465576,
+  lastMessage: "Hello, how are you?"
+},
+{
+  id: "2",
+  room: "Kitchen",
+  lastTimeChat: 1636465577,
+  lastMessage: "What's for dinner?"
+},
+{
+  id: "3",
+  room: "Bedroom",
+  lastTimeChat: 1636465578,
+  lastMessage: "Good night!"
+},
+{
+  id: "4",
+  room: "Bathroom",
+  lastTimeChat: 1636465579,
+  lastMessage: "Need more toilet paper."
+},
+{
+  id: "5",
+  room: "Garage",
+  lastTimeChat: 1636465580,
+  lastMessage: "Car needs an oil change."
+}];
+
+
 export {
     RealEstates,
     theBestProperties,
-    carousels
-}
+    carousels,
+    getAboutUs, getRooms
+};
