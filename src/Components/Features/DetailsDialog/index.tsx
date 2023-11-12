@@ -8,10 +8,12 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { Box } from "@mui/material";
+import { Box, DialogContent } from "@mui/material";
 import { IContext, RealDealContext } from "../../context";
 import ListRealEstate from "../../SalePage/listRealEstate";
 import RealEstateItem from "../../SalePage/realEstateItem";
+import { RealEstates } from "Components/datas";
+import { splitRandomRes } from "Components/rdutil";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -29,6 +31,7 @@ interface IFulllScreenDialog {
 
 export default function FullScreenDialog(props: IFulllScreenDialog) {
   const { newsSelected, isRealestate } = props;
+  const divRef = React.useRef(null);
   const { detailsDialog, joinDialog, handleRedirect, selectedRealEstate } =
     React.useContext<IContext>(RealDealContext);
 
@@ -36,8 +39,12 @@ export default function FullScreenDialog(props: IFulllScreenDialog) {
     detailsDialog.setIsOpenDetailsDialog(false);
   };
 
+  const handleScrollTop = () => {
+    (divRef.current as any)?.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <Box>
+    <Box id="realEstate-modal">
       <Dialog
         fullScreen
         open={detailsDialog.isOpenDetailsDialog}
@@ -100,23 +107,29 @@ export default function FullScreenDialog(props: IFulllScreenDialog) {
             )}
           </Toolbar>
         </AppBar>
-        {newsSelected && (
-          <Box sx={{ padding: "10px 20px 40px 20px" }}>
-            <div dangerouslySetInnerHTML={{ __html: newsSelected.content }} />
-          </Box>
-        )}
-        {/** Real estate on selected */}
-        <Box>
-          {selectedRealEstate.selectedREs && (
-            <RealEstateItem
-              realestate={selectedRealEstate?.selectedREs}
-              posts={[]}
-              onBooking
-            />
+        <DialogContent ref={divRef}>
+          {newsSelected && (
+            <Box sx={{ padding: "10px 20px 40px 20px" }}>
+              <div dangerouslySetInnerHTML={{ __html: newsSelected.content }} />
+            </Box>
           )}
-        </Box>
-        {/** Related real estate on sales */}
-        <ListRealEstate length={4} />
+          {/** Real estate on selected */}
+          <Box>
+            {selectedRealEstate.selectedREs && (
+              <RealEstateItem
+                realestate={selectedRealEstate?.selectedREs}
+                posts={[]}
+                onBooking
+              />
+            )}
+          </Box>
+          {/** Related real estate on sales */}
+          <ListRealEstate
+            scrollTop={handleScrollTop}
+            data={splitRandomRes(RealEstates)}
+            length={3}
+          />
+        </DialogContent>
       </Dialog>
     </Box>
   );

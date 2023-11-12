@@ -8,13 +8,15 @@ import RealEstateItem from "./realEstateItem";
 interface IListRealEstate {
   length?: number;
   handleListSearch?: (searchOpts: any) => void;
+  scrollTop?: () => void;
   searchOpts?: any;
+  data: IRealEstates[];
 }
 
 export default function ListRealEstate(props: IListRealEstate) {
-  const { handleListSearch, searchOpts, length } = props;
+  const { handleListSearch, scrollTop, searchOpts, length, data } = props;
   const [currentPage, setCurrentPage] = React.useState<number>(0);
-  const [posts, setPosts] = React.useState<IRealEstates[]>([]);
+  const [posts, setPosts] = React.useState<IRealEstates[]>(data);
   const [listRsRef, setListRsRef] = React.useState<number[]>([]);
   const { selectedRealEstate } = React.useContext<IContext>(RealDealContext);
 
@@ -63,6 +65,10 @@ export default function ListRealEstate(props: IListRealEstate) {
   React.useEffect(() => {
     handleNumberPosts();
   }, [searchOpts]);
+
+  React.useEffect(() => {
+    console.log("ListRealEstate: ", posts);
+  }, []);
 
   const renderPaging = () => {
     return (
@@ -127,11 +133,18 @@ export default function ListRealEstate(props: IListRealEstate) {
           styling={{ flex: "0 1 100%", padding: "30px 0px !important" }}
         />
       )}
-      {posts?.length &&
-        posts.map((rs) => {
-          console.log("posts posts : ", posts);
-          return <RealEstateItem realestate={rs} posts={posts} />;
-        })}
+      {posts?.length
+        ? posts.map((rs) => {
+            console.log("posts posts : ", posts);
+            return (
+              <RealEstateItem
+                scrollTop={scrollTop}
+                realestate={rs}
+                posts={posts}
+              />
+            );
+          })
+        : ""}
       {renderPaging()}
     </Box>
   );

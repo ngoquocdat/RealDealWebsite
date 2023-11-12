@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "undefined/subscriptions/fc2c6a8b-c74f-483f-ac64-3f2b64a904de/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/RealdealServer2",
+  "appService.deploySubpath": "server"
+}

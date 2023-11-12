@@ -17,8 +17,9 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import AddRoadIcon from "@mui/icons-material/AddRoad";
 import FactoryIcon from "@mui/icons-material/Factory";
 import WaterIcon from "@mui/icons-material/Water";
-import { getPrice } from "../main";
-import { theBestProperties } from "../datas";
+import { IRealEstates } from "../datas";
+import { getPrice } from "Components/rdutil";
+import { IContext, RealDealContext } from "Components/context";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -31,6 +32,10 @@ const Item = styled(Paper)(({ theme }) => ({
 
 interface IStyleDefined {
   [k: string]: SxProps;
+}
+
+interface IBestChoiceRealEstate {
+  data: IRealEstates[];
 }
 
 const styleDefined = (): IStyleDefined => {
@@ -58,7 +63,9 @@ const styleDefined = (): IStyleDefined => {
   };
 };
 
-export default function BestChoiceRealEstate() {
+export default function BestChoiceRealEstate({ data }: IBestChoiceRealEstate) {
+  const { selectedRealEstate, detailsDialog } =
+    React.useContext<IContext>(RealDealContext);
   const sxStyled = styleDefined();
 
   return (
@@ -77,12 +84,12 @@ export default function BestChoiceRealEstate() {
         popular <b>real estate</b>
       </Typography>
       <Grid container spacing={2} sx={{ maxWidth: "100vw", margin: "auto" }}>
-        {theBestProperties.map((property) => {
+        {data.map((property, index) => {
           return (
-            <Grid item xs={property.gridSize}>
+            <Grid item xs={index < 1 ? 7 : index > 1 ? 4 : 5}>
               <Item
                 sx={{
-                  backgroundImage: `url(${property.imgUrl})`,
+                  backgroundImage: `url(${property.image})`,
                   ...sxStyled.backgroundImage,
                 }}
               >
@@ -118,6 +125,11 @@ export default function BestChoiceRealEstate() {
                             right: "-12px",
                             top: "18px",
                           }}
+                          onClick={() => {
+                            debugger;
+                            selectedRealEstate?.setSelectedREs(property);
+                            detailsDialog?.setIsOpenDetailsDialog(true);
+                          }}
                         >
                           Details
                         </Button>
@@ -136,7 +148,7 @@ export default function BestChoiceRealEstate() {
                             sx={{ color: "#fff", padding: "0px 5px 10px" }}
                           >
                             <span>
-                              {property.size}
+                              {property.floorArea}
                               <span>
                                 m<sup>2</sup>
                               </span>
@@ -146,13 +158,13 @@ export default function BestChoiceRealEstate() {
                           <Typography
                             sx={{ color: "#fff", padding: "0px 5px 10px" }}
                           >
-                            {property.bathRoom}
+                            {property.facilities?.bathroom}
                           </Typography>
                           <BedIcon sx={{ color: "#fff" }} />
                           <Typography
                             sx={{ color: "#fff", padding: "0px 5px 10px" }}
                           >
-                            {property.bedRoom}
+                            {property.facilities?.bedroom}
                           </Typography>
                         </Box>
                       </Grid>
@@ -167,7 +179,7 @@ export default function BestChoiceRealEstate() {
                         <Typography sx={{ fontSize: "18px", color: "#fff" }}>
                           Near places:{" "}
                         </Typography>
-                        {property.nearPlaces.map((place) => {
+                        {property.facilities?.others.map((place) => {
                           if (place === "School") {
                             return (
                               <SchoolIcon
@@ -223,7 +235,7 @@ export default function BestChoiceRealEstate() {
                           backgroundColor: "#ffcc41c7",
                         }}
                       >
-                        SOLD: {property.sold}
+                        SOLD: {property.capacity}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -244,7 +256,7 @@ export default function BestChoiceRealEstate() {
                         padding: "10px",
                       }}
                     >
-                      {property.addr}
+                      {property.address}
                     </Typography>
                     <Box
                       sx={{
@@ -254,9 +266,10 @@ export default function BestChoiceRealEstate() {
                         margin: "10px",
                         borderRadius: "5px",
                         fontFamily: "Georgia, serif",
+                        height: "max-content",
                       }}
                     >
-                      {getPrice(property.price)}
+                      {getPrice(property.floorArea * property.pricePerSquare)}
                     </Box>
                   </Grid>
                 </Grid>

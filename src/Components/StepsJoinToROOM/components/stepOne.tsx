@@ -30,11 +30,12 @@ export default function StepOne(props: IStepOne) {
       { length: memberCounter },
       (_, idx) => `${++idx}`
     );
+    console.log("handleDiscountPrice members: ", members);
     const _priceTable = members.map((mem, index) => {
       const priceobj = calculateDiscountPrice(
         index,
-        members.length,
-        selectedRealEstate?.selectedREs
+        selectedRealEstate?.selectedREs,
+        members.length
       );
       return priceobj;
     });

@@ -5,8 +5,13 @@ import ListRealEstate from "./listRealEstate";
 import RDSearch from "../Features/Search";
 import FullScreenDialog from "../Features/DetailsDialog";
 import { IContext, RealDealContext } from "../context";
+import { IRealEstates, RealEstates } from "Components/datas";
 
 export default function SalesContainer() {
+  const [dataBestChoice, setDataBestChoice] = React.useState<IRealEstates[]>(
+    []
+  );
+  const [listRes, setListRes] = React.useState<IRealEstates[]>([]);
   const [listSearch, setListSearch] = React.useState<any>(null);
   const { selectedRealEstate } = React.useContext<IContext>(RealDealContext);
 
@@ -60,14 +65,22 @@ export default function SalesContainer() {
     );
   };
 
+  React.useEffect(() => {
+    const bestRes = RealEstates.slice(0, 5);
+    const listRes = RealEstates.slice(5, RealEstates.length);
+    setDataBestChoice(bestRes);
+    setListRes(listRes);
+  }, []);
+
   return (
     <>
       {/** Banner */}
       <SalesBanner />
       {/** Best choice real estates */}
-      <BestChoiceRealEstate />
+      <BestChoiceRealEstate data={dataBestChoice} />
       {/** List real estate on sale */}
       <ListRealEstate
+        data={listRes}
         handleListSearch={handleListRSSearch}
         searchOpts={listSearch}
       />
