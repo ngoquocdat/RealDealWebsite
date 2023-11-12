@@ -1,6 +1,0 @@
-@RealDealInternal.Server_HostAddress = http://localhost:5089
-
-GET {{RealDealInternal.Server_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
