@@ -12,28 +12,6 @@ import SalesContainer from "./SalePage/salesContainer";
 import SignUp from "./Features/Signup";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
 import StepsJoinToRoom from "./StepsJoinToROOM";
-import { createBrowserRouter } from "react-router-dom";
-import { calculateDiscountPrice } from "./rdutil";
-import { RealEstates } from "./datas";
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <SalesContainer />,
-//   },
-//   {
-//     path: "/demo",
-//     element: <div>Demo page</div>,
-//   },
-//   {
-//     path: "/news",
-//     element: <NewsContainer />,
-//   },
-//   {
-//     path: "/chat",
-//     element: <ChatRoom />,
-//   },
-// ]);
 
 export function uniq(a: any) {
   return a.sort().filter(function (item: any, pos: any, ary: any) {
@@ -41,20 +19,11 @@ export function uniq(a: any) {
   });
 }
 
-export const getPrice = (num: number) => {
-  const units = ["million", "billion", "T", "Q"];
-  const unit = Math.floor((num / 1.0e1).toFixed(0).toString().length);
-  const r = unit % 3;
-  const x =
-    Math.abs(Number(num)) / (Number("1.0e+" + (unit - r)).toFixed(2) as any);
-  return x.toFixed(2) + " " + units[Math.floor(unit / 3) - 2] + " VND";
-};
-
 export default function MainContainer() {
   const menuItems = [
     { title: "HOME", url: "/" },
-    { title: "PROPERTY", url: "/property" },
-    { title: "NEWS", url: "/news" },
+    // { title: "PROPERTY", url: "/property" },
+    // { title: "NEWS", url: "/news" },
     { title: "WHAT'S REALDEAL ?", url: "/about" },
     { title: "CHAT ROOM", url: "/chat" },
   ];
@@ -79,7 +48,7 @@ export default function MainContainer() {
     if (window.location.pathname === "/news") {
       redirectComp = <NewsContainer />;
     } else if (window.location.pathname === "/chat") {
-      redirectComp = <div>Chat Room</div>;
+      redirectComp = <ChatRoomContainer />;
     } else if (window.location.pathname === "/about") {
       redirectComp = <div>About Us</div>;
     } else if (window.location.pathname === "/property") {
@@ -184,23 +153,19 @@ export default function MainContainer() {
                 <div className="mainMenu">
                   <ul>{renderMenuItems()}</ul>
                   {/** Functions header */}
-                  <div className="functions-header">
+                  {/* <div className="functions-header">
                     <FavoriteBorderIcon />
                     <GTranslateIcon />
-                  </div>
+                  </div> */}
                 </div>
                 {/** Sign up zone */}
                 <SignUp gotoChatRoom={setGotoChatRoom} />
               </div>
             </header>
             {gotoChatRoom ? (
-              <div className="chatRoom">
-                <ChatRoom />
-              </div>
+              <div className="chatRoom"></div>
             ) : (
               <div className="contents">
-                {/* {renderContent}
-                <RouterProvider router={router} /> */}
                 {isRegistered && selectedREs && isProcessJoinRoom ? (
                   <StepsJoinToRoom
                     redirectToChatRoom={function (

@@ -10,21 +10,22 @@ import AddRoadIcon from "@mui/icons-material/AddRoad";
 import FactoryIcon from "@mui/icons-material/Factory";
 import WaterIcon from "@mui/icons-material/Water";
 import HomeIcon from "@mui/icons-material/Home";
-import React from "react";
+import React, { useEffect } from "react";
 import { IRealEstates } from "../datas";
 import { IContext, RealDealContext, lorem } from "../context";
-import { getPrice } from "../main";
-
+import { calculateDiscountPrice, getPrice } from "Components/rdutil";
 interface IRealEstateItem {
   onBooking?: boolean;
-  realestate: any;
+  scrollTop?: () => void;
+  realestate: IRealEstates;
   posts: IRealEstates[];
 }
 
 export default function RealEstateItem(props: IRealEstateItem) {
-  const { realestate, posts, onBooking } = props;
+  const { realestate, posts, onBooking, scrollTop } = props;
   const { selectedRealEstate, detailsDialog } =
     React.useContext<IContext>(RealDealContext);
+  const highestDiscountPrice = calculateDiscountPrice(0, realestate, 30);
 
   const renderComp = (rs: IRealEstates) => {
     return rs?.facilities?.others.map((place: any) => {
@@ -81,8 +82,8 @@ export default function RealEstateItem(props: IRealEstateItem) {
               realestate?.isPopular
                 ? "#d25319"
                 : !realestate?.isPopular &&
-                  realestate?.total - realestate?.capacity <
-                    realestate?.total / 3
+                  realestate?.propertyTotal - realestate?.capacity <
+                    realestate?.propertyTotal / 3
                 ? "#51d219"
                 : "#ffcc41"
             }`,
@@ -94,11 +95,15 @@ export default function RealEstateItem(props: IRealEstateItem) {
             </>
           ) : null}
           {!realestate?.isPopular &&
-          realestate?.total - realestate?.capacity < realestate?.total / 3
+          realestate?.propertyTotal - realestate?.capacity <
+            realestate?.propertyTotal / 3
             ? "SOLD OUT SOON"
             : null}
           {!realestate?.isPopular &&
-          !(realestate?.total - realestate?.capacity < realestate?.total / 3)
+          !(
+            realestate?.propertyTotal - realestate?.capacity <
+            realestate?.propertyTotal / 3
+          )
             ? "ON SELL"
             : null}
         </Button>
@@ -168,7 +173,7 @@ export default function RealEstateItem(props: IRealEstateItem) {
       <Box sx={{ display: "flex", gap: "40px", paddingBottom: "20px" }}>
         <Typography>
           <em>
-            <b>Total:</b> {realestate?.total}
+            <b>Total:</b> {realestate?.propertyTotal}
           </em>
         </Typography>
         <Typography>
@@ -248,12 +253,16 @@ export default function RealEstateItem(props: IRealEstateItem) {
             margin: "auto 0px",
           }}
         >
-          <Box>{getPrice(realestate?.price as number)}</Box>
+          <Box>
+            {getPrice(
+              (realestate?.pricePerSquare * realestate.floorArea) as number
+            )}
+          </Box>
           <Box sx={{ color: "#ff4141", paddingTop: "15px" }}>
             <i>
               <b style={{ fontSize: "20px" }}>Best price buy in group:</b>
               <br />
-              {getPrice(realestate?.priceOnRoom as number)}
+              {highestDiscountPrice?.finalPrice}
             </i>
           </Box>
         </Typography>
@@ -271,6 +280,7 @@ export default function RealEstateItem(props: IRealEstateItem) {
               right: "-60px",
             }}
             onClick={() => {
+              scrollTop && scrollTop();
               selectedRealEstate?.setSelectedREs(
                 posts.find((p) => p.id === realestate?.id)
               );
