@@ -3,16 +3,30 @@ import { formatter } from "./StepsJoinToROOM/datas";
 interface IProperty {
     floorArea: number,
     pricePerSquare: number,
-    total: number,
+    propertyTotal: number,
     [k: string]: any
 }
 
-export function calculateDiscountPrice(personIndex: number, openTotalRooms: number, property: IProperty) {
+interface IFinalDiscountPrice {
+    personPosition: number,
+    percentAddFromFollower: number,
+    percentDiscount: number,
+    discountPrice: string,
+    finalPrice: string
+}
 
+export function calculateDiscountPrice(personIndex: number, property: IProperty, _openTotalRooms?: number): IFinalDiscountPrice {
+    const openTotalRooms = _openTotalRooms ?? property?.propertyTotal;
     const _price = property.floorArea*property.pricePerSquare;;
 
     if(personIndex > openTotalRooms) {
-        return _price
+        return {
+            personPosition: personIndex+1,
+            percentAddFromFollower: 0,
+            percentDiscount: 0,
+            discountPrice: formatter.format(_price*1),
+            finalPrice: formatter.format(_price)
+        }
     }
 
     const discountPercentPerson: number = openTotalRooms === 10 ? 0.1 : (openTotalRooms > 20 ? 0.2 : 0.15),
@@ -66,7 +80,7 @@ export function calculateDiscountPrice(personIndex: number, openTotalRooms: numb
     discountPrice = _price-(_price*discountIncludes());
     
     console.log(`calculateDiscountPrice - ${personIndex === 0 ? "First position" : (personIndex > 0 && personIndex < openTotalRooms ? `Position ${personIndex+1}` : "Last position")}: `, Number((discountIncludes()*100).toFixed(5)), formatter.format(discountPrice));
-    
+
     return {
         personPosition: personIndex+1,
         percentAddFromFollower: percentAddFromFollower(),
@@ -74,4 +88,24 @@ export function calculateDiscountPrice(personIndex: number, openTotalRooms: numb
         discountPrice: formatter.format(_price*discountIncludes()),
         finalPrice: formatter.format(discountPrice)
     }
+}
+
+export const getPrice = (num: number, isShort?: boolean) => {
+    if(isShort) {
+        const units = ["million", "billion", "T", "Q"];
+        const unit = Math.floor((num / 1.0e1).toFixed(0).toString().length);
+        const r = unit % 3;
+        const x =
+        Math.abs(Number(num)) / (Number("1.0e+" + (unit - r)).toFixed(2) as any);
+        return x.toFixed(2) + " " + units[Math.floor(unit / 3) - 2] + " VND";
+    }
+    else {
+        return formatter.format(num);
+    }
+    
+};
+
+/** Split random real estate items */
+export function splitRandomRes(arr: any[]){
+    return arr[Math.floor(Math.random()*arr.length)]
 }

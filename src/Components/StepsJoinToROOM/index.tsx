@@ -9,6 +9,8 @@ import StepThree from "./components/stepThree";
 import StepFourth from "./components/stepFourth";
 import ListRealEstate from "../SalePage/listRealEstate";
 import RealEstateItem from "../SalePage/realEstateItem";
+import { splitRandomRes } from "Components/rdutil";
+import { RealEstates } from "Components/datas";
 
 export interface ISettings {
   totalCounter: number;
@@ -116,7 +118,7 @@ export default function StepsJoinToRoom(props: IStepjoinRoom) {
         }}
       />
       <Box className="similar-projects">
-        <ListRealEstate />
+        <ListRealEstate data={splitRandomRes(RealEstates)} />
       </Box>
     </Box>
   );

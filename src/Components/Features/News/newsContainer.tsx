@@ -4,6 +4,8 @@ import Carousel from "../Carousel";
 import RealEstateRegions from "../RealEstateRegions";
 import ListRealEstate from "../../SalePage/listRealEstate";
 import RealNews from ".";
+import { splitRandomRes } from "Components/rdutil";
+import { RealEstates } from "Components/datas";
 
 export default function NewsContainer() {
   return (
@@ -20,6 +22,7 @@ export default function NewsContainer() {
         {/** Real Estate on Sale */}
         <Box sx={{ paddingTop: "50px" }}>
           <ListRealEstate
+            data={splitRandomRes(RealEstates)}
             handleListSearch={function (searchOpts: any): void {
               throw new Error("Function not implemented.");
             }}
