@@ -4,15 +4,19 @@ import { Route, Routes } from "react-router-dom";
 import ChatRoomService from "./Services/ChatRoomService"
 import ChatRoomList from "./Views/ChatRoomList";
 import ChatView from "./Views/ChatView";
-import { Message } from "./Models/MessageModel";
+import { Message, RealEstates, IRealEstates, Room } from "../datas";
 
 
 export default function ChatRoomContainer() 
 {
   const chatRoomService = new ChatRoomService();
-  const rooms = chatRoomService.getRooms();
+  const [rooms] = useState(chatRoomService.getRooms());
+  const realEstates = RealEstates
   const [selectedRoomId, setSelectedRoomId] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
+  const [randomRealEstate] = useState(() => realEstates[Math.floor(Math.random() * realEstates.length)]);
+  const [roomConfigurationed, setRoomConfigurationed] = useState<Room[]>([]);
+  
 
 
   const handleRoomClick = (roomId: string) => {
@@ -32,6 +36,17 @@ export default function ChatRoomContainer()
     }
   }, [selectedRoomId]);
 
+  useEffect(() => {
+    setRoomConfigurationed(rooms.map((room) => {
+      return {
+        ...room,
+        RealEstateId: randomRealEstate.id.toString(),
+        id: chatRoomService.getRoomId(randomRealEstate.id, randomRealEstate.title, randomRealEstate.location, new Date().toLocaleString()),
+        room: chatRoomService.getRoomName(randomRealEstate.title, new Date().toLocaleString())
+      };
+    }));
+  }, [rooms]);
+
   return (
     <Box className="chat-room-container"
         sx={{
@@ -50,7 +65,7 @@ export default function ChatRoomContainer()
               padding: "10px",
               borderRadius: "10px",
           }}>
-        <ChatRoomList rooms={rooms} onRoomClick={handleRoomClick} />
+        <ChatRoomList rooms={roomConfigurationed} onRoomClick={handleRoomClick} />
       </Box>
 
       <Box className="chat-zone"
@@ -62,17 +77,16 @@ export default function ChatRoomContainer()
               ml: 1
           }}>
           <Routes>
-            {rooms.map((room) => (
+            {roomConfigurationed.map((room) => (
               <Route key={room.id} 
                 path={`/chat/room/${room.id}`} 
-                element=
-                  {
-                    <ChatView key={room.id} 
-                      roomId={room.id} 
-                      roomMessages={messages}/>
-                  } />
+                element={
+                  <ChatView key={room.id} 
+                    roomId={room.id} 
+                    roomMessages={messages}/>
+                } />
             ))}
-          </Routes>
+        </Routes>
       </Box>
     </Box>
   );

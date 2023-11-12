@@ -1,13 +1,10 @@
-import { Message } from '../Models/MessageModel';
-import { Room } from '../Models/RoomModel';
-import { getRooms } from "../../datas"
-
+import { RealEstates, Message, Room, getRooms } from "../../datas"
 
 export default class ChatRoomService
 {
     getMessages = (roomId: string): Message[] => {
         return Array.from({ length: 30 }, (_, item) => {
-          const id = `message${item + 1}`;
+          const id = `${item + 1}`;
           const isAgency = item % 2 === 0;
           const date = new Date().toLocaleString();
           const title = `Message Title ${item + 1}`;
@@ -22,4 +19,14 @@ export default class ChatRoomService
     {
         return getRooms
     } 
+
+    getRoomId(RealEstatesId: number, RealEstatesTitle: string, RealEstatesLocation: string, CreateTIme: string)
+    {
+        return RealEstatesId.toString() + RealEstatesTitle + RealEstatesLocation + CreateTIme
+    }
+
+    getRoomName(RealEstatesTitle: string, CreateTIme: string)
+    {
+        return RealEstatesTitle + CreateTIme
+    }
 }

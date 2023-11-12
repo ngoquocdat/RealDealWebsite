@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box, TextField, Button, List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@mui/material';
-import { Message } from '../Models/MessageModel';
+import { Message, chatAvatar } from '../../datas';
 
 interface ChatRoomListProps {
     roomId: string;
@@ -43,7 +43,7 @@ export default function ChatView({ roomId, roomMessages }: ChatRoomListProps)
         };
         setTitle("")
         setAgency(true);
-        setAvatar("https://th.bing.com/th/id/R.588e9f4570ef5ddee0ef2f0c3eb4d237?rik=VDy%2fh%2ffN3XJm6Q&amp;pid=ImgRaw&amp;r=0");
+        setAvatar(chatAvatar);
         setMessages([...messages, newMessage]);
         setInput("");
     };

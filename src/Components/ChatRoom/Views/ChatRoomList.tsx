@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { Room } from "../Models/RoomModel";
+import { Room } from "../../datas";
 import { Link } from "react-router-dom";
 
 interface ChatRoomListProps {

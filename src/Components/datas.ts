@@ -51,7 +51,8 @@ export type Message = {
 export type Room = {
   id: string,
   room: string,
-  lastTimeChat: number,
+  RealEstateId: string,
+  lastTimeChat: string,
   lastMessage: string
 }
 
@@ -622,40 +623,46 @@ const getAboutUs= [
 ] 
 
 const getRooms= [{
-  id: "1",
-  room: "Living Room",
-  lastTimeChat: 1636465576,
+  id: "",
+  room: "",
+  RealEstateId: "",
+  lastTimeChat: new Date().toLocaleString(),
   lastMessage: "Hello, how are you?"
 },
 {
-  id: "2",
-  room: "Kitchen",
-  lastTimeChat: 1636465577,
+  id: "",
+  room: "",
+  RealEstateId: "",
+  lastTimeChat: new Date().toLocaleString(),
   lastMessage: "What's for dinner?"
 },
 {
-  id: "3",
-  room: "Bedroom",
-  lastTimeChat: 1636465578,
+  id: "",
+  room: "",
+  RealEstateId: "",
+  lastTimeChat: new Date().toLocaleString(),
   lastMessage: "Good night!"
 },
 {
-  id: "4",
-  room: "Bathroom",
-  lastTimeChat: 1636465579,
+  id: "",
+  room: "",
+  RealEstateId: "",
+  lastTimeChat: new Date().toLocaleString(),
   lastMessage: "Need more toilet paper."
 },
 {
-  id: "5",
-  room: "Garage",
-  lastTimeChat: 1636465580,
+  id: "",
+  room: "",
+  RealEstateId: "",
+  lastTimeChat: new Date().toLocaleString(),
   lastMessage: "Car needs an oil change."
 }];
 
+const chatAvatar = `https://th.bing.com/th/id/R.588e9f4570ef5ddee0ef2f0c3eb4d237?rik=VDy%2fh%2ffN3XJm6Q&amp;pid=ImgRaw&amp;r=0`
 
 export {
     RealEstates,
     theBestProperties,
     carousels,
-    getAboutUs, getRooms
+    getAboutUs, getRooms, chatAvatar
 };

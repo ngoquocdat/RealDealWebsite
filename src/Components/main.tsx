@@ -3,10 +3,6 @@ import GTranslateIcon from "@mui/icons-material/GTranslate";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Box, Typography } from "@mui/material";
 import { RealDealContext } from "./context";
-import ChatRoom from "./ChatRoom";
-
-import NewsContainer from "./Features/News/newsContainer";
-
 import "./index.scss";
 import SalesContainer from "./SalePage/salesContainer";
 import SignUp from "./Features/Signup";
@@ -18,6 +14,7 @@ import { RealEstates } from "./datas";
 import ChatRoomPage from "./ChatRoom/ChatRoomContainer";
 import ChatRoomContainer from "./ChatRoom/ChatRoomContainer";
 import AboutUsContainer from "./Features/AboutUs/AboutUsContainer";
+import NewsContainer from "./Features/News/newsContainer";
 
 //const router = createBrowserRouter([
 //   {
