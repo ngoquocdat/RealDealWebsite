@@ -48,7 +48,7 @@ export default function MainContainer() {
     if (window.location.pathname === "/news") {
       redirectComp = <NewsContainer />;
     } else if (window.location.pathname === "/chat") {
-      redirectComp = <div>Chat Room</div>;
+      redirectComp = <ChatRoomContainer />;
     } else if (window.location.pathname === "/about") {
       redirectComp = <div>About Us</div>;
     } else if (window.location.pathname === "/property") {
@@ -163,9 +163,7 @@ export default function MainContainer() {
               </div>
             </header>
             {gotoChatRoom ? (
-              <div className="chatRoom">
-                <ChatRoom />
-              </div>
+              <div className="chatRoom"></div>
             ) : (
               <div className="contents">
                 {isRegistered && selectedREs && isProcessJoinRoom ? (
