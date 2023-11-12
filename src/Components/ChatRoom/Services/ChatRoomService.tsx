@@ -8,7 +8,7 @@ export default class ChatRoomService
         return Array.from({ length: 30 }, (_, item) => {
           const id = `message${item + 1}`;
           const isAgency = item % 2 === 0;
-          const date = Date.now() - item * 1000;
+          const date = new Date().toLocaleString();
           const title = `Message Title ${item + 1}`;
           const text = `This is a longer message number ${item + 1} from ${roomId}. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.`;
           const avatar = `https://th.bing.com/th/id/R.588e9f4570ef5ddee0ef2f0c3eb4d237?rik=VDy%2fh%2ffN3XJm6Q&amp;pid=ImgRaw&amp;r=0`

@@ -5,7 +5,7 @@ export type Message = {
   isAgency: boolean
   title: string,
   text?: string,
-  date: number,
+  date: string,
   avatar: string,
   fileUrls?: { name: string, url: string }[],
   imageUrls?: { name: string, url: string }[]
