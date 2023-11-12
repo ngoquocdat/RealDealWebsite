@@ -6,7 +6,6 @@ import ChatRoomList from "./Views/ChatRoomList";
 import ChatView from "./Views/ChatView";
 import { Message, RealEstates, IRealEstates, Room } from "../datas";
 
-
 export default function ChatRoomContainer() 
 {
   const chatRoomService = new ChatRoomService();
@@ -17,8 +16,6 @@ export default function ChatRoomContainer()
   const [randomRealEstate] = useState(() => realEstates[Math.floor(Math.random() * realEstates.length)]);
   const [roomConfigurationed, setRoomConfigurationed] = useState<Room[]>([]);
   
-
-
   const handleRoomClick = (roomId: string) => {
     setSelectedRoomId(prevRoomId => {
       if (roomId !== prevRoomId) 
@@ -84,7 +81,7 @@ export default function ChatRoomContainer()
                   <ChatView key={room.id} 
                     roomId={room.id} 
                     roomMessages={messages}/>
-                } />
+                }/>
             ))}
         </Routes>
       </Box>

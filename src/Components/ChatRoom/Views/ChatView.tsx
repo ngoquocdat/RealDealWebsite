@@ -38,7 +38,7 @@ export default function ChatView({ roomId, roomMessages }: ChatRoomListProps)
             isAgency: isAgency,
             title: title,
             text: input,
-            date: Date.now().toLocaleString(),
+            date: new Date().toLocaleString(),
             avatar: avatar
         };
         setTitle("")
