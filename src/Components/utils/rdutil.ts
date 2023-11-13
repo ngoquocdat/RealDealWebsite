@@ -101,11 +101,17 @@ export const getPrice = (num: number, isShort?: boolean) => {
     }
     else {
         return formatter.format(num);
-    }
-    
+    }  
 };
 
 /** Split random real estate items */
 export function splitRandomRes(arr: any[]){
     return arr[Math.floor(Math.random()*arr.length)]
+}
+
+export const handleScrollToTop = (elementRef?: any) => {
+    const _options = { top: 0, behavior: "smooth" };
+    const targetEl = elementRef ?? window;
+    targetEl.scrollTo(_options);
+    return;
 }

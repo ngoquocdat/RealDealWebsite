@@ -3,7 +3,10 @@ import { Box, Button, Chip, TextField, Typography } from "@mui/material";
 import { formatter, roomInfo } from "../datas";
 import { IContext, RealDealContext } from "../../utils/context";
 import { ISettingsRoom } from "..";
-import { calculateDiscountPrice } from "Components/utils/rdutil";
+import {
+  calculateDiscountPrice,
+  handleScrollToTop,
+} from "Components/utils/rdutil";
 
 interface IStepOne {
   errors: any;
@@ -21,6 +24,7 @@ export default function StepOne(props: IStepOne) {
     settingsRoom.settings.counter
   );
   const [discountPrice, setDiscountPrice] = React.useState<any>(null);
+  const stepOneRef = React.useRef(null);
 
   const handleDiscountPrice = (memberCounter: number) => {
     const members = Array.from(
@@ -43,8 +47,12 @@ export default function StepOne(props: IStepOne) {
     handleDiscountPrice(memberCount);
   }, [memberCount]);
 
+  React.useEffect(() => {
+    (() => handleScrollToTop())();
+  });
+
   return (
-    <Box className="content-container">
+    <Box className="content-container" ref={stepOneRef}>
       <Box className="contents">
         <Box className="room-info">
           {roomInfo.map((info) => {

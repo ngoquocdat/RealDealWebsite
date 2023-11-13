@@ -13,7 +13,7 @@ import { IContext, RealDealContext } from "../../utils/context";
 import ListRealEstate from "../../SalePage/listRealEstate";
 import RealEstateItem from "../../SalePage/realEstateItem";
 import { RealEstates } from "Components/utils/datas";
-import { splitRandomRes } from "Components/utils/rdutil";
+import { handleScrollToTop, splitRandomRes } from "Components/utils/rdutil";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -40,7 +40,8 @@ export default function FullScreenDialog(props: IFulllScreenDialog) {
   };
 
   const handleScrollTop = () => {
-    (divRef.current as any)?.scrollTo({ top: 0, behavior: "smooth" });
+    // (divRef.current as any)?.scrollTo({ top: 0, behavior: "smooth" });
+    handleScrollToTop(divRef.current);
   };
 
   return (
