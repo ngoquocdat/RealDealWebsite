@@ -7,10 +7,11 @@ import { RealDealContext } from "./utils/context";
 import NewsContainer from "./Features/News/newsContainer";
 import AboutUsContainer from "./Features/AboutUs/AboutUsContainer";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
+import SignUp from "./Features/Signup";
 import ChatRoomContainer from "./ChatRoom/ChatRoomContainer";
 import SalesContainer from "./SalePage/salesContainer";
 import StepsJoinToRoom from "./StepsJoinToROOM";
-import SignUp from "./Features/Signup";
+
 import testReadFile from "./utils/translate";
 
 export function uniq(a: any) {
