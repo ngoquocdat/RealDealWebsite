@@ -2,7 +2,7 @@ import React from "react";
 import GTranslateIcon from "@mui/icons-material/GTranslate";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Box, Typography } from "@mui/material";
-import { RealDealContext } from "./context";
+import { RealDealContext } from "./utils/context";
 import ChatRoom from "./ChatRoom";
 
 import NewsContainer from "./Features/News/newsContainer";
@@ -12,6 +12,8 @@ import SalesContainer from "./SalePage/salesContainer";
 import SignUp from "./Features/Signup";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
 import StepsJoinToRoom from "./StepsJoinToROOM";
+import ChatRoomContainer from "./ChatRoom/ChatRoomContainer";
+import testReadFile from "./utils/translate";
 
 export function uniq(a: any) {
   return a.sort().filter(function (item: any, pos: any, ary: any) {
@@ -60,6 +62,7 @@ export default function MainContainer() {
   };
 
   const contextObj: any = {
+    translate: testReadFile(),
     register: {
       isUserRegistered: isRegistered,
       setIsUserRegistered: setIsRegistered,
@@ -131,10 +134,6 @@ export default function MainContainer() {
       </li>
     ));
   };
-
-  React.useEffect(() => {
-    console.log("isRegistered && selectedREs: ", isRegistered && selectedREs);
-  });
 
   return (
     <RealDealContext.Provider value={contextObj}>

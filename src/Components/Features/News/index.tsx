@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Chip, Skeleton, TextField } from "@mui/material";
-import { IContext, RealDealContext } from "../../context";
+import { IContext, RealDealContext } from "../../utils/context";
 import { NavigateBefore, NavigateNext } from "@mui/icons-material";
 import NewsList from "./newsList";
 import RDSearch from "../Search";

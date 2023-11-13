@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
-import { IContext, RealDealContext } from "../../context";
+import { IContext, RealDealContext } from "../../utils/context";
 
 interface IStepFourth {
   toChatRoom: React.Dispatch<React.SetStateAction<boolean>>;

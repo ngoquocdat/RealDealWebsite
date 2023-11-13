@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, Button, Chip, TextField, Typography } from "@mui/material";
 import { formatter, roomInfo } from "../datas";
-import { IContext, RealDealContext } from "../../context";
+import { IContext, RealDealContext } from "../../utils/context";
 import { ISettingsRoom } from "..";
-import { calculateDiscountPrice } from "Components/rdutil";
+import { calculateDiscountPrice } from "Components/utils/rdutil";
 
 interface IStepOne {
   errors: any;
@@ -23,14 +23,10 @@ export default function StepOne(props: IStepOne) {
   const [discountPrice, setDiscountPrice] = React.useState<any>(null);
 
   const handleDiscountPrice = (memberCounter: number) => {
-    // const members = new Array(memberCounter);
-    // .fill(null)
-    // .map((_, i) => i);
     const members = Array.from(
       { length: memberCounter },
       (_, idx) => `${++idx}`
     );
-    console.log("handleDiscountPrice members: ", members);
     const _priceTable = members.map((mem, index) => {
       const priceobj = calculateDiscountPrice(
         index,
@@ -44,7 +40,6 @@ export default function StepOne(props: IStepOne) {
   };
 
   React.useEffect(() => {
-    console.log("memberCount: ", memberCount);
     handleDiscountPrice(memberCount);
   }, [memberCount]);
 
@@ -143,7 +138,7 @@ export default function StepOne(props: IStepOne) {
                 setMemberCount(evt?.target.value);
                 if (
                   evt?.target.value > 30 ||
-                  evt?.target.value < 5 ||
+                  evt?.target.value < 10 ||
                   !evt?.target.value
                 ) {
                   setError([
@@ -171,7 +166,10 @@ export default function StepOne(props: IStepOne) {
                 }
               }}
             />
-            / <Typography>{selectedRealEstate?.selectedREs?.total}</Typography>
+            /{" "}
+            <Typography>
+              {selectedRealEstate?.selectedREs?.propertyTotal}
+            </Typography>
           </Box>
           {errors.find((error: any) => error.fieldError === "roomCounter") ? (
             <Typography sx={{ color: "red", paddingTop: "10px" }}>
@@ -205,7 +203,7 @@ export default function StepOne(props: IStepOne) {
             }}
           >
             {`${
-              discountPrice
+              discountPrice && errors?.length === 0
                 ? discountPrice.finalPrice
                 : formatter.format(
                     selectedRealEstate?.selectedREs?.floorArea *

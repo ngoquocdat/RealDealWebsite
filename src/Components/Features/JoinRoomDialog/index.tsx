@@ -16,7 +16,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 
 import "./index.scss";
-import { IContext, RealDealContext } from "../../context";
+import { IContext, RealDealContext } from "../../utils/context";
 import SignUp from "../Signup";
 
 export interface SimpleDialogProps {

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { formatter, paymentInfo } from "../datas";
-import { IContext, RealDealContext } from "../../context";
+import { IContext, RealDealContext } from "../../utils/context";
 import { ISettings } from "..";
 
 interface IStepTwo {
@@ -30,6 +30,9 @@ export default function StepTwo(props: IStepTwo) {
         {paymentInfo.map((info) => {
           if (info.type === "currency" && !openFee) {
             setOpenFee(Number(info.value));
+          }
+          if (info.key === "memberCounter") {
+            info.value = `${settings.counter}`;
           }
           return (
             <Box className="info-wrapper">

@@ -4,8 +4,8 @@ import Carousel from "../Carousel";
 import RealEstateRegions from "../RealEstateRegions";
 import ListRealEstate from "../../SalePage/listRealEstate";
 import RealNews from ".";
-import { splitRandomRes } from "Components/rdutil";
-import { RealEstates } from "Components/datas";
+import { splitRandomRes } from "Components/utils/rdutil";
+import { RealEstates } from "Components/utils/datas";
 
 export default function NewsContainer() {
   return (

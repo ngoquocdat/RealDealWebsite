@@ -4,8 +4,8 @@ import BestChoiceRealEstate from "./bestChoiceRealEstate";
 import ListRealEstate from "./listRealEstate";
 import RDSearch from "../Features/Search";
 import FullScreenDialog from "../Features/DetailsDialog";
-import { IContext, RealDealContext } from "../context";
-import { IRealEstates, RealEstates } from "Components/datas";
+import { IContext, RealDealContext } from "../utils/context";
+import { IRealEstates, RealEstates } from "Components/utils/datas";
 
 export default function SalesContainer() {
   const [dataBestChoice, setDataBestChoice] = React.useState<IRealEstates[]>(

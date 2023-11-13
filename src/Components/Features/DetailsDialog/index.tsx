@@ -9,11 +9,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { Box, DialogContent } from "@mui/material";
-import { IContext, RealDealContext } from "../../context";
+import { IContext, RealDealContext } from "../../utils/context";
 import ListRealEstate from "../../SalePage/listRealEstate";
 import RealEstateItem from "../../SalePage/realEstateItem";
-import { RealEstates } from "Components/datas";
-import { splitRandomRes } from "Components/rdutil";
+import { RealEstates } from "Components/utils/datas";
+import { splitRandomRes } from "Components/utils/rdutil";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -115,7 +115,7 @@ export default function FullScreenDialog(props: IFulllScreenDialog) {
           )}
           {/** Real estate on selected */}
           <Box>
-            {selectedRealEstate.selectedREs && (
+            {selectedRealEstate?.selectedREs && (
               <RealEstateItem
                 realestate={selectedRealEstate?.selectedREs}
                 posts={[]}
