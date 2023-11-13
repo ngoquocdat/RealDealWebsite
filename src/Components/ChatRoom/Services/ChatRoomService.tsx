@@ -1,4 +1,5 @@
-import { RealEstates, Message, Room, getRooms } from "../../datas"
+import { Message, Room, getRooms } from "Components/utils/datas";
+
 
 export default class ChatRoomService
 {

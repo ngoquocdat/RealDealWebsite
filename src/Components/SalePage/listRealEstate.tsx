@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-import { IRealEstates, RealEstates } from "../datas";
+import { IRealEstates, RealEstates } from "../utils/datas";
 import RDSearch from "../Features/Search";
-import { IContext, RealDealContext } from "../context";
+import { IContext, RealDealContext } from "../utils/context";
 import RealEstateItem from "./realEstateItem";
 interface IListRealEstate {
   length?: number;

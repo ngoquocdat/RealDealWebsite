@@ -1,7 +1,7 @@
 import React from "react";
 import { AboutUs } from "./Models/AboutUsModel";
 import { Box, ImageListItem, List, ListItem, ListItemText, Typography } from "@mui/material";
-import { getAboutUs } from "Components/datas";
+import { getAboutUs } from "Components/utils/datas";
 
 interface AboutUsContainerProps
 {

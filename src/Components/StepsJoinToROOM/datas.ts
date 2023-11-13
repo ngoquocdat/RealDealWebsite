@@ -74,7 +74,8 @@ export const paymentInfo = [
         position: "left",
         type: "text"
     },
-    {
+    {   
+        key: "memberCounter",
         label: 'Số lượng thành viên tối đa:',
         value: '10',
         position: "left",

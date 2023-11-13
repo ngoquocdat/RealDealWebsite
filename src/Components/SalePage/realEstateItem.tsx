@@ -11,9 +11,9 @@ import FactoryIcon from "@mui/icons-material/Factory";
 import WaterIcon from "@mui/icons-material/Water";
 import HomeIcon from "@mui/icons-material/Home";
 import React, { useEffect } from "react";
-import { IRealEstates } from "../datas";
-import { IContext, RealDealContext, lorem } from "../context";
-import { calculateDiscountPrice, getPrice } from "Components/rdutil";
+import { IRealEstates } from "../utils/datas";
+import { IContext, RealDealContext, lorem } from "../utils/context";
+import { calculateDiscountPrice, getPrice } from "Components/utils/rdutil";
 interface IRealEstateItem {
   onBooking?: boolean;
   scrollTop?: () => void;

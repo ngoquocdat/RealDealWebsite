@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
-import { IContext, RealDealContext, lorem } from "../../context";
+import { IContext, RealDealContext, lorem } from "../../utils/context";
 
 interface INewsList {
   counter: string[];

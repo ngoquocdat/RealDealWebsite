@@ -4,7 +4,8 @@ import { Route, Routes } from "react-router-dom";
 import ChatRoomService from "./Services/ChatRoomService"
 import ChatRoomList from "./Views/ChatRoomList";
 import ChatView from "./Views/ChatView";
-import { Message, RealEstates, IRealEstates, Room } from "../datas";
+import { Message, RealEstates, Room } from "Components/utils/datas";
+
 
 export default function ChatRoomContainer() 
 {
@@ -16,6 +17,8 @@ export default function ChatRoomContainer()
   const [randomRealEstate] = useState(() => realEstates[Math.floor(Math.random() * realEstates.length)]);
   const [roomConfigurationed, setRoomConfigurationed] = useState<Room[]>([]);
   
+
+
   const handleRoomClick = (roomId: string) => {
     setSelectedRoomId(prevRoomId => {
       if (roomId !== prevRoomId) 
@@ -34,12 +37,16 @@ export default function ChatRoomContainer()
   }, [selectedRoomId]);
 
   useEffect(() => {
-    setRoomConfigurationed(rooms.map((room) => {
+    setRoomConfigurationed(rooms.map((room, index) => {
       return {
         ...room,
         RealEstateId: randomRealEstate.id.toString(),
-        id: chatRoomService.getRoomId(randomRealEstate.id, randomRealEstate.title, randomRealEstate.location, new Date().toLocaleString()),
-        room: chatRoomService.getRoomName(randomRealEstate.title, new Date().toLocaleString())
+        id: chatRoomService.getRoomId(randomRealEstate.id, 
+                                      randomRealEstate.title, 
+                                      randomRealEstate.location, 
+                                      new Date().toLocaleString()),
+        room: chatRoomService.getRoomName(randomRealEstate.title, 
+                                          `${new Date().getHours().toString()}:${new Date().getMinutes().toString()}`)
       };
     }));
   }, [rooms]);

@@ -17,9 +17,9 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import AddRoadIcon from "@mui/icons-material/AddRoad";
 import FactoryIcon from "@mui/icons-material/Factory";
 import WaterIcon from "@mui/icons-material/Water";
-import { IRealEstates } from "../datas";
-import { getPrice } from "Components/rdutil";
-import { IContext, RealDealContext } from "Components/context";
+import { IRealEstates } from "../utils/datas";
+import { getPrice } from "Components/utils/rdutil";
+import { IContext, RealDealContext } from "Components/utils/context";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -64,9 +64,13 @@ const styleDefined = (): IStyleDefined => {
 };
 
 export default function BestChoiceRealEstate({ data }: IBestChoiceRealEstate) {
-  const { selectedRealEstate, detailsDialog } =
+  const { selectedRealEstate, detailsDialog, translate } =
     React.useContext<IContext>(RealDealContext);
   const sxStyled = styleDefined();
+
+  React.useEffect(() => {
+    console.log("translate keys: ", translate);
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>

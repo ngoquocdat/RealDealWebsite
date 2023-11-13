@@ -1,16 +1,17 @@
 import React from "react";
+import "./index.scss";
 import GTranslateIcon from "@mui/icons-material/GTranslate";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Box, Typography } from "@mui/material";
-import { RealDealContext } from "./context";
-import "./index.scss";
-import SalesContainer from "./SalePage/salesContainer";
-import SignUp from "./Features/Signup";
-import JoinRoomDialog from "./Features/JoinRoomDialog";
-import StepsJoinToRoom from "./StepsJoinToROOM";
+import { RealDealContext } from "./utils/context";
 import NewsContainer from "./Features/News/newsContainer";
-import ChatRoomContainer from "./ChatRoom/ChatRoomContainer";
 import AboutUsContainer from "./Features/AboutUs/AboutUsContainer";
+import JoinRoomDialog from "./Features/JoinRoomDialog";
+import ChatRoomContainer from "./ChatRoom/ChatRoomContainer";
+import SalesContainer from "./SalePage/salesContainer";
+import StepsJoinToRoom from "./StepsJoinToROOM";
+import SignUp from "./Features/Signup";
+import testReadFile from "./utils/translate";
 
 export function uniq(a: any) {
   return a.sort().filter(function (item: any, pos: any, ary: any) {
@@ -59,6 +60,7 @@ export default function MainContainer() {
   };
 
   const contextObj: any = {
+    translate: testReadFile(),
     register: {
       isUserRegistered: isRegistered,
       setIsUserRegistered: setIsRegistered,
@@ -130,10 +132,6 @@ export default function MainContainer() {
       </li>
     ));
   };
-
-  React.useEffect(() => {
-    console.log("isRegistered && selectedREs: ", isRegistered && selectedREs);
-  });
 
   return (
     <RealDealContext.Provider value={contextObj}>

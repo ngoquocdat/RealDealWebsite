@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { IContext, RealDealContext } from "../context";
+import { IContext, RealDealContext } from "../utils/context";
 import StepOne from "./components/stepOne";
 import StepTwo from "./components/stepTwo";
 
@@ -9,8 +9,8 @@ import StepThree from "./components/stepThree";
 import StepFourth from "./components/stepFourth";
 import ListRealEstate from "../SalePage/listRealEstate";
 import RealEstateItem from "../SalePage/realEstateItem";
-import { splitRandomRes } from "Components/rdutil";
-import { RealEstates } from "Components/datas";
+import { splitRandomRes } from "Components/utils/rdutil";
+import { RealEstates } from "Components/utils/datas";
 
 export interface ISettings {
   totalCounter: number;

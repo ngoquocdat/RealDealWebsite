@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React, { FormEvent, useState } from "react";
 import { Box, TextField, Button, List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@mui/material';
-import { Message, chatAvatar } from '../../datas';
+import { Message, chatAvatar } from 'Components/utils/datas';
+
 
 interface ChatRoomListProps {
     roomId: string;
@@ -9,13 +10,13 @@ interface ChatRoomListProps {
 
 export default function ChatView({ roomId, roomMessages }: ChatRoomListProps) 
 {
-    const [messages, setMessages] = React.useState(roomMessages as Message[]);
-    const [input, setInput] = React.useState('');
-    const [title, setTitle] = React.useState('');
-    const [isAgency, setAgency] = React.useState(true);
-    const [avatar, setAvatar] = React.useState('');
+    const [messages, setMessages] = useState(roomMessages as Message[]);
+    const [input, setInput] = useState('');
+    const [title, setTitle] = useState('');
+    const [isAgency, setAgency] = useState(true);
+    const [avatar, setAvatar] = useState('');
 
-    const onSendButtonClicked = (event: React.FormEvent) =>
+    const onSendButtonClicked = (event: FormEvent) =>
     {
         handleSend(event)
     }

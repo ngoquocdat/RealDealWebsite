@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Chip, TextField } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { AvatarGenerator } from "random-avatar-generator";
-import { IContext, RealDealContext } from "../../context";
+import { IContext, RealDealContext } from "../../utils/context";
 
 import "./index.scss";
 import { defaultLogin } from "../../StepsJoinToROOM/datas";

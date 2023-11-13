@@ -1,7 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 import Button from "@mui/material/Button";
 import React from "react";
-import { IContext, RealDealContext, lorem } from "../../context";
+import { IContext, RealDealContext, lorem } from "../../utils/context";
 
 export default function Carousel() {
   const [position, setPosition] = React.useState<number>(1);
