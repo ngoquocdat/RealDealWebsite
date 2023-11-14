@@ -469,7 +469,7 @@ const carousels = [
 const getAboutUs= [
   {
       id: "1",
-      title: "",
+      title: "Why us ?",
       header: "Chào mừng tới RealDeal",
       text: "Không cần mua sỉ mới có giá rẻ, tại RealDeal bạn chỉ cần mua theo nhóm là sẽ có được mức giá rất phải chăng. Chất lượng và số lượng hàng hóa tại RealDeal cũng rất đa dạng, nên nếu có nhu cầu mua sắm Bất Động Sản thì RealDeal là một gợi ý hoàn hảo dành cho bạn.",
       fileUrls: [
@@ -478,13 +478,13 @@ const getAboutUs= [
       ],
       imageUrls: [
         { name: "Logo", url: "https://www.example.com/logo.png" },
-        { name: "Banner", url: "https://www.example.com/banner.png" }
+        { name: "Banner", url: "https://offer.rever.vn/hubfs/chinh-sach-ho-tro-tai-chinh-kich-cau-thi-truong-bat-dong-san-cuoi-nam-1.jpg" }
       ]
   },
   {
       id: "2",
-      title: "Realdeal Là Gì?",
-      header: "",
+      title: "Who we are ?",
+      header: "Realdeal Là Gì?",
       text: `Realdeal là một trang thương mại điện tử về lĩnh vực Bất Động Sản được thành lập năm 2023 bởi Công ty TNHH Truyền thông SEEU. Realdeal cung cấp đa dạng các sản phẩm trong lĩnh vực Bất Động Sản từ Căn hộ chung cư, Nhà phố, Đất nền, Bất động sản nghỉ dưỡng, Shophouse, Officetel,… đáp ứng được hầu hết các nhu cầu của khách hàng.
              Tuy nhiên, thay vì tập trung vào mô hình kinh doanh B2B hay B2C, RealDeal lại áp dụng một hình thức mới: “mua theo nhóm” – kết hợp mạng xã hội vào mua sắm. 
              Tại đây, khách hàng có thể tạo nhóm bạn bè, người thân, thậm chí là những người xa lạ với nhau để cùng mua một mặt hàng về Bất Động Sản với giá “hời” hơn rất nhiều.
@@ -500,8 +500,8 @@ const getAboutUs= [
   },
   {
       id: "3",
-      title: "Mua sắm theo nhóm",
-      header: "Những Lợi Thế Nổi Bật Của RealDeal",
+      title: "Our mindset",
+      header: "Mua sắm theo nhóm",
       text: `Mua sắm theo nhóm là cốt lõi của RealDeal. Tại đây, người dùng có hai sự lựa chọn cụ thể:
              Mua lẻ cho cá nhân: Hình thức mua lẻ thông thường..
              Mua theo nhóm: Bạn sẽ khởi tạo nhóm mới hoặc tham gia một nhóm mua hàng có sẵn. Trong thời gian quy định, nếu những thành viên tham gia đủ số lượng mua trên RealDeal thì đơn hàng của bạn sẽ được xác nhận.
@@ -518,8 +518,8 @@ const getAboutUs= [
   },
   {
       id: "4",
-      title: "Không giới hạn khu vực",
-      header: "",
+      title: "Our mindset",
+      header: "Không giới hạn khu vực",
       text: `RealDeal không chỉ tập trung phát triển tại những thành phố lớn mà còn phân bổ nhiều dự án ở mọi khu vực trải dài khắp cả nước. Đối với khu vực ngoại ô, tuy có mức sống không cao như thành thị nhưng với sự phát triển nhanh chóng của nền kinh tế, kỹ thuật số, nhóm khách hàng khu vực ngoại ô rất cực kỳ tiềm năng.
              Đặc biệt, người có thu nhập thấp thường hướng đến những sản phẩm chất lượng – giá tốt, rất hợp với hình thức mua sắm theo nhóm của RealDeal.`,
       fileUrls: [
@@ -533,8 +533,8 @@ const getAboutUs= [
   },
   {
       id: "5",
-      title: "Giá cả cạnh tranh",
-      header: "",
+      title: "Our mindset",
+      header: "Giá cả cạnh tranh",
       text: `RealDeal không chỉ tập trung phát triển tại những thành phố lớn mà còn phân bổ nhiều dự án ở mọi khu vực trải dài khắp cả nước. Đối với khu vực ngoại ô, tuy có mức sống không cao như thành thị nhưng với sự phát triển nhanh chóng của nền kinh tế, kỹ thuật số, nhóm khách hàng khu vực ngoại ô rất cực kỳ tiềm năng.
              Đặc biệt, người có thu nhập thấp thường hướng đến những sản phẩm chất lượng – giá tốt, rất hợp với hình thức mua sắm theo nhóm của RealDeal.`,
       fileUrls: [
