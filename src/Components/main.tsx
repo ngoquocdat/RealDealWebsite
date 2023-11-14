@@ -1,18 +1,17 @@
 import React from "react";
+import "./index.scss";
 import GTranslateIcon from "@mui/icons-material/GTranslate";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Box, Typography } from "@mui/material";
 import { RealDealContext } from "./utils/context";
-import ChatRoom from "./ChatRoom";
-
 import NewsContainer from "./Features/News/newsContainer";
-
-import "./index.scss";
-import SalesContainer from "./SalePage/salesContainer";
-import SignUp from "./Features/Signup";
+import AboutUsContainer from "./Features/AboutUs/AboutUsContainer";
 import JoinRoomDialog from "./Features/JoinRoomDialog";
-import StepsJoinToRoom from "./StepsJoinToROOM";
+import SignUp from "./Features/Signup";
 import ChatRoomContainer from "./ChatRoom/ChatRoomContainer";
+import SalesContainer from "./SalePage/salesContainer";
+import StepsJoinToRoom from "./StepsJoinToROOM";
+
 import testReadFile from "./utils/translate";
 
 export function uniq(a: any) {
@@ -52,7 +51,7 @@ export default function MainContainer() {
     } else if (window.location.pathname === "/chat") {
       redirectComp = <ChatRoomContainer />;
     } else if (window.location.pathname === "/about") {
-      redirectComp = <div>About Us</div>;
+      redirectComp = <AboutUsContainer />;
     } else if (window.location.pathname === "/property") {
       redirectComp = <div>Property</div>;
     } else if (window.location.pathname === "/") {
