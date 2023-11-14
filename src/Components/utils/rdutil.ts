@@ -115,3 +115,13 @@ export const handleScrollToTop = (elementRef?: any) => {
     targetEl.scrollTo(_options);
     return;
 }
+
+export function generateRandomDate(
+    from = new Date(2023, 0, 1),
+    to = new Date(),
+  ) {
+    return new Date(
+      from.getTime() +
+        Math.random() * (to.getTime() - from.getTime()),
+    );
+  }
