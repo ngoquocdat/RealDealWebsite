@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Strypper\\source\\repos\\RealDealInternal\\server\\src\\RealDealInternal.Server\\RealDealInternal.Server\\RealDealInternal.Server.csproj": {}
+    "C:\\Users\\viet.to\\source\\repos\\RealDealInternal\\server\\RealDealInternal.Server\\RealDealInternal.Server\\RealDealInternal.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Strypper\\source\\repos\\RealDealInternal\\server\\src\\RealDealInternal.Server\\RealDealInternal.Server\\RealDealInternal.Server.csproj": {
+    "C:\\Users\\viet.to\\source\\repos\\RealDealInternal\\server\\RealDealInternal.Server\\RealDealInternal.Server\\RealDealInternal.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Strypper\\source\\repos\\RealDealInternal\\server\\src\\RealDealInternal.Server\\RealDealInternal.Server\\RealDealInternal.Server.csproj",
+        "projectUniqueName": "C:\\Users\\viet.to\\source\\repos\\RealDealInternal\\server\\RealDealInternal.Server\\RealDealInternal.Server\\RealDealInternal.Server.csproj",
         "projectName": "RealDealInternal.Server",
-        "projectPath": "C:\\Users\\Strypper\\source\\repos\\RealDealInternal\\server\\src\\RealDealInternal.Server\\RealDealInternal.Server\\RealDealInternal.Server.csproj",
-        "packagesPath": "C:\\Users\\Strypper\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Strypper\\source\\repos\\RealDealInternal\\server\\src\\RealDealInternal.Server\\RealDealInternal.Server\\obj\\",
+        "projectPath": "C:\\Users\\viet.to\\source\\repos\\RealDealInternal\\server\\RealDealInternal.Server\\RealDealInternal.Server\\RealDealInternal.Server.csproj",
+        "packagesPath": "C:\\Users\\viet.to\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\viet.to\\source\\repos\\RealDealInternal\\server\\RealDealInternal.Server\\RealDealInternal.Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Strypper\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\viet.to\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -27,7 +27,8 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.devexpress.com/iFGoj3inXThntQgvCmwUjR6z7IFlwSfnyQi1sLG2MT3qeQ8awo/api": {}
         },
         "frameworks": {
           "net8.0": {
