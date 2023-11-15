@@ -3,15 +3,13 @@ import { AboutUs } from "./Models/AboutUsModel";
 import {
   Box,
   Grid,
-  ImageListItem,
   List,
-  ListItem,
-  ListItemText,
+  SxProps,
   Typography,
   alpha,
   styled,
 } from "@mui/material";
-import { getAboutUs } from "Components/utils/datas";
+import { getAboutUs, projectImages } from "Components/utils/datas";
 
 interface AboutUsContainerProps {}
 
@@ -33,7 +31,14 @@ const AboutUsContainerStyle = {
     backgroundImage: `url(${imageSrc})`,
     backgroundSize: "cover",
   })),
+  Title: styled(Typography)(({ theme }) => ({
+    fontSize: "2.125rem",
+  })),
+  Description: styled(Typography)<{ width?: number }>(({ theme, width }) => ({
+    width: `${width}%`,
+  })),
 };
+
 export default function AboutUsContainer(props: AboutUsContainerProps) {
   const aboutUs: AboutUs[] = getAboutUs;
 
@@ -49,8 +54,10 @@ export default function AboutUsContainer(props: AboutUsContainerProps) {
       <List
         sx={{
           display: "grid",
+          paddingTop: 20,
         }}
       >
+        {/* Why us */}
         <Grid container spacing={2}>
           <Grid item xs={4} sx={{ position: "relative" }}>
             <AboutUsContainerStyle.ImageWrapper
@@ -61,82 +68,126 @@ export default function AboutUsContainer(props: AboutUsContainerProps) {
               }}
             />
             <AboutUsContainerStyle.ContentImage
-              height={300}
-              width={300}
+              height={350}
+              width={350}
               custom={{
-                margin: "90px",
+                margin: "30px 70px 60px",
                 zIndex: "100",
                 position: "relative",
               }}
               imageSrc={getAboutUs[0].imageUrls[1].url}
             />
           </Grid>
-          <Grid item xs={8}>
-            <Box>{getAboutUs[0].header}</Box>
-            <Box>{getAboutUs[0].text}</Box>
-          </Grid>
-        </Grid>
-        {/* {aboutUs.slice(0).map((data, index) => (
-          <ListItem
-            key={index}
+          <Grid
+            item
+            xs={8}
             sx={{
               display: "flex",
-              flexDirection: index % 2 === 0 ? "row-reverse" : "row",
+              justifyContent: "center",
+              flexDirection: "column",
+              textAlign: "left",
+              gap: "50px",
             }}
           >
-            <Box
+            <AboutUsContainerStyle.Title variant="h4">
+              {aboutUs[0].header}
+            </AboutUsContainerStyle.Title>
+            <AboutUsContainerStyle.Description variant="h5" width={70}>
+              {aboutUs[0].text}
+            </AboutUsContainerStyle.Description>
+          </Grid>
+        </Grid>
+        {/* What is Real Deal */}
+        <Grid container spacing={2} sx={{ paddingTop: 30, paddingBottom: 20 }}>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              maxWidth: "fit-content",
+              justifyContent: "center",
+            }}
+          >
+            {projectImages.map((project, index) => {
+              return (
+                <AboutUsContainerStyle.ContentImage
+                  key={`projects-about-us-${project.title}`}
+                  height={250}
+                  width={250}
+                  custom={{
+                    position: "relative",
+                    borderRadius: "60px",
+                    border: "solid 10px #fff",
+                    left: `${index > 0 ? index * -30 + "px" : "inherit"}`,
+                    top: `${index % 2 === 0 ? "-60px" : "inherit"}`,
+                  }}
+                  imageSrc={project.url}
+                />
+              );
+            })}
+          </Grid>
+          <Grid item xs={12}>
+            <AboutUsContainerStyle.Description
+              variant="h5"
               sx={{
-                backgroundColor: "#ffffff",
-                padding: "10px",
-                margin: "10px",
-                height: "200px",
-                width: "1000px",
+                margin: "auto 10%",
+                paddingTop: 10,
+                textAlign: "justify",
               }}
             >
-              <ImageListItem
-                key={index}
-                sx={{
-                  backgroundColor: "#ffffff",
-                  padding: "10px",
-                  margin: "10px",
-                }}
-              >
-                {data.imageUrls &&
-                  data.imageUrls.map((image, imageIndex) => (
-                    <img
-                      key={`${index}-${imageIndex}`}
-                      src={image.url}
-                      alt={image.name}
-                      style={{ width: "100%" }}
-                    />
-                  ))}
-              </ImageListItem>
-            </Box>
-            <Box
-              sx={{
-                backgroundColor: "#ffffff",
-                padding: "10px",
-                margin: "10px",
-              }}
-            >
-              {data.header && (
-                <Typography
-                  variant="h1"
-                  sx={{ fontSize: "40px", margin: "12px" }}
+              {aboutUs[1].text}
+            </AboutUsContainerStyle.Description>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ width: "80vw", margin: "auto" }}>
+          {aboutUs.slice(2).map((content, index) => {
+            const flexWrapper: SxProps = {
+              display: "flex",
+              flexDirection: index % 2 === 0 ? "row-reverse" : "inherit",
+              padding: "10px 0px",
+            };
+            return (
+              <Box sx={flexWrapper}>
+                <Grid item xs={4} sx={{ position: "relative" }}>
+                  <AboutUsContainerStyle.ContentImage
+                    height={350}
+                    width={350}
+                    custom={{
+                      borderRadius: "50%",
+                      margin: "30px 70px 60px",
+                      zIndex: "100",
+                      position: "relative",
+                    }}
+                    imageSrc={getAboutUs[0].imageUrls[1].url}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={8}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    textAlign: "left",
+                    gap: "50px",
+                  }}
                 >
-                  {data.header}
-                </Typography>
-              )}
-              <Typography variant="h2" sx={{ fontSize: "30px", margin: "6px" }}>
-                {data.title}
-              </Typography>
-              <ListItemText
-                primary={data.text}
-                sx={{ fontSize: "20px", margin: "0px 16px 0px 16px" }}
-              />
-            </Box>
-          </ListItem>
-        ))} */}
+                  <AboutUsContainerStyle.Title variant="h4">
+                    {content.header}
+                  </AboutUsContainerStyle.Title>
+                  <AboutUsContainerStyle.Description
+                    variant="h6"
+                    width={70}
+                    sx={{ whiteSpaceCollapse: "preserve-breaks" }}
+                  >
+                    {content.text}
+                  </AboutUsContainerStyle.Description>
+                </Grid>
+                ;
+              </Box>
+            );
+          })}
+        </Grid>
       </List>
     </Box>
   );

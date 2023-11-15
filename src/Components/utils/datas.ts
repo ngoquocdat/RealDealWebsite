@@ -519,7 +519,7 @@ const getAboutUs= [
   {
       id: "4",
       title: "Our mindset",
-      header: "Không giới hạn khu vực",
+      header: " ",
       text: `RealDeal không chỉ tập trung phát triển tại những thành phố lớn mà còn phân bổ nhiều dự án ở mọi khu vực trải dài khắp cả nước. Đối với khu vực ngoại ô, tuy có mức sống không cao như thành thị nhưng với sự phát triển nhanh chóng của nền kinh tế, kỹ thuật số, nhóm khách hàng khu vực ngoại ô rất cực kỳ tiềm năng.
              Đặc biệt, người có thu nhập thấp thường hướng đến những sản phẩm chất lượng – giá tốt, rất hợp với hình thức mua sắm theo nhóm của RealDeal.`,
       fileUrls: [
@@ -586,8 +586,28 @@ const getRooms= [{
 
 const chatAvatar = `https://th.bing.com/th/id/R.588e9f4570ef5ddee0ef2f0c3eb4d237?rik=VDy%2fh%2ffN3XJm6Q&amp;pid=ImgRaw&amp;r=0`
 
+const projectImages = [
+  {
+    title: "SKYGARDEN",
+    url: "https://www.phudonggroup.com/wp-content/uploads/2022/07/SKYGARDEN_1-min.jpeg",
+  },
+  {
+    title: "SKYONE",
+    url: "https://www.phudonggroup.com/wp-content/uploads/2022/11/HINH-SKYONE-03.jpeg",
+  },
+  {
+    title: "TOPAZ TWINS",
+    url: "https://www.phudonggroup.com/wp-content/uploads/2022/08/bg_night-5-scaled.jpg",
+  },
+  {
+    title: "TTHE PRAIA",
+    url: "https://www.phudonggroup.com/wp-content/uploads/2022/08/DA-BN413-Tong-the.jpeg",
+  },
+];
+
 export {
     RealEstates,
     carousels,
-    getAboutUs, getRooms, chatAvatar
+    getAboutUs, getRooms, chatAvatar,
+    projectImages
 };
