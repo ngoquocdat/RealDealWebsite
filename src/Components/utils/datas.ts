@@ -552,35 +552,35 @@ const getRooms= [{
   id: "",
   room: "",
   RealEstateId: "",
-  lastTimeChat: new Date().toLocaleString(),
+  lastTimeChat: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
   lastMessage: "Hello, how are you?"
 },
 {
   id: "",
   room: "",
   RealEstateId: "",
-  lastTimeChat: new Date().toLocaleString(),
+  lastTimeChat: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
   lastMessage: "What's for dinner?"
 },
 {
   id: "",
   room: "",
   RealEstateId: "",
-  lastTimeChat: new Date().toLocaleString(),
+  lastTimeChat: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
   lastMessage: "Good night!"
 },
 {
   id: "",
   room: "",
   RealEstateId: "",
-  lastTimeChat: new Date().toLocaleString(),
+  lastTimeChat: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
   lastMessage: "Need more toilet paper."
 },
 {
   id: "",
   room: "",
   RealEstateId: "",
-  lastTimeChat: new Date().toLocaleString(),
+  lastTimeChat: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
   lastMessage: "Car needs an oil change."
 }];
 
