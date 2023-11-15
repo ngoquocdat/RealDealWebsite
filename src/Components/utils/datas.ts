@@ -519,7 +519,7 @@ const getAboutUs= [
   {
       id: "4",
       title: "Our mindset",
-      header: " ",
+      header: "",
       text: `RealDeal không chỉ tập trung phát triển tại những thành phố lớn mà còn phân bổ nhiều dự án ở mọi khu vực trải dài khắp cả nước. Đối với khu vực ngoại ô, tuy có mức sống không cao như thành thị nhưng với sự phát triển nhanh chóng của nền kinh tế, kỹ thuật số, nhóm khách hàng khu vực ngoại ô rất cực kỳ tiềm năng.
              Đặc biệt, người có thu nhập thấp thường hướng đến những sản phẩm chất lượng – giá tốt, rất hợp với hình thức mua sắm theo nhóm của RealDeal.`,
       fileUrls: [
