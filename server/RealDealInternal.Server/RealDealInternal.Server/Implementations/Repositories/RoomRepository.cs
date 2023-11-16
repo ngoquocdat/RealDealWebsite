@@ -1,4 +1,7 @@
-﻿namespace RealDealInternal;
+﻿
+using Microsoft.EntityFrameworkCore;
+
+namespace RealDealInternal;
 
 public class RoomRepository : ApplicationBaseRepository<Room>, IRoomRepository
 {
@@ -12,6 +15,9 @@ public class RoomRepository : ApplicationBaseRepository<Room>, IRoomRepository
     #endregion
 
     #region [ Methods ]
+
+    public override Task<Room?> FindByIdAsync(string id, CancellationToken cancellationToken = default)
+        => Task.FromResult(_dbSet.Include(x => x.Messages).FirstOrDefaultAsync(x => x.Id == new Guid(id)).Result);
     #endregion
 
 }

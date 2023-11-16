@@ -41,6 +41,9 @@ public class RoomController : BaseController
     public async Task<ActionResult> Get(string id, 
                                         CancellationToken cancellationToken = default)
     {
+        if(!Guid.TryParse(id, out _))
+            throw new BadRequestException("Invalid room id format");
+
         var result = await roomRepository.FindByIdAsync(id, cancellationToken);
         if(result is null)
             return NotFound();
@@ -58,9 +61,13 @@ public class RoomController : BaseController
     [AllowAnonymous]
     public async Task<IActionResult> Post(RoomDTO dto, 
                                           CancellationToken cancellationToken = default){
+        
+        if(!Guid.TryParse(dto.realEstateId, out _))
+            throw new BadRequestException("Invalid real estate id format");
+
         var realEstate = await realEstateRepository.FindByIdAsync(dto.realEstateId, cancellationToken);
         if(realEstate is null)
-            return NotFound();
+            throw new NotFoundException("Real estate not found", dto.realEstateId);
 
         Room room = new()
         {
@@ -82,6 +89,10 @@ public class RoomController : BaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Put(RoomDTO dto,
                                          CancellationToken cancellationToken = default){
+                                            
+        if(!Guid.TryParse(dto.id, out _))
+            throw new BadRequestException("Invalid room id format");
+
         var room = await roomRepository.FindByIdAsync(dto.id, cancellationToken);
         if(room is null)
             return NotFound();
@@ -102,6 +113,10 @@ public class RoomController : BaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(string id,
                                             CancellationToken cancellationToken = default){
+                                                
+        if(!Guid.TryParse(id, out _))
+            throw new BadRequestException("Invalid room id format");
+
         var room = await roomRepository.FindByIdAsync(id, cancellationToken);
         if(room is null)
             return NotFound();

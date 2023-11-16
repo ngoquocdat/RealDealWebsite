@@ -35,7 +35,11 @@ public class RealEstateController : BaseController
     public async Task<ActionResult> Get(string id, 
                                         CancellationToken cancellationToken = default)
     {
-        var result = await realEstateRepository.FindByIdAsync(id, cancellationToken);
+        if(!Guid.TryParse(id, out _))
+            throw new BadRequestException("Invalid real estate id format");
+
+        var result = await realEstateRepository
+                                .FindByIdAsync(id, cancellationToken);
         if(result is null)
             return NotFound();
 
@@ -50,7 +54,10 @@ public class RealEstateController : BaseController
     [ProducesResponseType(400)]
     [AllowAnonymous]
     public async Task<IActionResult> Post(RealEstateDTO dto, 
-                                          CancellationToken cancellationToken = default){
+                                          CancellationToken cancellationToken = default){           
+        if(!Guid.TryParse(dto.id, out _))
+            throw new BadRequestException("Invalid real estate id format");
+
         RealEstate realEstate = new()
         {
             Title = dto.title,
@@ -83,9 +90,12 @@ public class RealEstateController : BaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Put(RealEstateDTO dto,
                                          CancellationToken cancellationToken = default){
+        if(!Guid.TryParse(dto.id, out _))
+            throw new BadRequestException("Invalid real estate id format");
+            
         var realEstate = await realEstateRepository.FindByIdAsync(dto.id, cancellationToken);
         if(realEstate is null)
-            return NotFound();
+            throw new NotFoundException("Invalid real estate id", dto.id);
         
         realEstate.Title = dto.title;
         realEstate.Description = dto.description;
@@ -116,9 +126,10 @@ public class RealEstateController : BaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(string id,
                                             CancellationToken cancellationToken = default){
+
         var realEstate = await realEstateRepository.FindByIdAsync(id, cancellationToken);
         if(realEstate is null)
-            return NotFound();
+            throw new NotFoundException("Invalid real estate id", id);
 
         realEstateRepository.Delete(realEstate);
         await realEstateRepository.SaveChangesAsync(cancellationToken);

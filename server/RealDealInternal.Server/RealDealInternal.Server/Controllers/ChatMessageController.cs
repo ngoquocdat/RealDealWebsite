@@ -8,7 +8,6 @@ public class ChatMessageController : BaseController
 
     private readonly ApplicationDbContext context;
     private readonly IRoomRepository roomRepository;
-    private readonly IRealEstateRepository realEstateRepository;
     private readonly IChatMessageRepository chatMessageRepository;
     #endregion
 
@@ -16,12 +15,10 @@ public class ChatMessageController : BaseController
     
     public ChatMessageController(ApplicationDbContext context,
                                  IRoomRepository roomRepository,
-                                 IRealEstateRepository realEstateRepository,
                                  IChatMessageRepository chatMessageRepository)
     {
         this.context = context;
         this.roomRepository = roomRepository;
-        this.realEstateRepository = realEstateRepository;
         this.chatMessageRepository = chatMessageRepository;
     }
     #endregion
@@ -44,9 +41,12 @@ public class ChatMessageController : BaseController
     public async Task<ActionResult> Get(string id, 
                                         CancellationToken cancellationToken = default)
     {
+        if(!Guid.TryParse(id, out _))
+            throw new BadRequestException("Invalid chat message id format");
+
         var result = await chatMessageRepository.FindByIdAsync(id, cancellationToken);
         if(result is null)
-            return NotFound();
+            throw new NotFoundException("Chat message not found", id);
 
         return Ok(result);
     }
@@ -61,9 +61,13 @@ public class ChatMessageController : BaseController
     public async Task<IActionResult> Post(ChatMessageDTO dto, 
                                           CancellationToken cancellationToken = default){
 
+                                            
+        if(!Guid.TryParse(dto.roomId, out _))
+            throw new BadRequestException("Invalid room id format");
+
         var room = await roomRepository.FindByIdAsync(dto.roomId, cancellationToken);
         if(room is null)
-            return NotFound();
+            throw new NotFoundException("Room not found", dto.roomId);  
 
         ChatMessage chatMessage = new(){
             Content = dto.content,
@@ -87,9 +91,20 @@ public class ChatMessageController : BaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Put(ChatMessageDTO dto,
                                          CancellationToken cancellationToken = default){
+
+
+        if(!Guid.TryParse(dto.id, out _))
+            throw new BadRequestException("Invalid chat message id format");
+
         var chatMessage = await chatMessageRepository.FindByIdAsync(dto.id, cancellationToken);
         if(chatMessage is null)
-            return NotFound();
+            throw new NotFoundException("Chat message not found", dto.id);
+
+        chatMessage.SenderName = dto.senderName;
+        chatMessage.SenderAvatar = dto.senderAvatar;
+        chatMessage.Content = dto.content;
+        chatMessage.CreatedAt = dto.createdAt;
+        chatMessage.SenderId = dto.senderId;
 
         chatMessageRepository.Update(chatMessage);
         await chatMessageRepository.SaveChangesAsync(cancellationToken);
@@ -104,9 +119,14 @@ public class ChatMessageController : BaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(string id,
                                             CancellationToken cancellationToken = default){
+
+        
+        if(!Guid.TryParse(id, out _))
+            throw new BadRequestException("Invalid chat message id format");
+
         var chatMessage = await chatMessageRepository.FindByIdAsync(id, cancellationToken);
         if(chatMessage is null)
-            return NotFound();
+            throw new NotFoundException("Chat message not found", id);
 
         chatMessageRepository.Delete(chatMessage);
         await chatMessageRepository.SaveChangesAsync(cancellationToken);
